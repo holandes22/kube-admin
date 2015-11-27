@@ -1,13 +1,15 @@
 import Ember from 'ember';
-import KubernetesClient from 'kube-admin/kubernetes/client';
 
 export default Ember.Route.extend({
 
-  ajax: Ember.inject.service(),
+  kubeClient: Ember.inject.service(),
 
   model() {
-    let client = KubernetesClient.create({ ajax: this.get('ajax') });
-    return client.getPods();
+    return this.get('kubeClient').findAll('pod');
+    //return this.get('kubeClient').query('pod', { filter: { namespace: 'default' }});
+    //return this.get('kubeClient').query('pod');
+    //return this.get('kubeClient').findAll('replicationcontroller');
+    //return this.get('kubeClient').findAll('services');
   }
 
 });
