@@ -1,6 +1,13 @@
-Pods:
-
-{{#each model.items as |pod|}}
-  <div>{{pod.metadata.name}}</div>
-{{/each}}
-{{outlet}}
+<nav class="navbar navbar-full navbar-dark bg-inverse">
+  {{#link-to "application" class="navbar-brand"}}
+    Kube<span class="highlight">ADMIN</span>
+  {{/link-to}}
+  <ul class="nav navbar-nav">
+    <li class="nav-item">
+      {{link-to "Pods" "pods" class="nav-item nav-link"}}
+    </li>
+  </ul>
+</nav>
+<div class="container-fluid">
+  {{outlet}}
+</div>
