@@ -1,13 +1,4 @@
-<nav class="navbar navbar-full navbar-dark bg-inverse">
-  {{#link-to "application" class="navbar-brand"}}
-    Kube<span class="highlight">ADMIN</span>
-  {{/link-to}}
-  <ul class="nav navbar-nav">
-    <li class="nav-item">
-      {{link-to "Namespaces" "namespaces" class="nav-item nav-link"}}
-    </li>
-  </ul>
-</nav>
+{{nav-bar namespaces=model chooseNamespace="chooseNamespace"}}
 <div class="container-fluid">
   {{outlet}}
 </div>
