@@ -6,17 +6,17 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('pods', function() {
+  this.route('namespaces', function() {
+    this.route('namespace', { path: ':namespace' });
+  });
+  this.route('pods', { path: 'namespaces/:namespace/pods' }, function() {
     this.route('pod', { path: ':name' });
   });
-  this.route('replication-controllers', function() {
+  this.route('replication-controllers', { path: 'namespaces/:namespace/replication-controllers' }, function() {
     this.route('replication-controller', { path: ':name' });
   });
-  this.route('services', function() {
+  this.route('services', { path: 'namespaces/:namespace/services' }, function() {
     this.route('service', { path: ':name' });
-  });
-  this.route('namespaces', function() {
-    this.route('namespace', { path: ':name' });
   });
 });
 
