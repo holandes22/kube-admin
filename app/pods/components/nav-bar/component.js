@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   currentNamespace: 'default',
   actions: {
-    chooseNamespace(namespace) {
+    chooseNamespace(component, namespace, value) {
       this.set('currentNamespace', namespace);
       this.sendAction("chooseNamespace", namespace);
     }

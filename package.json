@@ -35,9 +35,10 @@
     "ember-cli-sass": "5.2.0",
     "ember-cli-sri": "^1.2.0",
     "ember-cli-uglify": "^1.2.0",
+    "ember-component-css": "0.1.6",
     "ember-data": "2.2.1",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
-    "ember-power-select": "0.6.5"
+    "semantic-ui-ember": "0.9.1"
   }
 }
