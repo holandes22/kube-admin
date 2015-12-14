@@ -1,3 +1,5 @@
-{{#each model.items as |pod|}}
-  <div>{{pod.metadata.name}}</div>
+{{#each model.items as |item|}}
+  <div>
+  {{link-to item.metadata.name 'pod' item.metadata.namespace item.metadata.name}}
+  </div>
 {{/each}}

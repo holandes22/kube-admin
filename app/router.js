@@ -9,15 +9,12 @@ Router.map(function() {
   this.route('namespaces', function() {
     this.route('namespace', { path: ':namespace' });
   });
-  this.route('pods', { path: 'namespaces/:namespace/pods' }, function() {
-    this.route('pod', { path: ':name' });
-  });
-  this.route('replication-controllers', { path: 'namespaces/:namespace/replication-controllers' }, function() {
-    this.route('replication-controller', { path: ':name' });
-  });
-  this.route('services', { path: 'namespaces/:namespace/services' }, function() {
-    this.route('service', { path: ':name' });
-  });
+  this.route('pods');
+  this.route('pod', { path: 'namespaces/:namespace/pods/:name' });
+  this.route('replication-controllers');
+  this.route('replication-controller', { path: 'namespaces/:namespace/replication-controllers/:name' });
+  this.route('services');
+  this.route('service', { path: 'namespaces/:namespace/services/:name' });
 });
 
 export default Router;

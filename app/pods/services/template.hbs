@@ -1,1 +1,5 @@
-{{outlet}}
+{{#each model.items as |item|}}
+  <div>
+  {{link-to item.metadata.name 'service' item.metadata.namespace item.metadata.name}}
+  </div>
+{{/each}}

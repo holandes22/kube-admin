@@ -1,4 +1,14 @@
-{{nav-bar namespaces=model chooseNamespace="chooseNamespace"}}
+<div class="ui fixed inverted menu">
+  <div class="ui container">
+    {{#link-to "index" class="item"}}
+      Kube<span class="highlight">ADMIN</span>
+    {{/link-to}}
+    {{link-to "Namespaces" "namespaces" class="item"}}
+    {{link-to "Pods" "pods" class="item"}}
+    {{link-to "ReplicationControllers" "replication-controllers" class="item"}}
+    {{link-to "Services" "services" class="item"}}
+  </div>
+</div>
 <div class="ui main container">
   {{outlet}}
 </div>
