@@ -1,5 +1,27 @@
-{{#each model.items as |item|}}
-  <div>
-  {{link-to item.metadata.name 'pod' item.metadata.namespace item.metadata.name}}
-  </div>
-{{/each}}
+<table class="ui compact celled definition table">
+  <thead class="full-width">
+    <tr>
+      <th>Name</th>
+      <th>Namespace</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each model.items as |item|}}
+    <tr>
+      <td>{{link-to item.metadata.name 'pod' item.metadata.namespace item.metadata.name class="header"}}</td>
+      <td>{{item.metadata.namespace}}</td>
+      <td>{{item.metadata.creationTimestamp}}</td>
+    </tr>
+      {{/each}}
+  </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th colspan="3">
+        <div class="ui right floated small primary labeled icon button">
+          <i class="user icon"></i> Add Pod
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
