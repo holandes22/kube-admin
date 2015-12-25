@@ -9,17 +9,17 @@
     </tr>
   </thead>
   <tbody>
-      {{#each entities as |entity index|}}
+      {{#each resources as |resource index|}}
       <tr data-autoid='container'>
         {{#if (eq type "namespace")}}
-        <td data-autoid="name{{index}}">{{link-to entity.metadata.name "namespaces.namespace" entity.metadata.name class="header"}}</td>
+        <td data-autoid="name{{index}}">{{link-to resource.metadata.name "namespaces.namespace" resource.metadata.name class="header"}}</td>
         {{else}}
-        <td data-autoid="name{{index}}">{{link-to entity.metadata.name type entity.metadata.namespace entity.metadata.name class="header"}}</td>
+        <td data-autoid="name{{index}}">{{link-to resource.metadata.name type resource.metadata.namespace resource.metadata.name class="header"}}</td>
         {{/if}}
         {{#if (not-eq type "namespace")}}
-          <td data-autoid="namespace{{index}}">{{entity.metadata.namespace}}</td>
+          <td data-autoid="namespace{{index}}">{{resource.metadata.namespace}}</td>
         {{/if}}
-        <td data-autoid="timestamp{{index}}">{{entity.metadata.creationTimestamp}}</td>
+        <td data-autoid="timestamp{{index}}">{{resource.metadata.creationTimestamp}}</td>
       </tr>
       {{/each}}
   </tbody>
