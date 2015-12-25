@@ -1,6 +1,2 @@
-<ul class="nav nav-pills nav-stacked">
-  {{#each model.items as |namespace|}}
-  <div>{{namespace.metadata.name}}</div>
-  {{/each}}
-</ul>
+{{entity-list entities=model.items type="namespace"}}
 {{outlet}}

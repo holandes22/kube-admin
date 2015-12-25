@@ -1,5 +1,1 @@
-{{#each model.items as |item|}}
-  <div>
-  {{link-to item.metadata.name 'pod' item.metadata.namespace item.metadata.name}}
-  </div>
-{{/each}}
+{{entity-list entities=model.items type="replication-controller"}}

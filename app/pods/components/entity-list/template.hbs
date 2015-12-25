@@ -1,0 +1,35 @@
+<table class="ui compact celled definition table">
+  <thead class="full-width">
+    <tr>
+      <th>Name</th>
+      {{#if (not-eq type "namespace")}}
+        <th>Namespace</th>
+      {{/if}}
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each entities as |entity index|}}
+      <tr data-autoid='container'>
+        {{#if (eq type "namespace")}}
+        <td data-autoid="name{{index}}">{{link-to entity.metadata.name "namespaces.namespace" entity.metadata.name class="header"}}</td>
+        {{else}}
+        <td data-autoid="name{{index}}">{{link-to entity.metadata.name type entity.metadata.namespace entity.metadata.name class="header"}}</td>
+        {{/if}}
+        {{#if (not-eq type "namespace")}}
+          <td data-autoid="namespace{{index}}">{{entity.metadata.namespace}}</td>
+        {{/if}}
+        <td data-autoid="timestamp{{index}}">{{entity.metadata.creationTimestamp}}</td>
+      </tr>
+      {{/each}}
+  </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th colspan="3">
+        <div class="ui right floated small primary labeled icon button">
+          <i class="add square icon"></i>Create {{capitalize str=type}}
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
