@@ -10,7 +10,7 @@
   </thead>
   <tbody>
       {{#each resources as |resource index|}}
-      <tr data-autoid='container'>
+      <tr data-autoid="container{{index}}">
         {{#if (eq type "namespace")}}
         <td data-autoid="name{{index}}">{{link-to resource.metadata.name "namespaces.namespace" resource.metadata.name class="header"}}</td>
         {{else}}
@@ -26,7 +26,7 @@
   <tfoot class="full-width">
     <tr>
       <th colspan="3">
-        <div class="ui right floated small primary labeled icon button">
+        <div class="ui right floated small primary labeled icon button" {{action 'create'}}>
           <i class="add square icon"></i>Create {{capitalize str=type}}
         </div>
       </th>

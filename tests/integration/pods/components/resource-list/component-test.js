@@ -20,7 +20,8 @@ test('it renders resource list', function(assert) {
   const model = makeResourceObjects(10);
   this.set('model', model);
   this.render(hbs`{{resource-list type='pod' resources=model}}`);
-  assert.equal(this.$('[data-autoid=container]').length, 10);
+  const containers = this.$('[data-autoid^=container]');
+  assert.equal(containers.length, 10);
   assert.equal(this.$('[data-autoid=name0]').text().trim(), 'name0');
   assert.equal(this.$('[data-autoid=namespace0]').text().trim(), 'namespace0');
   assert.equal(this.$('[data-autoid=timestamp0]').text().trim(), '0');
@@ -28,9 +29,11 @@ test('it renders resource list', function(assert) {
 });
 
 test('it does not render namespace if type namespace', function(assert) {
-  assert.expect(1);
-  const model = makeResourceObjects(10);
+  assert.expect(2);
+  const model = makeResourceObjects(5);
   this.set('model', model);
   this.render(hbs`{{resource-list type='namespace' resources=model}}`);
+  const containers = this.$('[data-autoid^=container]');
+  assert.equal(containers.length, 5);
   assert.equal(this.$('[data-autoid^=namespace]').length, 0);
 });
