@@ -63,9 +63,8 @@ export default Ember.Component.extend(Validations, {
     },
 
     action() {
-      this.validateSync({ on: ['fileInfo'] });
-      if (!this.get('validations.isValid')) {
-        this.set('errorMessage', this.get('validations.attrs.fileInfo.messages')[0]);
+      if (this.get('validations.isInvalid')) {
+        this.set('errorMessage', this.get('validations.messages')[0]);
       } else {
         const fileInfo = this.get('fileInfo'),
               kind = this.get('kind');
@@ -75,8 +74,7 @@ export default Ember.Component.extend(Validations, {
           manifest = JSON.parse(fileInfo.text);
           if (!manifest.kind) {
             errorMessage = 'Bad manifest (No kind attribute)';
-          }
-          if (manifest.kind && manifest.kind !== kind) {
+          } else if (manifest.kind !== kind) {
             errorMessage = `Resource kind should be ${kind}`;
           }
         } catch(error) {
