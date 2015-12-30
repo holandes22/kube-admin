@@ -15,29 +15,29 @@ var Validations = buildValidations({
   ]
 });
 
-// TODO:
-// - Handle very large files (maybe show a progress bar and allow cancel)
-// - Validate type is application/json and parses correctly
-// - Validate is correct kind
-// - Show form validation error (is empty)
 
 export default Ember.Component.extend(Validations, {
 
   fileInfo: null,
 
-  selectionMade: false, // Hide validations at start
+  // Hide validations at start
+  selectionMade: false,
 
   didInsertElement() {
     this.$('input:file').on('change', bind(this, 'handleFileSelection'));
   },
 
   handleFileSelection(event) {
+    // TODO:
+    // - Handle very large files
+    // (maybe show a progress bar and allow cancel)
+    // - Properly handle read error
     const file = event.target.files[0];
     this.readFile(file).then((fileInfo) => {
       this.set('selectionMade', true);
       this.set('fileInfo', fileInfo);
     }).catch((reason) => {
-      window.console.log('TODO: handle error', reason);
+      window.console.log('Error loading file:', reason);
     });
   },
 
