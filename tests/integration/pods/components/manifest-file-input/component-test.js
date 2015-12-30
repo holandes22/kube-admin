@@ -66,7 +66,7 @@ test('it shows an error if manifest has no kind', function(assert) {
   this.$('input:file').trigger(event);
   return wait().then(() => {
     this.$('[data-autoid=submit]').click();
-    assert.equal(this.$('[data-autoid=error-message]').text(), 'Bad manifest file (No kind attribute)');
+    assert.equal(this.$('[data-autoid=error-message]').text(), 'Bad manifest (No kind attribute)');
   });
 });
 

@@ -74,7 +74,7 @@ export default Ember.Component.extend(Validations, {
         try {
           manifest = JSON.parse(fileInfo.text);
           if (!manifest.kind) {
-            errorMessage = 'Bad manifest file (No kind attribute)';
+            errorMessage = 'Bad manifest (No kind attribute)';
           }
           if (manifest.kind && manifest.kind !== kind) {
             errorMessage = `Resource kind should be ${kind}`;

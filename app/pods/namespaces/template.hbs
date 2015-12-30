@@ -1,2 +1,28 @@
+<div class="ui two column middle aligned very relaxed stackable grid" style="position: relative;">
+  <div class="column">
+    <div class="ui form">
+      <div class="field">
+        <label>Name</label>
+          <div class="ui action input">
+            <input type="text">
+            <button class="ui teal labeled icon button">
+              <i class="add square icon"></i>Create
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui vertical divider">
+    Or
+  </div>
+  <div class="column">
+    <div class="ui form">
+      <div class="field">
+        <label>Manifest file</label>
+        {{manifest-file-input action=(route-action "create")}}
+      </div>
+    </div>
+  </div>
+</div>
 {{resource-list resources=model.items type="namespace"}}
 {{outlet}}
