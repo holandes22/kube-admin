@@ -7,10 +7,18 @@ moduleForComponent('manifest-file-input', 'Integration | Component | manifest fi
   integration: true
 });
 
-const makeFileInputEvent = function(content='fake', type='application/json') {
-  let blob = new window.Blob([content], { type });
-  let file = new window.File([blob], 'filename');
-
+const makeFileInputEvent = function(content='fake_content', type='application/json') {
+  let file = null;
+  const fileName = 'fake_name';
+  if (window.WebKitBlobBuilder) { //PhatomJS 1.9
+    let builder = new window.WebKitBlobBuilder();
+    builder.append([content]);
+    file = builder.getBlob(type);
+    file.name = fileName;
+  } else {
+    const blob = new window.Blob([content], { type });
+    file = new window.File([blob], fileName);
+  }
   return Ember.$.Event('change', { target: { files: [file] } });
 };
 
@@ -73,7 +81,7 @@ test('it shows an error if kind in manifest is not the specified', function(asse
   });
 });
 
-test('it passes up the manifest', function(assert) {
+test('it sets file name in input and passes up the manifest', function(assert) {
   const create = function(manifest) {
     assert.equal(manifest.kind, 'Pod');
   };
@@ -82,7 +90,7 @@ test('it passes up the manifest', function(assert) {
   let event = makeFileInputEvent('{"kind": "Pod"}', 'application/json');
   this.$('input:file').trigger(event);
   return wait().then(() => {
+    assert.equal(this.$('[data-autoid=filename]').val(), 'fake_name');
     this.$('[data-autoid=submit]').click();
   });
-
 });
