@@ -1,0 +1,11 @@
+<div class="ui action input">
+  {{input value=name type="text"}}
+  <button data-autoid="submit" class="ui teal labeled icon button" {{action "action"}}>
+    <i class="add square icon"></i>Create
+  </button>
+</div>
+{{#if (and selectionMade validations.isInvalid)}}
+<div class="ui negative small message">
+  <div data-autoid="error-message">{{validations.messages}}</div>
+</div>
+{{/if}}

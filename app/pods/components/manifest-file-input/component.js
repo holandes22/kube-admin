@@ -8,7 +8,7 @@ const {
 } = Ember;
 
 
-var Validations = buildValidations({
+const Validations = buildValidations({
   fileInfo: [
     validator('presence', true),
     validator('valid-manifest')

@@ -3,12 +3,7 @@
     <div class="ui form">
       <div class="field">
         <label>Name</label>
-          <div class="ui action input">
-            <input type="text">
-            <button class="ui teal labeled icon button">
-              <i class="add square icon"></i>Create
-            </button>
-          </div>
+        {{namespace-input action=(route-action "create")}}
       </div>
     </div>
   </div>
