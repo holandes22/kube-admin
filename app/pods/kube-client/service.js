@@ -17,6 +17,15 @@ export default Ember.Service.extend({
 
     }
     return this.findAll(modelName);
+  },
+
+  create(manifest) {
+    // TODO: get url based on manifest kind and namespace
+    let data = {
+      data: JSON.stringify(manifest),
+      headers: {'Content-Type': 'application/json'}
+    };
+    return this.get('ajax').post(`/api/v1/namespaces/`, data );
   }
 
 });
