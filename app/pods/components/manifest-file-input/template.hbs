@@ -6,8 +6,10 @@
     <i class="add square icon"></i>{{if actionLabel actionLabel "Go"}}
   </button>
 </div>
-{{#if errorMessage}}
+{{#if selectionMade}}
+{{#if validations.isInvalid}}
 <div class="ui negative small message">
-  <div data-autoid="error-message">{{errorMessage}}</div>
+  <div data-autoid="error-message">{{validations.messages}}</div>
 </div>
+{{/if}}
 {{/if}}

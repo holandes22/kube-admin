@@ -9,7 +9,10 @@ const {
 
 
 var Validations = buildValidations({
-  fileInfo: validator('presence', true)
+  fileInfo: [
+    validator('presence', true),
+    validator('valid-manifest')
+  ]
 });
 
 // TODO:
@@ -22,17 +25,16 @@ export default Ember.Component.extend(Validations, {
 
   fileInfo: null,
 
-  errorMessage: null,
+  selectionMade: false, // Hide validations at start
 
   didInsertElement() {
     this.$('input:file').on('change', bind(this, 'handleFileSelection'));
   },
 
   handleFileSelection(event) {
-    this.set('errorMessage', null);
     const file = event.target.files[0];
-
     this.readFile(file).then((fileInfo) => {
+      this.set('selectionMade', true);
       this.set('fileInfo', fileInfo);
     }).catch((reason) => {
       window.console.log('TODO: handle error', reason);
@@ -63,29 +65,10 @@ export default Ember.Component.extend(Validations, {
     },
 
     action() {
-      if (this.get('validations.isInvalid')) {
-        this.set('errorMessage', this.get('validations.messages')[0]);
-      } else {
-        const fileInfo = this.get('fileInfo'),
-              kind = this.get('kind');
-        let manifest = {},
-            errorMessage = null;
-        try {
-          manifest = JSON.parse(fileInfo.text);
-          if (!manifest.kind) {
-            errorMessage = 'Bad manifest (No kind attribute)';
-          } else if (manifest.kind !== kind) {
-            errorMessage = `Resource kind should be ${kind}`;
-          }
-        } catch(error) {
-          errorMessage = 'Selected file must be valid JSON';
-        }
-
-        if (!!errorMessage) {
-          this.set('errorMessage', errorMessage);
-        } else {
-          this.get('attrs').action(manifest);
-        }
+      this.set('selectionMade', true);
+      if (this.get('validations.isValid')) {
+        // manifest is set by the validator after parsing fileInfo.text
+        this.get('attrs').action(this.get('manifest'));
       }
     }
   }

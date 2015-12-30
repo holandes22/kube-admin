@@ -34,14 +34,14 @@ test('it renders actionLabel', function(assert) {
 
 test('it shows an error if no file and removes it if file is selected', function(assert) {
   assert.expect(2);
-  this.render(hbs`{{manifest-file-input}}`);
+  this.render(hbs`{{manifest-file-input kind="Pod"}}`);
   this.$('[data-autoid=submit]').click();
   assert.equal(
     this.$('[data-autoid=error-message]').text(),
     "This field can't be blank"
   );
 
-  let event = makeFileInputEvent({type: 'text/plain'});
+  let event = makeFileInputEvent('{"kind": "Pod"}');
   this.$('input:file').trigger(event);
   return wait().then(() => {
     assert.equal(this.$('[data-autoid=error-message]').text(), '');
@@ -51,18 +51,21 @@ test('it shows an error if no file and removes it if file is selected', function
 test('it shows an error if cannot parse text as JSON', function(assert) {
   assert.expect(1);
   this.render(hbs`{{manifest-file-input}}`);
-  let event = makeFileInputEvent({type: 'application/json'});
+  let event = makeFileInputEvent();
   this.$('input:file').trigger(event);
   return wait().then(() => {
     this.$('[data-autoid=submit]').click();
-    assert.equal(this.$('[data-autoid=error-message]').text(), 'Selected file must be valid JSON');
+    assert.equal(
+      this.$('[data-autoid=error-message]').text(),
+      'Selected file must be valid JSON'
+    );
   });
 });
 
 test('it shows an error if manifest has no kind', function(assert) {
   assert.expect(1);
   this.render(hbs`{{manifest-file-input kind="Pod"}}`);
-  let event = makeFileInputEvent('{"apiVersion": "v1"}', 'application/json');
+  let event = makeFileInputEvent('{"apiVersion": "v1"}');
   this.$('input:file').trigger(event);
   return wait().then(() => {
     this.$('[data-autoid=submit]').click();
@@ -73,7 +76,7 @@ test('it shows an error if manifest has no kind', function(assert) {
 test('it shows an error if kind in manifest is not the specified', function(assert) {
   assert.expect(1);
   this.render(hbs`{{manifest-file-input kind="Fake"}}`);
-  let event = makeFileInputEvent('{"kind": "Pod"}', 'application/json');
+  let event = makeFileInputEvent('{"kind": "Pod"}');
   this.$('input:file').trigger(event);
   return wait().then(() => {
     this.$('[data-autoid=submit]').click();
@@ -87,7 +90,7 @@ test('it sets file name in input and passes up the manifest', function(assert) {
   };
   this.set('actions', { create });
   this.render(hbs`{{manifest-file-input kind="Pod" action=(action "create")}}`);
-  let event = makeFileInputEvent('{"kind": "Pod"}', 'application/json');
+  let event = makeFileInputEvent('{"kind": "Pod"}');
   this.$('input:file').trigger(event);
   return wait().then(() => {
     assert.equal(this.$('[data-autoid=filename]').val(), 'fake_name');
