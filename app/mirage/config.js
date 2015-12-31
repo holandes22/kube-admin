@@ -1,3 +1,6 @@
+import Mirage from 'ember-cli-mirage';
+
+
 export default function() {
 
   // These comments are here to help you get started. Feel free to delete them.
@@ -16,14 +19,27 @@ export default function() {
   });
 
   this.post('/namespaces', function(db, request) {
-    const manifest = JSON.parse(request.requestBody);
+    const manifest = JSON.parse(request.requestBody),
+          name = manifest.metadata.name;
+    if (name === 'already-exists') {
+      const data = {
+        "apiVersion": "v1",
+        "code": 409,
+        "details": {
+            "kind": "namespaces",
+            "name": `"${name}`
+        },
+        "kind": "Status",
+        "message": `namespaces "${name}" already exists`,
+        "metadata": {},
+        "reason": "AlreadyExists",
+        "status": "Failure"
+      };
+      return new Mirage.Response(409, {}, data);
+    }
     let namespace = db.namespaces.insert(manifest);
     return namespace;
   });
-
-
-
-
 
   /*
     Route shorthand cheatsheet

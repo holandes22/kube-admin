@@ -9,6 +9,20 @@
     {{link-to "Services" "services" class="item"}}
   </div>
 </div>
+
+
 <div class="ui main container">
+
+  {{#each flashMessages.queue as |flash|}}
+    {{#flash-message flash=flash as |component flash|}}
+      {{#if flash.componentName}}
+        {{component flash.componentName content=flash.content}}
+      {{else}}
+        <div class="ui {{flash.type}} message">
+          <p>{{flash.message}}</p>
+        </div>
+      {{/if}}
+    {{/flash-message}}
+  {{/each}}
   {{outlet}}
 </div>
