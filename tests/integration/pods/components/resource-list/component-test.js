@@ -9,10 +9,11 @@ moduleForComponent('resource-list', 'Integration | Component | resource list', {
 
 test('it renders empty', function(assert) {
   assert.expect(1);
-  const type = 'pod';
-  this.set('type', type);
-  this.render(hbs`{{resource-list type=type}}`);
-  assert.equal(this.$('div.button').text().trim(), 'Create Pod');
+  const model = [];
+  this.set('model', model);
+  this.render(hbs`{{resource-list type='pod' resources=model}}`);
+  const containers = this.$('[data-autoid^=container]');
+  assert.equal(containers.length, 0);
 });
 
 test('it renders resource list', function(assert) {
