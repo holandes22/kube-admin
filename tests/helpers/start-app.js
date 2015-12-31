@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
+import triggerFileSelected from './trigger-file-selected'; // jshint unused: false
+
 
 export default function startApp(attrs) {
   let application;

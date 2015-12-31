@@ -2,24 +2,15 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
+import makeEventOptions from '../../../../helpers/make-event-options';
 
 moduleForComponent('manifest-file-input', 'Integration | Component | manifest file input', {
   integration: true
 });
 
 const makeFileInputEvent = function(content='fake_content', type='application/json') {
-  let file = null;
-  const fileName = 'fake_name';
-  if (window.WebKitBlobBuilder) { //PhatomJS 1.9
-    let builder = new window.WebKitBlobBuilder();
-    builder.append([content]);
-    file = builder.getBlob(type);
-    file.name = fileName;
-  } else {
-    const blob = new window.Blob([content], { type });
-    file = new window.File([blob], fileName);
-  }
-  return Ember.$.Event('change', { target: { files: [file] } });
+  const options = makeEventOptions(content, type);
+  return Ember.$.Event('change', options);
 };
 
 test('it renders no actionLabel', function(assert) {
