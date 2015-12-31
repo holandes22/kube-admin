@@ -13,7 +13,7 @@ test('it renders', function(assert) {
 test('it shows an error if name is empty', function(assert) {
   assert.expect(1);
   this.render(hbs`{{namespace-input}}`);
-  this.$('[data-autoid=submit]').click();
+  this.$('[data-autoid=submit-name]').click();
   assert.equal(
     this.$('[data-autoid=error-message]').text(),
     "This field can't be blank"
@@ -25,7 +25,7 @@ test('it shows an error if name too long', function(assert) {
   this.render(hbs`{{namespace-input}}`);
   const name = new Array(120).join('a');
   this.$('input').val(name).trigger('change');
-  this.$('[data-autoid=submit]').click();
+  this.$('[data-autoid=submit-name]').click();
   assert.equal(
     this.$('[data-autoid=error-message]').text(),
     'This field is too long (maximum is 100 characters)'
@@ -48,5 +48,5 @@ test('it passes up the manifest', function(assert) {
   this.render(hbs`{{namespace-input action=(action "create")}}`);
 
   this.$('input').val(name).trigger('change');
-  this.$('[data-autoid=submit]').click();
+  this.$('[data-autoid=submit-name]').click();
 });

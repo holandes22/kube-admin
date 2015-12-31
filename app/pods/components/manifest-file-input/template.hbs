@@ -2,7 +2,7 @@
   <i class="file icon"></i>
   <input data-autoid="filename" type="text" readonly value={{if fileInfo fileInfo.name "Select JSON manifest"}} {{action "selectFile"}}>
   <input type="file">
-  <button class="ui teal labeled icon button" {{action "action"}} data-autoid="submit">
+  <button class="ui teal labeled icon button" {{action "action"}} data-autoid="submit-file">
     <i class="add square icon"></i>{{if actionLabel actionLabel "Go"}}
   </button>
 </div>
