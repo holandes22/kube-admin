@@ -20,12 +20,20 @@ export default Ember.Service.extend({
   },
 
   create(manifest) {
-    // TODO: get url based on manifest kind and namespace
+    let url = '/api/v1/namespaces';
+    if ( manifest.kind !== 'Namespace') {
+      let namespace = 'default';
+      const namespaceFromMeta = manifest.metadata.namespace;
+      if ( namespaceFromMeta && namespaceFromMeta !== '' ) {
+        namespace = namespaceFromMeta;
+      }
+      url = `${url}/${namespace}/${manifest.kind.toLowerCase()}s`;
+    }
     let data = {
       data: JSON.stringify(manifest),
       headers: {'Content-Type': 'application/json'}
     };
-    return this.get('ajax').post(`/api/v1/namespaces/`, data );
+    return this.get('ajax').post(url, data );
   }
 
 });

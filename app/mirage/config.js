@@ -63,6 +63,18 @@ export default function() {
     return namespace;
   });
 
+  this.get('/pods', function(db) {
+    return { items: db.pods };
+  });
+
+  this.post('/namespaces/:namespace/pods', function(db, request) {
+    const namespace = request.params.namespace,
+          manifest = JSON.parse(request.requestBody);
+    manifest.metadata.namespace = namespace;
+    let pod = db.pods.insert(manifest);
+    return pod;
+  });
+
   /*
     Route shorthand cheatsheet
   */

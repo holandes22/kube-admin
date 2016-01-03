@@ -4,8 +4,8 @@ let {
   text,
   count,
   fillable,
-  visitable,
-  clickable
+  clickable,
+  visitable
 } = PageObject;
 
 export default PageObject.create({
