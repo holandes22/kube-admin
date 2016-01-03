@@ -1,23 +1,7 @@
 import Ember from 'ember';
+import ResourceListRouteMixin from 'kube-admin/mixins/resource-list-route';
 
-export default Ember.Route.extend({
-  kubeClient: Ember.inject.service(),
 
-  model() {
-    return this.get('kubeClient').findAll('pod');
-  },
-
-  actions: {
-    create(manifest) {
-      const flashMessages = this.get('flashMessages');
-      flashMessages.clearMessages();
-      this.get('kubeClient').create(manifest).then(() => {
-        flashMessages.positive('Successfully created');
-        this.refresh();
-      }).catch((error) => {
-        flashMessages.negative(error.errors[0].title, { sticky: true });
-      });
-    }
-  }
-
+export default Ember.Route.extend(ResourceListRouteMixin, {
+  kind: 'pod'
 });
