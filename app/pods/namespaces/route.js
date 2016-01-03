@@ -13,7 +13,7 @@ export default Ember.Route.extend({
         this.get('flashMessages').positive('Successfully created');
         this.refresh();
       }).catch((error) => {
-        this.get('flashMessages').negative(error.errors[0].title);
+        this.get('flashMessages').negative(error.errors[0].title, { sticky: true });
       });
     }
   }

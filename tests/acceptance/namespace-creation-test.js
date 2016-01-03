@@ -87,3 +87,13 @@ test('create namespace by name shows error on failure', function(assert) {
   });
 });
 
+test('create namespace by name shows error on invalid name', function(assert) {
+  assert.expect(2);
+  page.createByName('Invalid');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/namespaces');
+    assert.equal(page.error(), 'invalid msg');
+  });
+});
+

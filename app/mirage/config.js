@@ -47,6 +47,17 @@ export default function() {
         "status": "Failure"
       };
       return new Mirage.Response(400, {}, data);
+    } else if ( name === 'Invalid' ) {
+      data = {
+        "code": 422,
+        "kind": "Status",
+        "message": "invalid msg",
+        "metadata": {},
+        "reason": "Invalid",
+        "status": "Failure"
+      };
+      return new Mirage.Response(422, {}, data);
+
     }
     let namespace = db.namespaces.insert(manifest);
     return namespace;
