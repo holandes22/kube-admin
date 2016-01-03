@@ -9,11 +9,13 @@ export default Ember.Route.extend({
 
   actions: {
     create(manifest) {
+      const flashMessages = this.get('flashMessages');
+      flashMessages.clearMessages();
       this.get('kubeClient').create(manifest).then(() => {
-        this.get('flashMessages').positive('Successfully created');
+        flashMessages.positive('Successfully created');
         this.refresh();
       }).catch((error) => {
-        this.get('flashMessages').negative(error.errors[0].title, { sticky: true });
+        flashMessages.negative(error.errors[0].title, { sticky: true });
       });
     }
   }

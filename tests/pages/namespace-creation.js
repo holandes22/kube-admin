@@ -1,10 +1,11 @@
 import PageObject from '../page-object';
 
 let {
-  visitable,
+  text,
+  count,
   fillable,
-  clickable,
-  text
+  visitable,
+  clickable
 } = PageObject;
 
 export default PageObject.create({
@@ -14,6 +15,7 @@ export default PageObject.create({
   submitFile: clickable('[data-autoid=submit-file]'),
   error: text('.ui.negative.message'),
   success: text('.ui.positive.message'),
+  messageCount: count('.ui.message'),
 
   createByName(name) {
     return this.visit()

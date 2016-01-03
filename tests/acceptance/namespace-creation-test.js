@@ -97,3 +97,31 @@ test('create namespace by name shows error on invalid name', function(assert) {
   });
 });
 
+test('only one message is displayed after success', function(assert) {
+  assert.expect(2);
+  page.createByName('Invalid');
+
+  andThen(function() {
+    assert.equal(page.error(), 'invalid msg');
+  });
+
+  page.createByName('fake');
+  andThen(function() {
+    assert.equal(page.messageCount(), 1);
+  });
+});
+
+
+test('only one message is displayed after error', function(assert) {
+  assert.expect(2);
+  page.createByName('fake');
+
+  andThen(function() {
+    assert.equal(page.success(), 'Successfully created');
+  });
+
+  page.createByName('error');
+  andThen(function() {
+    assert.equal(page.messageCount(), 1);
+  });
+});
