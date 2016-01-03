@@ -21,8 +21,9 @@ export default function() {
   this.post('/namespaces', function(db, request) {
     const manifest = JSON.parse(request.requestBody),
           name = manifest.metadata.name;
+    let data = {};
     if (name === 'already-exists') {
-      const data = {
+      data = {
         "apiVersion": "v1",
         "code": 409,
         "details": {
@@ -36,6 +37,16 @@ export default function() {
         "status": "Failure"
       };
       return new Mirage.Response(409, {}, data);
+    } else if ( name === 'error' ) {
+      data = {
+        "code": 400,
+        "kind": "Status",
+        "message": "error msg",
+        "metadata": {},
+        "reason": "BadRequest",
+        "status": "Failure"
+      };
+      return new Mirage.Response(400, {}, data);
     }
     let namespace = db.namespaces.insert(manifest);
     return namespace;

@@ -4,7 +4,7 @@ import page from '../pages/namespace-creation';
 
 moduleForAcceptance('Acceptance | namespace creation');
 
-test('creating a namespace by manifest file', function(assert) {
+test('create namespace by file', function(assert) {
   assert.expect(3);
   const name = 'fake',
         content = `{
@@ -21,7 +21,39 @@ test('creating a namespace by manifest file', function(assert) {
   });
 });
 
-test('creating a namespace by name', function(assert) {
+test('create namespace by file shows error if already exists', function(assert) {
+  assert.expect(2);
+  const name = 'already-exists',
+        content = `{
+          "apiVersion": "v1",
+          "kind": "Namespace",
+          "metadata": {"name": "${name}"}
+        }`;
+  page.createByFile(content);
+
+  andThen(function() {
+    assert.equal(currentURL(), '/namespaces');
+    const expected = `namespaces "${name}" already exists`;
+    assert.equal(page.error(), expected);
+  });
+});
+
+test('create namespace by file shows error on failure', function(assert) {
+  assert.expect(2);
+  const content = `{
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": {"name": "error"}
+  }`;
+  page.createByFile(content);
+
+  andThen(function() {
+    assert.equal(currentURL(), '/namespaces');
+    assert.equal(page.error(), 'error msg');
+  });
+});
+
+test('create namespace by name', function(assert) {
   assert.expect(3);
   const name = 'fake';
   page.createByName(name);
@@ -33,9 +65,8 @@ test('creating a namespace by name', function(assert) {
   });
 });
 
-test('creating shows error if already exists', function(assert) {
+test('create namespace by name shows error if already exists', function(assert) {
   assert.expect(2);
-  visit('/namespaces');
   const name = 'already-exists';
   page.createByName(name);
 
@@ -46,8 +77,13 @@ test('creating shows error if already exists', function(assert) {
   });
 });
 
-/*
-test('creating a namespace by manifest file shows error on failure', function(assert) {
+test('create namespace by name shows error on failure', function(assert) {
+  assert.expect(2);
+  page.createByName('error');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/namespaces');
+    assert.equal(page.error(), 'error msg');
+  });
 });
 
-*/
