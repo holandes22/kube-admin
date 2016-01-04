@@ -3,7 +3,6 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'kube-admin',
-    podModulePrefix: 'kube-admin/pods',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
