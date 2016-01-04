@@ -23,9 +23,8 @@ export default Ember.Service.extend({
     let url = '/api/v1/namespaces';
     if ( manifest.kind !== 'Namespace') {
       let namespace = 'default';
-      const namespaceFromMeta = manifest.metadata.namespace;
-      if ( namespaceFromMeta && namespaceFromMeta !== '' ) {
-        namespace = namespaceFromMeta;
+      if ( manifest.metadata.namespace && manifest.metadata.namespace !== '' ) {
+        namespace = manifest.metadata.namespace;
       }
       url = `${url}/${namespace}/${manifest.kind.toLowerCase()}s`;
     }

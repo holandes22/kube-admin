@@ -6,7 +6,8 @@ const reasons = {
   '422': 'Invalid'
 };
 
-const getStatusResponse = function(code) {
+const getStatusResponse = function(name) {
+  const code = name.split('-')[1];
   let data = {
     'code': code,
     'kind': 'Status',
@@ -32,11 +33,9 @@ export default function() {
     const manifest = JSON.parse(request.requestBody),
           name = manifest.metadata.name;
     if ( name.includes('error') ) {
-      const code = name.split('-')[1];
-      return getStatusResponse(code);
+      return getStatusResponse(name);
     }
-    let namespace = db.namespaces.insert(manifest);
-    return namespace;
+    return db.namespaces.insert(manifest);
   });
 
   this.get('/pods', function(db) {
@@ -45,10 +44,13 @@ export default function() {
 
   this.post('/namespaces/:namespace/pods', function(db, request) {
     const namespace = request.params.namespace,
-          manifest = JSON.parse(request.requestBody);
+          manifest = JSON.parse(request.requestBody),
+          name = manifest.metadata.name;
+    if ( name.includes('error') ) {
+      return getStatusResponse(name);
+    }
     manifest.metadata.namespace = namespace;
-    let pod = db.pods.insert(manifest);
-    return pod;
+    return db.pods.insert(manifest);
   });
 }
 
