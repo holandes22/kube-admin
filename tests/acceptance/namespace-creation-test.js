@@ -23,7 +23,7 @@ test('create namespace by file', function(assert) {
 
 test('create namespace by file shows error if already exists', function(assert) {
   assert.expect(2);
-  const name = 'already-exists',
+  const name = 'error-409',
         content = `{
           "apiVersion": "v1",
           "kind": "Namespace",
@@ -33,8 +33,7 @@ test('create namespace by file shows error if already exists', function(assert) 
 
   andThen(function() {
     assert.equal(currentURL(), '/namespaces');
-    const expected = `namespaces "${name}" already exists`;
-    assert.equal(page.error(), expected);
+    assert.equal(page.error(), 'error msg 409');
   });
 });
 
@@ -43,13 +42,13 @@ test('create namespace by file shows error on failure', function(assert) {
   const content = `{
     "apiVersion": "v1",
     "kind": "Namespace",
-    "metadata": {"name": "error"}
+    "metadata": {"name": "error-400"}
   }`;
   page.createByFile(content);
 
   andThen(function() {
     assert.equal(currentURL(), '/namespaces');
-    assert.equal(page.error(), 'error msg');
+    assert.equal(page.error(), 'error msg 400');
   });
 });
 
@@ -67,42 +66,41 @@ test('create namespace by name', function(assert) {
 
 test('create namespace by name shows error if already exists', function(assert) {
   assert.expect(2);
-  const name = 'already-exists';
+  const name = 'error-409';
   page.createByName(name);
 
   andThen(function() {
     assert.equal(currentURL(), '/namespaces');
-    const expected = `namespaces "${name}" already exists`;
-    assert.equal(page.error(), expected);
+    assert.equal(page.error(), 'error msg 409');
   });
 });
 
 test('create namespace by name shows error on failure', function(assert) {
   assert.expect(2);
-  page.createByName('error');
+  page.createByName('error-400');
 
   andThen(function() {
     assert.equal(currentURL(), '/namespaces');
-    assert.equal(page.error(), 'error msg');
+    assert.equal(page.error(), 'error msg 400');
   });
 });
 
 test('create namespace by name shows error on invalid name', function(assert) {
   assert.expect(2);
-  page.createByName('Invalid');
+  page.createByName('error-422');
 
   andThen(function() {
     assert.equal(currentURL(), '/namespaces');
-    assert.equal(page.error(), 'invalid msg');
+    assert.equal(page.error(), 'error msg 422');
   });
 });
 
 test('only one message is displayed after success', function(assert) {
   assert.expect(2);
-  page.createByName('Invalid');
+  page.createByName('error-400');
 
   andThen(function() {
-    assert.equal(page.error(), 'invalid msg');
+    assert.equal(page.error(), 'error msg 400');
   });
 
   page.createByName('fake');
@@ -120,7 +118,7 @@ test('only one message is displayed after error', function(assert) {
     assert.equal(page.success(), 'Successfully created');
   });
 
-  page.createByName('error');
+  page.createByName('error-400');
   andThen(function() {
     assert.equal(page.messageCount(), 1);
   });
