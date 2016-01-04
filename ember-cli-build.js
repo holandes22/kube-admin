@@ -6,6 +6,9 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
   });
+  if ( app.env === 'test' ) {
+    app.import('vendor/phantomjs-polyfills.js');
+  }
 
   // Use `app.import` to add additional libraries to the generated
   // output files.
