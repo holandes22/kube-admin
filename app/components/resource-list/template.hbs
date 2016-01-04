@@ -19,7 +19,7 @@
         {{#if (not-eq type "namespace")}}
           <td data-autoid="namespace{{index}}">{{resource.metadata.namespace}}</td>
         {{/if}}
-        <td data-autoid="timestamp{{index}}">{{resource.metadata.creationTimestamp}}</td>
+        <td data-autoid="timestamp{{index}}">{{moment-from-now resource.metadata.creationTimestamp allow-empty=true}} ({{resource.metadata.creationTimestamp}})</td>
       </tr>
       {{/each}}
   </tbody>

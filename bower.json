@@ -15,7 +15,9 @@
     "pretender": "~0.10.1",
     "lodash": "~3.7.0",
     "Faker": "~3.0.0",
-    "es5-shim": "^4.0.5"
+    "es5-shim": "^4.0.5",
+    "moment": ">= 2.8.0",
+    "moment-timezone": ">= 0.1.0"
   },
   "resolutions": {
     "ember": "2.2.0"
