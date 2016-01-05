@@ -20,7 +20,7 @@ const makeResourceObjects = function(total) {
 test('it renders empty', function(assert) {
   assert.expect(1);
   this.set('model', []);
-  this.render(hbs`{{resource-list type='pod' resources=model}}`);
+  this.render(hbs`{{resource-list kind='pod' resources=model}}`);
   const containers = this.$('[data-autoid^=container]');
   assert.equal(containers.length, 0);
 });
@@ -29,7 +29,7 @@ test('it renders resource list', function(assert) {
   assert.expect(6);
   const model = makeResourceObjects(5);
   this.set('model', model);
-  this.render(hbs`{{resource-list type='pod' resources=model}}`);
+  this.render(hbs`{{resource-list kind='pod' resources=model}}`);
   const containers = this.$('[data-autoid^=container]');
   assert.equal(containers.length, 5);
   assert.equal(this.$('[data-autoid=name0]').text().trim(), 'name0');
@@ -39,11 +39,11 @@ test('it renders resource list', function(assert) {
   assert.equal(this.$('[data-autoid^=namespace]').length, 5);
 });
 
-test('it does not render namespace if type namespace', function(assert) {
+test('it does not render namespace if kind namespace', function(assert) {
   assert.expect(2);
   const model = makeResourceObjects(5);
   this.set('model', model);
-  this.render(hbs`{{resource-list type='namespace' resources=model}}`);
+  this.render(hbs`{{resource-list kind='namespace' resources=model}}`);
   const containers = this.$('[data-autoid^=container]');
   assert.equal(containers.length, 5);
   assert.equal(this.$('[data-autoid^=namespace]').length, 0);

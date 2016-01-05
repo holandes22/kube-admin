@@ -4,19 +4,19 @@ export default Ember.Service.extend({
 
   ajax: Ember.inject.service(),
 
-  findAll(modelName) {
-    let types = Ember.Inflector.inflector.pluralize(modelName);
-    return this.get('ajax').request(`/api/v1/${types}`);
+  findAll(kind) {
+    let kinds = Ember.Inflector.inflector.pluralize(kind);
+    return this.get('ajax').request(`/api/v1/${kinds}`);
   },
 
-  query(modelName, query) {
-    let types = Ember.Inflector.inflector.pluralize(modelName);
+  query(kind, query) {
+    let kinds = Ember.Inflector.inflector.pluralize(kind);
     if (query) {
       let ns = query.filter.namespace;
-      return this.get('ajax').request(`/api/v1/namespaces/${ns}/${types}`);
+      return this.get('ajax').request(`/api/v1/namespaces/${ns}/${kinds}`);
 
     }
-    return this.findAll(modelName);
+    return this.findAll(kind);
   },
 
   create(manifest) {
