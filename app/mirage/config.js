@@ -67,6 +67,21 @@ export default function() {
     manifest.metadata.namespace = namespace;
     return db.services.insert(manifest);
   });
+
+  this.get('/replicationcontrollers', function(db) {
+    return { items: db.replicationcontrollers };
+  });
+
+  this.post('/namespaces/:namespace/replicationcontrollers', function(db, request) {
+    const namespace = request.params.namespace,
+          manifest = JSON.parse(request.requestBody),
+          name = manifest.metadata.name;
+    if ( name.includes('error') ) {
+      return getStatusResponse(name);
+    }
+    manifest.metadata.namespace = namespace;
+    return db.replicationcontrollers.insert(manifest);
+  });
 }
 
 /*

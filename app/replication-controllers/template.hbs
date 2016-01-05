@@ -1,1 +1,9 @@
+<div class="ui segment">
+  <div class="ui form">
+    <div class="field">
+      <label>Manifest file</label>
+      {{manifest-file-input kind="ReplicationController" actionLabel="Create" action=(route-action "create")}}
+    </div>
+  </div>
+</div>
 {{resource-list resources=model.items type="replication-controller"}}
