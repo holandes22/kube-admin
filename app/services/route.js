@@ -1,9 +1,7 @@
 import Ember from 'ember';
+import ResourceListRouteMixin from 'kube-admin/mixins/resource-list-route';
 
-export default Ember.Route.extend({
-  kubeClient: Ember.inject.service(),
 
-  model() {
-    return this.get('kubeClient').findAll('service');
-  }
+export default Ember.Route.extend(ResourceListRouteMixin, {
+  kind: 'service'
 });

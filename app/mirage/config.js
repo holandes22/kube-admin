@@ -52,6 +52,21 @@ export default function() {
     manifest.metadata.namespace = namespace;
     return db.pods.insert(manifest);
   });
+
+  this.get('/services', function(db) {
+    return { items: db.services };
+  });
+
+  this.post('/namespaces/:namespace/services', function(db, request) {
+    const namespace = request.params.namespace,
+          manifest = JSON.parse(request.requestBody),
+          name = manifest.metadata.name;
+    if ( name.includes('error') ) {
+      return getStatusResponse(name);
+    }
+    manifest.metadata.namespace = namespace;
+    return db.services.insert(manifest);
+  });
 }
 
 /*
