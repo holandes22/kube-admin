@@ -1,19 +1,39 @@
-{{log model}}
-<h4 class="ui horizontal divider header">
-  <i class="ellipsis horizontal icon"></i>
-  Metadata
-</h4>
-<div class="ui list">
-  {{#each-in model.metadata.labels as |key value|}}
-    <div class="item">{{key}} - {{value}}</div>
-  {{/each-in}}
-</div>
+<h4 class="ui horizontal divider header">Details</h4>
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>{{model.metadata.name}}</td>
+    </tr>
+    <tr>
+      <td>Creation timestamp</td>
+      <td>{{model.metadata.creationTimestamp}}</td>
+    </tr>
+    <tr>
+      <td>Cluster IP address</td>
+      <td>{{model.spec.clusterIP}}</td>
+    </tr>
+    <tr>
+      <td>Session affinity</td>
+      <td>{{model.spec.sessionAffinity}}</td>
+    </tr>
+    {{#if model.metadata.labels}}
+    <tr>
+      <td>Labels</td>
+      <td>
+        {{#each-in model.metadata.labels as |key value|}}
+          <div class="ui basic blue label">
+            {{key}}
+            <div class="detail">{{value}}</div>
+          </div>
+        {{/each-in}}
+      </td>
+    </tr>
+    {{/if}}
+  </tbody>
+</table>
 
-<h4 class="ui horizontal divider header">
-  <i class="sitemap icon"></i>
-  Ports
-</h4>
-
+<h4 class="ui horizontal divider header"><i class="sitemap icon"></i>Ports</h4>
 <table class="ui table">
   <thead>
     <tr>
