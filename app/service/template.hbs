@@ -1,1 +1,36 @@
-{{outlet}}
+{{log model}}
+<h4 class="ui horizontal divider header">
+  <i class="ellipsis horizontal icon"></i>
+  Metadata
+</h4>
+<div class="ui list">
+  {{#each-in model.metadata.labels as |key value|}}
+    <div class="item">{{key}} - {{value}}</div>
+  {{/each-in}}
+</div>
+
+<h4 class="ui horizontal divider header">
+  <i class="sitemap icon"></i>
+  Ports
+</h4>
+
+<table class="ui table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Port</th>
+      <th>Target port</th>
+      <th>Protocol</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each model.spec.ports as |port|}}
+    <tr>
+      <td>{{port.name}}</td>
+      <td>{{port.port}}</td>
+      <td>{{port.targetPort}}</td>
+      <td>{{port.protocol}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

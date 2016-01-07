@@ -1,14 +1,10 @@
 import Mirage from 'ember-cli-mirage';
 import { faker } from 'ember-cli-mirage';
-import { getLabels, getSpec } from './fakers';
+import { getMetadata, getSpec } from './fakers';
 
 export default Mirage.Factory.extend({
   metadata(i) {
-    const name =  `pod${i}`,
-          namespace = 'default',
-          creationTimestamp = faker.date.recent(),
-          labels = getLabels();
-    return { name, namespace, creationTimestamp, labels };
+    return getMetadata('pod', i);
   },
 
   status(i) {
@@ -23,6 +19,7 @@ export default Mirage.Factory.extend({
     }];
     return { hostIP, podIP, startTime, containerStatuses };
   },
+
   spec() {
     return getSpec();
   }

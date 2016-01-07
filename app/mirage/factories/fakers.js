@@ -17,9 +17,9 @@ export function getPorts() {
 
 
 export function getLabels() {
-  const count = faker.random.arrayElement([1, 2, 3]);
+  const count = faker.random.arrayElement([0, 1, 2, 3]);
   let labels = {};
-  for (let j = 0; j <= count; j++) {
+  for (let j = 1; j <= count; j++) {
     labels[faker.hacker.verb()] = faker.hacker.noun();
   }
   return labels;
@@ -47,4 +47,13 @@ export function getSpec() {
     nodeName: faker.internet.ip(),
     hostNetwork: faker.random.boolean()
   };
+}
+
+
+export function getMetadata(kind, index) {
+  const name =  `${kind}-${index}`,
+        namespace = 'default',
+        creationTimestamp = faker.date.recent(),
+        labels = getLabels();
+  return { name, namespace, creationTimestamp, labels };
 }

@@ -6,6 +6,10 @@ const reasons = {
   '422': 'Invalid'
 };
 
+const idFromName = function(name) {
+  return parseInt(name.split('-')[1]) + 1;
+};
+
 const getStatusResponse = function(name) {
   const code = name.split('-')[1];
   let data = {
@@ -66,6 +70,10 @@ export default function() {
     }
     manifest.metadata.namespace = namespace;
     return db.services.insert(manifest);
+  });
+
+  this.get('/namespaces/:namespace/services/:name', function(db, request) {
+    return db.services.find(idFromName(request.params.name));
   });
 
   this.get('/replicationcontrollers', function(db) {

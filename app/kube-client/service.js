@@ -9,6 +9,11 @@ export default Ember.Service.extend({
     return this.get('ajax').request(`/api/v1/${kinds}`);
   },
 
+  findRecord(kind, ns, name) {
+    let kinds = Ember.Inflector.inflector.pluralize(kind);
+    return this.get('ajax').request(`/api/v1/namespaces/${ns}/${kinds}/${name}`);
+  },
+
   query(kind, query) {
     let kinds = Ember.Inflector.inflector.pluralize(kind);
     if (query) {
