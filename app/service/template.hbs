@@ -16,7 +16,6 @@
       <td>Session affinity</td>
       <td>{{model.spec.sessionAffinity}}</td>
     </tr>
-    {{#if model.metadata.labels}}
     <tr>
       <td>Labels</td>
       <td data-autoid="labels">
@@ -24,13 +23,15 @@
           <div class="ui basic violet label">
             {{key}} = {{value}}
           </div>
+        {{else}}
+          No labels
         {{/each-in}}
       </td>
     </tr>
-    {{/if}}
   </tbody>
 </table>
 
+{{#if model.spec.ports}}
 <h4 class="ui horizontal divider header"><i class="sitemap icon"></i>Ports</h4>
 <table class="ui table" data-autoid="ports">
   <thead>
@@ -52,3 +53,4 @@
     {{/each}}
   </tbody>
 </table>
+{{/if}}

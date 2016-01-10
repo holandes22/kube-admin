@@ -2,6 +2,7 @@ import PageObject from '../page-object';
 
 let {
   text,
+  isHidden,
   collection
 } = PageObject;
 
@@ -11,6 +12,7 @@ export default PageObject.create({
     return visit(url);
   },
 
+  isPortsSectionHidden: isHidden('[data-autoid=ports]'),
   details: {
     name: text('[data-autoid=name]'),
     labels: text('[data-autoid=labels]'),

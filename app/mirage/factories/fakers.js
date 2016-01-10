@@ -2,7 +2,7 @@ import { faker } from 'ember-cli-mirage';
 
 
 export function getPorts() {
-    const count = faker.random.arrayElement([1, 3]);
+    const count = faker.random.arrayElement([0, 1, 3]);
     let ports = [];
     for (let j = 1; j <= count; j++) {
       ports.push({

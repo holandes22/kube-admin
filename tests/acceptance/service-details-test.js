@@ -49,12 +49,12 @@ test('service details with no labels', function(assert) {
   page.visit(service);
 
   andThen(function() {
-    assert.notOk(page.details().labels());
+    assert.equal(page.details().labels(), 'No labels');
   });
 });
 
 test('service details with no ports', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
   let service = server.create('service');
   service.spec.ports = [];
   server.db.services.update(service.id, service);
@@ -62,6 +62,7 @@ test('service details with no ports', function(assert) {
   page.visit(service);
 
   andThen(function() {
+    assert.ok(page.isPortsSectionHidden());
     assert.ok(page.details().ports().isHidden());
   });
 });
