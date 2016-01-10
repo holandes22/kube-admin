@@ -1,9 +1,8 @@
-<h4 class="ui horizontal divider header">Details</h4>
 <table class="ui definition table">
   <tbody>
     <tr>
       <td>Name</td>
-      <td>{{model.metadata.name}}</td>
+      <td data-autoid="name">{{model.metadata.name}}</td>
     </tr>
     <tr>
       <td>Creation timestamp</td>
@@ -20,11 +19,10 @@
     {{#if model.metadata.labels}}
     <tr>
       <td>Labels</td>
-      <td>
+      <td data-autoid="labels">
         {{#each-in model.metadata.labels as |key value|}}
-          <div class="ui basic blue label">
-            {{key}}
-            <div class="detail">{{value}}</div>
+          <div class="ui basic violet label">
+            {{key}} = {{value}}
           </div>
         {{/each-in}}
       </td>
@@ -34,7 +32,7 @@
 </table>
 
 <h4 class="ui horizontal divider header"><i class="sitemap icon"></i>Ports</h4>
-<table class="ui table">
+<table class="ui table" data-autoid="ports">
   <thead>
     <tr>
       <th>Name</th>
