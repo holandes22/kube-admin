@@ -57,6 +57,10 @@ export default function() {
     return db.pods.insert(manifest);
   });
 
+  this.get('/namespaces/:namespace/pods/:name', function(db, request) {
+    return db.pods.find(idFromName(request.params.name));
+  });
+
   this.get('/services', function(db) {
     return { items: db.services };
   });

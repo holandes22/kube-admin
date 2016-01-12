@@ -1,0 +1,20 @@
+<table class="ui table" data-autoid="ports">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Port</th>
+      <th>Target port</th>
+      <th>Protocol</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each ports as |port|}}
+    <tr>
+      <td>{{port.name}}</td>
+      <td>{{port.port}}</td>
+      <td>{{port.targetPort}}</td>
+      <td>{{port.protocol}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
