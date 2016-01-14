@@ -24,6 +24,7 @@ export default Mirage.Factory.extend({
   status(i) {
     const hostIP = faker.internet.ip(),
           podIP = faker.internet.ip(),
+          phase = faker.random.arrayElement(['Pending', 'Running', 'Succeded', 'Failed', 'Unknown']),
           startTime = faker.date.recent();
     let containerStatuses = [];
     spec.containers.map((container) => {
@@ -39,7 +40,7 @@ export default Mirage.Factory.extend({
       });
 
     });
-    return { hostIP, podIP, startTime, containerStatuses };
+    return { hostIP, podIP, phase, startTime, containerStatuses };
   },
 
   spec() {

@@ -6,6 +6,10 @@ export default Mirage.Factory.extend({
     return getMetadata('replicationcontroller', i);
   },
 
+  status(i) {
+    return { replicas: i + 1, observedGeneration: i + 1 };
+  },
+
   spec() {
     return getSpec();
   }

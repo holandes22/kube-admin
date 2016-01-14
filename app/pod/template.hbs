@@ -13,6 +13,22 @@
       <td>{{model.metadata.creationTimestamp}}</td>
     </tr>
     <tr>
+      <td>Phase</td>
+      <td>{{model.status.phase}}</td>
+    </tr>
+    <tr>
+      <td>Start time</td>
+      <td>{{model.status.startTime}}</td>
+    </tr>
+    <tr>
+      <td>Host IP address</td>
+      <td>{{model.status.hostIP}}</td>
+    </tr>
+    <tr>
+      <td>Pod IP address</td>
+      <td>{{model.status.podIP}}</td>
+    </tr>
+    <tr>
       <td>Labels</td>
       <td data-autoid="labels">
         {{#each-in model.metadata.labels as |key value|}}

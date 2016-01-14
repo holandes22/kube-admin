@@ -94,6 +94,10 @@ export default function() {
     manifest.metadata.namespace = namespace;
     return db.replicationcontrollers.insert(manifest);
   });
+
+  this.get('/namespaces/:namespace/replicationcontrollers/:name', function(db, request) {
+    return db.replicationcontrollers.find(idFromName(request.params.name));
+  });
 }
 
 /*

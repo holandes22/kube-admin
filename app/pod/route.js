@@ -6,5 +6,4 @@ export default Ember.Route.extend({
   model(params) {
     return this.get('kubeClient').findRecord('pod', params.namespace, params.name);
   }
-
 });
