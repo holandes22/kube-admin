@@ -11,7 +11,8 @@ export default Ember.Component.extend({
 
   key: Ember.computed('state', function() {
     const state = this.get('state');
-    let retval = null;
+    let retval = 'None';
+
     Ember.$.each(['running', 'waiting', 'terminated'], (i, key) => {
       if (key in state) {
         retval = key;
@@ -22,16 +23,10 @@ export default Ember.Component.extend({
   }),
 
   title: Ember.computed('state', function() {
-    if (this.get('isLast') && Object.keys(this.get('state')).length === 0) {
-      return 'None';
-    }
     return this.get('key').capitalize();
   }),
 
-  className: Ember.computed('state', function() {
-    if (this.get('isLast')) {
-      return '';
-    }
+  className: Ember.computed(function() {
     switch (this.get('key')) {
       case 'running': return 'positive';
       case 'waiting': return 'warning';
@@ -41,9 +36,6 @@ export default Ember.Component.extend({
   }),
 
   details: Ember.computed('state', function() {
-    if (this.get('isLast')) {
-      return [];
-    }
     const key = this.get('key'),
           state = this.get('state');
 

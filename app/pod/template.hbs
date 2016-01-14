@@ -1,1 +1,29 @@
-{{spec-details spec=model.spec}}
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td data-autoid="name">{{model.metadata.name}}</td>
+    </tr>
+    <tr>
+      <td>Namespace</td>
+      <td>{{model.metadata.namespace}}</td>
+    </tr>
+    <tr>
+      <td>Creation timestamp</td>
+      <td>{{model.metadata.creationTimestamp}}</td>
+    </tr>
+    <tr>
+      <td>Labels</td>
+      <td data-autoid="labels">
+        {{#each-in model.metadata.labels as |key value|}}
+          <div class="ui basic violet label">
+            {{key}} = {{value}}
+          </div>
+        {{else}}
+          No labels
+        {{/each-in}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+{{spec-details spec=model.spec containerStatuses=model.status.containerStatuses}}

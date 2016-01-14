@@ -33,7 +33,7 @@ export function getSpec() {
     const name = faker.hacker.verb();
     containers.push({
       name,
-      image: `${name}:latest`,
+      image: `${name}:v${j / 2}`,
       ports: getPorts(),
       terminationMessagePath: '/dev/termination-log',
       imagePullPolicy: faker.random.arrayElement(['Always', 'Never', 'IfNotPresent'])

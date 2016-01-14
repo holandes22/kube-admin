@@ -1,3 +1,4 @@
+<h4 class="ui horizontal divider header"><i class="copy icon"></i>Spec</h4>
 <table class="ui definition table">
   <tbody>
     <tr>
@@ -25,10 +26,10 @@
 
 {{#if spec.containers}}
   <h4 class="ui horizontal divider header"><i class="cubes icon"></i>Containers</h4>
-  {{#each spec.containers as |container index|}}
+  {{#each containerList as |container index|}}
   <div class="ui raised segment">
-    <div class="ui equal width grid">
-      <div class="column">
+    <div class="ui grid">
+      <div class="ten wide column">
         <table class="ui definition table">
           <tbody>
             <tr>
@@ -43,14 +44,36 @@
               <td>Image pull policy</td>
               <td>{{container.imagePullPolicy}}</td>
             </tr>
+            {{#if container.status}}
             <tr>
-              <td>Termination message path</td>
-              <td>{{container.terminationMessagePath}}</td>
+              <td>Ready?</td>
+              <td data-autoid="container{{index}}-ready">
+                {{if container.status.ready "Yes" "No"}}
+              </td>
             </tr>
+            <tr>
+              <td>Restart count</td>
+              <td data-autoid="container{{index}}-restartCount">
+                {{container.status.restartCount}}
+              </td>
+            </tr>
+            <tr>
+              <td>Last state</td>
+              <td data-autoid="container{{index}}-lastState">
+                {{container-state state=container.status.lastState isLast=true}}
+              </td>
+            </tr>
+            <tr>
+              <td>State</td>
+              <td data-autoid="container{{index}}-state">
+                {{container-state state=container.status.state}}
+              </td>
+            </tr>
+            {{/if}}
           </tbody>
         </table>
       </div>
-      <div class="column" data-autoid="container{{index}}-ports">
+      <div class="six wide column" data-autoid="container{{index}}-ports">
       {{#if container.ports}}
         {{ports-details ports=container.ports}}
       {{else}}
@@ -60,6 +83,25 @@
       {{/if}}
       </div>
     </div>
+    {{#if container.status}}
+    <table class="ui definition table">
+      <tbody>
+        <tr>
+          <td>Image ID</td>
+          <td data-autoid="container{{index}}-imageID">
+            {{container.status.imageID}}
+          </td>
+        </tr>
+        <tr>
+          <td>Container ID</td>
+          <td data-autoid="container{{index}}-containerID">
+            {{container.status.containerID}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    {{/if}}
   </div>
+
   {{/each}}
 {{/if}}

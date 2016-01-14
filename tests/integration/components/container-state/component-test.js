@@ -50,9 +50,7 @@ test('it renders None for empty for last state', function(assert) {
   this.set('state', state);
   this.render(hbs`{{container-state state=state isLast=true}}`);
 
-  assert.equal(this.$('.header').text().trim(), 'None');
-  assert.equal(this.$('.ui.message').attr('class'), 'ui  message');
-  assert.equal(this.$('.list').children().length, 0);
+  assert.equal(this.$().text().trim(), 'None');
 });
 
 // TODO: how can we parametrize this state to avoid duplication??
@@ -61,9 +59,7 @@ test('it renders running for last state', function(assert) {
   this.set('state', state);
   this.render(hbs`{{container-state state=state isLast=true}}`);
 
-  assert.equal(this.$('.header').text().trim(), 'Running');
-  assert.equal(this.$('.ui.message').attr('class'), 'ui  message');
-  assert.equal(this.$('.list').children().length, 0);
+  assert.equal(this.$().text().trim(), 'Running');
 });
 
 test('it renders waiting for last state', function(assert) {
@@ -71,10 +67,7 @@ test('it renders waiting for last state', function(assert) {
   this.set('state', state);
   this.render(hbs`{{container-state state=state isLast=true}}`);
 
-  assert.equal(this.$('.header').text().trim(), 'Waiting');
-  assert.equal(this.$('.ui.message').attr('class'), 'ui  message');
-  assert.equal(this.$('.list').children().length, 0);
-
+  assert.equal(this.$().text().trim(), 'Waiting');
 });
 
 test('it renders terminated for last state', function(assert) {
@@ -82,7 +75,5 @@ test('it renders terminated for last state', function(assert) {
   this.set('state', state);
   this.render(hbs`{{container-state state=state isLast=true}}`);
 
-  assert.equal(this.$('.header').text().trim(), 'Terminated');
-  assert.equal(this.$('.ui.message').attr('class'), 'ui  message');
-  assert.equal(this.$('.list').children().length, 0);
+  assert.equal(this.$().text().trim(), 'Terminated');
 });

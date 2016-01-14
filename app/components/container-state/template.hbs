@@ -1,3 +1,6 @@
+{{#if isLast}}
+  {{title}}
+{{else}}
 <div class="ui {{className}} message">
   <div class="header">{{title}}</div>
   <ul class="list">
@@ -6,3 +9,4 @@
     {{/each}}
   </ul>
 </div>
+{{/if}}
