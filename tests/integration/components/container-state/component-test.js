@@ -44,3 +44,45 @@ test('it renders terminated', function(assert) {
   assert.equal(this.$('.list li:nth-child(4)').text().trim(), 'Finished at: 2016-01-13T06:29:31Z');
   assert.ok(this.$('.ui.message').hasClass('negative'));
 });
+
+test('it renders None for empty for last state', function(assert) {
+  let state = {};
+  this.set('state', state);
+  this.render(hbs`{{container-state state=state isLast=true}}`);
+
+  assert.equal(this.$('.header').text().trim(), 'None');
+  assert.equal(this.$('.ui.message').attr('class'), 'ui  message');
+  assert.equal(this.$('.list').children().length, 0);
+});
+
+// TODO: how can we parametrize this state to avoid duplication??
+test('it renders running for last state', function(assert) {
+  let state = { running: {} };
+  this.set('state', state);
+  this.render(hbs`{{container-state state=state isLast=true}}`);
+
+  assert.equal(this.$('.header').text().trim(), 'Running');
+  assert.equal(this.$('.ui.message').attr('class'), 'ui  message');
+  assert.equal(this.$('.list').children().length, 0);
+});
+
+test('it renders waiting for last state', function(assert) {
+  let state = { waiting: {} };
+  this.set('state', state);
+  this.render(hbs`{{container-state state=state isLast=true}}`);
+
+  assert.equal(this.$('.header').text().trim(), 'Waiting');
+  assert.equal(this.$('.ui.message').attr('class'), 'ui  message');
+  assert.equal(this.$('.list').children().length, 0);
+
+});
+
+test('it renders terminated for last state', function(assert) {
+  let state = { terminated: {} };
+  this.set('state', state);
+  this.render(hbs`{{container-state state=state isLast=true}}`);
+
+  assert.equal(this.$('.header').text().trim(), 'Terminated');
+  assert.equal(this.$('.ui.message').attr('class'), 'ui  message');
+  assert.equal(this.$('.list').children().length, 0);
+});
