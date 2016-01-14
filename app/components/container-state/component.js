@@ -23,6 +23,15 @@ export default Ember.Component.extend({
     return this.get('key').capitalize();
   }),
 
+  className: Ember.computed('state', function() {
+    switch (this.get('key')) {
+      case 'running': return 'positive';
+      case 'waiting': return 'warning';
+      case 'terminated': return 'negative';
+      default: return '';
+    }
+  }),
+
   details: Ember.computed('state', function() {
     const key = this.get('key'),
           state = this.get('state');

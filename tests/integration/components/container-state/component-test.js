@@ -12,6 +12,7 @@ test('it renders running', function(assert) {
 
   assert.equal(this.$('.header').text().trim(), 'Running');
   assert.equal(this.$('.list').first().text().trim(), 'Started at: 2016-01-13T06:29:31Z');
+  assert.ok(this.$('.ui.message').hasClass('positive'));
 });
 
 test('it renders waiting', function(assert) {
@@ -21,6 +22,7 @@ test('it renders waiting', function(assert) {
 
   assert.equal(this.$('.header').text().trim(), 'Waiting');
   assert.equal(this.$('.list').first().text().trim(), 'Reason: Because...');
+  assert.ok(this.$('.ui.message').hasClass('warning'));
 });
 
 test('it renders terminated', function(assert) {
@@ -40,4 +42,5 @@ test('it renders terminated', function(assert) {
   assert.equal(this.$('.list li:nth-child(2)').text().trim(), 'Exit code: 2');
   assert.equal(this.$('.list li:nth-child(3)').text().trim(), 'Started at: 2016-01-13T06:29:31Z');
   assert.equal(this.$('.list li:nth-child(4)').text().trim(), 'Finished at: 2016-01-13T06:29:31Z');
+  assert.ok(this.$('.ui.message').hasClass('negative'));
 });
