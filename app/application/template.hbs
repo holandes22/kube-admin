@@ -1,28 +1,30 @@
-<div class="ui fixed inverted menu">
-  <div class="ui container">
-    {{#link-to "index" class="item"}}
-      <h4 class="ui header"><span class="highlight-white">Kube</span><span class="highlight-blue">ADMIN</span></h4>
-    {{/link-to}}
-    {{link-to "Namespaces" "namespaces" class="item"}}
-    {{link-to "Pods" "pods" class="item"}}
-    {{link-to "ReplicationControllers" "replication-controllers" class="item"}}
-    {{link-to "Services" "services" class="item"}}
+<div class="ui visible inverted left vertical sidebar menu" id="sidebar-menu">
+  {{#link-to "index" class="item"}}
+    <h4 class="ui header"><span class="highlight-white">Kube</span><span class="highlight-blue">ADMIN</span></h4>
+  {{/link-to}}
+  <div class="item">
+    <div class="ui large disabled blue input">
+      <input type="text" placeholder="k8s..." value="http://localhostvvvvvvvvvvvvvvvvvvvvvvv:8080">
+    </div>
   </div>
+  {{link-to "Pods" "pods" class="item"}}
+  {{link-to "Services" "services" class="item"}}
+  {{link-to "Namespaces" "namespaces" class="item"}}
+  {{link-to "ReplicationControllers" "replication-controllers" class="item"}}
 </div>
-
-
-<div class="ui main container">
-
-  {{#each flashMessages.queue as |flash|}}
-    {{#flash-message flash=flash as |component flash|}}
-      {{#if flash.componentName}}
-        {{component flash.componentName content=flash.content}}
-      {{else}}
-        <div class="ui {{flash.type}} message">
-          <p>{{flash.message}}</p>
-        </div>
-      {{/if}}
-    {{/flash-message}}
-  {{/each}}
-  {{outlet}}
+<div class="pusher">
+  <div class="main">
+    {{#each flashMessages.queue as |flash|}}
+      {{#flash-message flash=flash as |component flash|}}
+        {{#if flash.componentName}}
+          {{component flash.componentName content=flash.content}}
+        {{else}}
+          <div class="ui {{flash.type}} message">
+            <p>{{flash.message}}</p>
+          </div>
+        {{/if}}
+      {{/flash-message}}
+    {{/each}}
+    {{outlet}}
+  </div>
 </div>
