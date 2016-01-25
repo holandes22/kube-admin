@@ -1,10 +1,14 @@
+import Ember from 'ember';
 import AjaxService from 'ember-ajax/services/ajax';
 import { AjaxError } from 'ember-ajax/errors';
 
 
 export default AjaxService.extend({
-  host: 'http://localhost:8080',
+  session: Ember.inject.service(),
 
+  host: Ember.computed(function() {
+    return this.get('session').host;
+  }),
   /**
    * We override this method from ember-ajax as the
    * payload contains all the info for the failed

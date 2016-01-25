@@ -1,17 +1,9 @@
-<div class="ui visible inverted left vertical sidebar menu" id="sidebar-menu">
-  {{#link-to "index" class="item"}}
-    <h4 class="ui header"><span class="highlight-white">Kube</span><span class="highlight-blue">ADMIN</span></h4>
-  {{/link-to}}
-  <div class="item">
-    <div class="ui large disabled blue input">
-      <input type="text" placeholder="k8s..." value="http://localhostvvvvvvvvvvvvvvvvvvvvvvv:8080">
-    </div>
-  </div>
+{{#navigation-menu}}
   {{link-to "Pods" "pods" class="item"}}
   {{link-to "Services" "services" class="item"}}
   {{link-to "Namespaces" "namespaces" class="item"}}
   {{link-to "ReplicationControllers" "replication-controllers" class="item"}}
-</div>
+{{/navigation-menu}}
 <div class="pusher">
   <div class="main">
     {{#each flashMessages.queue as |flash|}}
