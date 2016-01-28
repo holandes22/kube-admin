@@ -15,6 +15,7 @@ Router.map(function() {
   this.route('replication-controller', { path: 'namespaces/:namespace/replication-controllers/:name' });
   this.route('services');
   this.route('service', { path: 'namespaces/:namespace/services/:name' });
+  this.route('settings');
 });
 
 export default Router;

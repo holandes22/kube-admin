@@ -1,8 +1,24 @@
 {{#navigation-menu}}
-  {{link-to "Pods" "pods" class="item"}}
-  {{link-to "Services" "services" class="item"}}
-  {{link-to "Namespaces" "namespaces" class="item"}}
-  {{link-to "ReplicationControllers" "replication-controllers" class="item"}}
+  {{#link-to "settings" class="item"}}
+    <i class="setting icon"></i>
+    Settings
+  {{/link-to}}
+  {{#link-to "pods" class="item"}}
+    <i class="cube icon"></i>
+    Pods
+  {{/link-to}}
+  {{#link-to "services" class="item"}}
+    <i class="configure icon"></i>
+    Services
+  {{/link-to}}
+  {{#link-to "namespaces" class="item"}}
+    <i class="square outline icon"></i>
+    Namespaces
+  {{/link-to}}
+  {{#link-to "replication-controllers" class="item"}}
+    <i class="angle double up icon"></i>
+    ReplicationControllers
+  {{/link-to}}
 {{/navigation-menu}}
 <div class="pusher">
   <div class="main">
