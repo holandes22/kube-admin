@@ -1,0 +1,14 @@
+<div class="ui form {{if validations.isInvalid 'error' ''}}">
+    <div class="field">
+      <label>Kubernetes hostname or IP address</label>
+      <div class="ui input">
+        {{input value=host}}
+      </div>
+      {{#if validations.isInvalid}}
+      <div class="ui error message">
+        <p data-autoid="error-message">{{validations.messages}}</p>
+      </div>
+      {{/if}}
+    </div>
+    <div data-autoid="submit" class="ui {{if validations.isInvalid 'disabled' ''}} submit button" {{action "saveSettings"}}>Submit</div>
+</div>
