@@ -6,8 +6,8 @@ import { AjaxError } from 'ember-ajax/errors';
 export default AjaxService.extend({
   session: Ember.inject.service(),
 
-  host: Ember.computed(function() {
-    return this.get('session').host;
+  host: Ember.computed('session.host', function() {
+    return this.get('session').get('host');
   }),
   /**
    * We override this method from ember-ajax as the

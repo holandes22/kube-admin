@@ -1,0 +1,11 @@
+<div class="ui negative message">
+  <div class="header" data-autoid="title">{{title}}</div>
+  <p data-autoid="message">{{message}}</p>
+  <ul>
+  {{#each errors as |error index|}}
+    <li data-autoid="error{{index}}-detail">{{error.detail}}</li>
+    <li data-autoid="error{{index}}-status">{{error.status}}</li>
+    <li data-autoid="error{{index}}-title">{{error.title}}</li>
+  {{/each}}
+  </ul>
+</div>

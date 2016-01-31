@@ -27,7 +27,7 @@ export default function() {
 
   this.urlPrefix = 'http://localhost:8080';
   this.namespace = 'api/v1';
-  this.timing = 400;      // delay for each request, automatically set to 0 during testing
+  this.timing = 500;      // delay for each request, automatically set to 0 during testing
 
   this.get('/namespaces', function(db) {
     return { items: db.namespaces };

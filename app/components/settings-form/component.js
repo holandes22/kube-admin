@@ -20,7 +20,8 @@ export default Ember.Component.extend(Validations, {
 
   session: Ember.inject.service(),
 
-  didInsertElement() {
+  init() {
+    this._super(...arguments);
     this.set('host',  this.get('session').host);
   },
 
