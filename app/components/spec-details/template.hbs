@@ -1,10 +1,12 @@
 <h4 class="ui horizontal divider header"><i class="copy icon"></i>Spec</h4>
 <table class="ui definition table">
   <tbody>
+    {{#if spec.nodeName}}
     <tr>
       <td>Node name</td>
       <td data-autoid="node-name">{{spec.nodeName}}</td>
     </tr>
+    {{/if}}
     <tr>
       <td>Using host network?</td>
       <td>{{spec.hostNetwork}}</td>
@@ -75,7 +77,7 @@
       </div>
       <div class="six wide column" data-autoid="container{{index}}-ports">
       {{#if container.ports}}
-        {{ports-details ports=container.ports}}
+        {{ports-details ports=container.ports isContainer=true}}
       {{else}}
         <div class="ui segment">
           <p>No ports</p>

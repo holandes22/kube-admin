@@ -2,8 +2,13 @@
   <thead>
     <tr>
       <th>Name</th>
+      {{#if isContainer}}
+      <th>Host port</th>
+      <th>Container port</th>
+      {{else}}
       <th>Port</th>
       <th>Target port</th>
+      {{/if}}
       <th>Protocol</th>
     </tr>
   </thead>
@@ -11,8 +16,13 @@
     {{#each ports as |port|}}
     <tr>
       <td>{{port.name}}</td>
+      {{#if isContainer}}
+      <td>{{port.hostPort}}</td>
+      <td>{{port.containerPort}}</td>
+      {{else}}
       <td>{{port.port}}</td>
       <td>{{port.targetPort}}</td>
+      {{/if}}
       <td>{{port.protocol}}</td>
     </tr>
     {{/each}}
