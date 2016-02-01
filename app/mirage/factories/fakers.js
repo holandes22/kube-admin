@@ -1,17 +1,19 @@
 import { faker } from 'ember-cli-mirage';
 
 
-export function getPorts() {
+export function getPorts(isContainer=false) {
     const count = faker.random.arrayElement([0, 1, 3]);
     let ports = [];
     for (let j = 1; j <= count; j++) {
-      ports.push({
+      let obj = {
         name: faker.hacker.noun(),
         protocol: 'TCP',
-        port: faker.random.number(),
-        targetPort: faker.random.number()
-      });
+      };
+      obj[isContainer ? 'hostPort': 'port'] = faker.random.number();
+      obj[isContainer ? 'containerPort': 'targetPort'] = faker.random.number();
+      ports.push(obj);
     }
+    window.console.log(ports);
     return ports;
 }
 
@@ -26,7 +28,7 @@ export function getLabels() {
 }
 
 
-export function getSpec() {
+export function getSpec(isContainer=false) {
   let containers = [];
   const count = faker.random.arrayElement([1, 2, 5]);
   for (let j = 1; j <= count; j++) {
@@ -34,7 +36,7 @@ export function getSpec() {
     containers.push({
       name,
       image: `${name}:v${j / 2}`,
-      ports: getPorts(),
+      ports: getPorts(isContainer),
       terminationMessagePath: '/dev/termination-log',
       imagePullPolicy: faker.random.arrayElement(['Always', 'Never', 'IfNotPresent'])
     });

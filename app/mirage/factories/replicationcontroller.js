@@ -11,6 +11,7 @@ export default Mirage.Factory.extend({
   },
 
   spec() {
-    return getSpec();
+    let spec = getSpec(true);
+    return { template: { spec }  };
   }
 });

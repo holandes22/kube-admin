@@ -2,7 +2,7 @@ import Mirage from 'ember-cli-mirage';
 import { faker } from 'ember-cli-mirage';
 import { getMetadata, getSpec } from './fakers';
 
-let spec = getSpec();
+let spec = getSpec(true);
 
 let getState = function() {
   let type = faker.random.arrayElement(['running', 'waiting', 'terminated']),
