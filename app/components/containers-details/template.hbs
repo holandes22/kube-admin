@@ -2,64 +2,45 @@
   <h4 class="ui horizontal divider header"><i class="cubes icon"></i>Containers</h4>
   {{#each containerList as |container index|}}
   <div class="ui raised segment">
-    <div class="ui grid">
-      <div class="ten wide column">
-        <table class="ui definition table">
-          <tbody>
-            <tr>
-              <td>Name</td>
-              <td data-autoid="container{{index}}-name">{{container.name}}</td>
-            </tr>
-            <tr>
-              <td>Image</td>
-              <td>{{image-name name=container.image}}</td>
-            </tr>
-            <tr>
-              <td>Image pull policy</td>
-              <td>{{container.imagePullPolicy}}</td>
-            </tr>
-            {{#if container.status}}
-            <tr>
-              <td>Ready?</td>
-              <td data-autoid="container{{index}}-ready">
-                {{if container.status.ready "Yes" "No"}}
-              </td>
-            </tr>
-            <tr>
-              <td>Restart count</td>
-              <td data-autoid="container{{index}}-restartCount">
-                {{container.status.restartCount}}
-              </td>
-            </tr>
-            <tr>
-              <td>Last state</td>
-              <td data-autoid="container{{index}}-lastState">
-                {{container-state state=container.status.lastState isLast=true}}
-              </td>
-            </tr>
-            <tr>
-              <td>State</td>
-              <td data-autoid="container{{index}}-state">
-                {{container-state state=container.status.state}}
-              </td>
-            </tr>
-            {{/if}}
-          </tbody>
-        </table>
-      </div>
-      <div class="six wide column" data-autoid="container{{index}}-ports">
-      {{#if container.ports}}
-        {{ports-details ports=container.ports isContainer=true}}
-      {{else}}
-        <div class="ui segment">
-          <p>No ports</p>
-        </div>
-      {{/if}}
-      </div>
-    </div>
-    {{#if container.status}}
-    <table class="ui definition table">
+    <table class="ui fixed single line definition table">
       <tbody>
+        <tr>
+          <td class="three wide">Name</td>
+          <td data-autoid="container{{index}}-name">{{container.name}}</td>
+        </tr>
+        <tr>
+          <td>Image</td>
+          <td>{{image-name name=container.image}}</td>
+        </tr>
+        <tr>
+          <td>Image pull policy</td>
+          <td>{{container.imagePullPolicy}}</td>
+        </tr>
+        {{#if container.status}}
+        <tr>
+          <td>Ready?</td>
+          <td data-autoid="container{{index}}-ready">
+            {{if container.status.ready "Yes" "No"}}
+          </td>
+        </tr>
+        <tr>
+          <td>Restart count</td>
+          <td data-autoid="container{{index}}-restartCount">
+            {{container.status.restartCount}}
+          </td>
+        </tr>
+        <tr>
+          <td>Last state</td>
+          <td data-autoid="container{{index}}-lastState">
+            {{container-state state=container.status.lastState isLast=true}}
+          </td>
+        </tr>
+        <tr>
+          <td>State</td>
+          <td data-autoid="container{{index}}-state">
+            {{container-state state=container.status.state}}
+          </td>
+        </tr>
         <tr>
           <td>Image ID</td>
           <td data-autoid="container{{index}}-imageID">
@@ -72,9 +53,10 @@
             {{container.status.containerID}}
           </td>
         </tr>
+        {{/if}}
       </tbody>
     </table>
-    {{/if}}
+    {{ports-details ports=container.ports isContainer=true}}
   </div>
   {{/each}}
 {{/if}}

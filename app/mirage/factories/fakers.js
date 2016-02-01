@@ -13,7 +13,6 @@ export function getPorts(isContainer=false) {
       obj[isContainer ? 'containerPort': 'targetPort'] = faker.random.number();
       ports.push(obj);
     }
-    window.console.log(ports);
     return ports;
 }
 

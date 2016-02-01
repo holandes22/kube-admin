@@ -29,7 +29,7 @@ test('it renders with no ports in container', function(assert) {
   this.set('containers', containers);
   this.render(hbs`{{containers-details containers=containers}}`);
   assert.equal(this.$('[data-autoid=container0-name]').text().trim(), 'a');
-  assert.equal(this.$('[data-autoid=container0-ports]').text().trim(), 'No ports');
+  assert.equal(this.$('[data-autoid=container0-ports]').length, 0);
 });
 
 test('it renders with container statuses', function(assert) {
