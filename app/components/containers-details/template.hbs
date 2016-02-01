@@ -1,32 +1,4 @@
-<h4 class="ui horizontal divider header"><i class="copy icon"></i>Spec</h4>
-<table class="ui definition table">
-  <tbody>
-    {{#if spec.nodeName}}
-    <tr>
-      <td>Node name</td>
-      <td data-autoid="node-name">{{spec.nodeName}}</td>
-    </tr>
-    {{/if}}
-    <tr>
-      <td>Using host network?</td>
-      <td>{{spec.hostNetwork}}</td>
-    </tr>
-    <tr>
-      <td>Restart policy</td>
-      <td>{{spec.restartPolicy}}</td>
-    </tr>
-    <tr>
-      <td>DNS Policy</td>
-      <td>{{spec.dnsPolicy}}</td>
-    </tr>
-    <tr>
-      <td>Termination grace period (seconds)</td>
-      <td>{{spec.terminationGracePeriodSeconds}}</td>
-    </tr>
-  </tbody>
-</table>
-
-{{#if spec.containers}}
+{{#if containers}}
   <h4 class="ui horizontal divider header"><i class="cubes icon"></i>Containers</h4>
   {{#each containerList as |container index|}}
   <div class="ui raised segment">
@@ -104,6 +76,5 @@
     </table>
     {{/if}}
   </div>
-
   {{/each}}
 {{/if}}

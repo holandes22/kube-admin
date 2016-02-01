@@ -1,0 +1,64 @@
+<h4 class="ui horizontal divider header"><i class="copy icon"></i>Details</h4>
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td data-autoid="name">{{model.metadata.name}}</td>
+    </tr>
+    <tr>
+      <td>Namespace</td>
+      <td>{{model.metadata.namespace}}</td>
+    </tr>
+    <tr>
+      <td>Creation timestamp</td>
+      <td>{{model.metadata.creationTimestamp}}</td>
+    </tr>
+    <tr>
+      <td>Labels</td>
+      <td data-autoid="labels">
+        {{#each-in model.metadata.labels as |key value|}}
+          <div class="ui basic violet label">
+            {{key}} = {{value}}
+          </div>
+        {{else}}
+          No labels
+        {{/each-in}}
+      </td>
+    </tr>
+    {{#each detailList as |detail index|}}
+    <tr data-autoid="detail-container-{{index}}">
+      <td data-autoid="detail-label{{index}}">{{detail.label}}</td>
+      <td data-autoid="detail-value{{index}}">{{detail.value}}</td>
+    </tr>
+    {{/each}}
+
+    {{#if spec}}
+      {{#if spec.nodeName}}
+      <tr>
+        <td>Node name</td>
+        <td>{{spec.nodeName}}</td>
+      </tr>
+      {{/if}}
+      <tr>
+        <td>Using host network?</td>
+        {{#if spec.hostNetwork}}
+          <td>{{spec.hostNetwork}}</td>
+        {{else}}
+          <td>false</td>
+        {{/if}}
+      </tr>
+      <tr>
+        <td>Restart policy</td>
+        <td data-autoid="restartPolicy">{{spec.restartPolicy}}</td>
+      </tr>
+      <tr>
+        <td>DNS Policy</td>
+        <td>{{spec.dnsPolicy}}</td>
+      </tr>
+      <tr>
+        <td>Termination grace period (seconds)</td>
+        <td>{{spec.terminationGracePeriodSeconds}}</td>
+      </tr>
+    {{/if}}
+  </tbody>
+</table>

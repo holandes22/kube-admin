@@ -12,8 +12,8 @@ export default Ember.Component.extend({
     return retval;
   },
 
-  containerList: Ember.computed('spec', 'containerStatuses', function() {
-    let containers = this.get('spec').containers,
+  containerList: Ember.computed('containers', 'containerStatuses', function() {
+    let containers = this.get('containers'),
         containerStatuses = this.get('containerStatuses');
     if (!!containerStatuses) {
       containers.map((container) => {
