@@ -28,7 +28,7 @@ test('it shows relevant error message and link to settings if conn failed', func
   this.set('model', { errors, message: 'fake' });
   this.render(hbs`{{error-message error=model}}`);
   assert.equal(this.$('[data-autoid=title]').text(), 'A connection error occured while connecting to host');
-  assert.equal(this.$('[data-autoid=message]').text(), 'Please verify that Kubernetes is running and the hostname is properly configure properly');
+  assert.equal(this.$('[data-autoid=message]').text(), 'Please verify that Kubernetes is running and the hostname is properly configured');
   assert.equal(this.$('[data-autoid^=error]').length, 0);
 });
 

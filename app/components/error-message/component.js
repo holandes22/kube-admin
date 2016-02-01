@@ -45,7 +45,7 @@ export default Ember.Component.extend({
     if (!this.get('hasInfo')) {
       message = 'Please check the console for errors';
     } else if (this.get('isConnectionError')) {
-      message = 'Please verify that Kubernetes is running and the hostname is properly configure properly';
+      message = 'Please verify that Kubernetes is running and the hostname is properly configured';
     } else {
       message = this.get('error.message');
     }
