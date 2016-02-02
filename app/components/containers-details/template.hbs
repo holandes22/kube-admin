@@ -2,6 +2,11 @@
   <h4 class="ui horizontal divider header"><i class="cubes icon"></i>Containers</h4>
   {{#each containerList as |container index|}}
   <div class="ui raised segment">
+    {{#if container.status}}
+      <div data-autoid="container{{index}}-state">
+        {{container-state state=container.status.state}}
+      </div>
+    {{/if}}
     <table class="ui fixed single line definition table">
       <tbody>
         <tr>
@@ -33,12 +38,6 @@
           <td>Last state</td>
           <td data-autoid="container{{index}}-lastState">
             {{container-state state=container.status.lastState isLast=true}}
-          </td>
-        </tr>
-        <tr>
-          <td>State</td>
-          <td data-autoid="container{{index}}-state">
-            {{container-state state=container.status.state}}
           </td>
         </tr>
         <tr>
