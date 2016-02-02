@@ -6,11 +6,16 @@
       <div data-autoid="container{{index}}-state">
         {{container-state state=container.status.state}}
       </div>
+      <br>
+      {{#link-to 'pod.log' metadata.namespace metadata.name container.name class="ui black basic button"}}
+        <i class="file text icon"></i>
+        Logs
+      {{/link-to}}
     {{/if}}
     <table class="ui fixed single line definition table">
       <tbody>
         <tr>
-          <td class="three wide">Name</td>
+          <td class="two wide">Name</td>
           <td data-autoid="container{{index}}-name">{{container.name}}</td>
         </tr>
         <tr>

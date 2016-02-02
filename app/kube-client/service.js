@@ -38,6 +38,28 @@ export default Ember.Service.extend({
       headers: {'Content-Type': 'application/json'}
     };
     return this.get('ajax').post(url, data );
+  },
+
+  getLog(params, tailLines = 200) {
+    let queryParams = `?container=${params.container}&tailLines=${tailLines}`;
+    return this.get('ajax').request(
+      `/api/v1/namespaces/${params.namespace}/pods/${params.name}/log${queryParams}`
+    ).catch((error) => {
+      // TODO: this sucks.
+      // Since API returns a text response, jquery fails to parse
+      // the response and raises an error. Even when the AJAX suceeded
+      if (error.errors) {
+        throw error;
+      }
+      // For some reason API returns a not found container in content with status 200
+      // instead of a proper JSON error response
+      // TODO: handle a good response including the matching string
+      // TODO: handle case of no logs: Pod "data-collector-wbnwl" in namespace "default" : pod is not in 'Running', 'Succeeded' or 'Failed' state - State: "Pending"
+      if (error.includes('not found')) {
+        throw { message: error };
+      }
+      return { log: error };
+    });
   }
 
 });

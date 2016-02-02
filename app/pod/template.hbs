@@ -1,3 +1,3 @@
 {{resource-details model=model keys='status.phase,status.startTime,status.hostIP,status.podIP' spec=model.spec}}
 <br>
-{{containers-details containers=model.spec.containers containerStatuses=model.status.containerStatuses}}
+{{containers-details containers=model.spec.containers containerStatuses=model.status.containerStatuses metadata=model.metadata}}
