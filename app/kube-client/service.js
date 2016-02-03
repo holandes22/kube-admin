@@ -44,8 +44,10 @@ export default Ember.Service.extend({
     let queryParams = `?container=${params.container}&tailLines=${tailLines}`;
     return this.get('ajax').request(
       `/api/v1/namespaces/${params.namespace}/pods/${params.name}/log${queryParams}`
-    ).catch((error) => {
-      // TODO: this sucks.
+    ).then((log) => {
+      return { log };
+    }).catch((error) => {
+      // TODO: Open ticket: this sucks.
       // Since API returns a text response, jquery fails to parse
       // the response and raises an error. Even when the AJAX suceeded
       if (error.errors) {

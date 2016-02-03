@@ -57,6 +57,13 @@ export default function() {
     return db.pods.insert(manifest);
   });
 
+  this.get('/namespaces/:namespace/pods/:pod/log', function(db, request) {
+    let log = `line1\n\tline2`;
+    return log
+    // TODO: use same headers that API uses to cause simulate the response
+    //return new Mirage.Response(200, { 'Content-Type': 'text/plain'}, log);
+  });
+
   this.get('/namespaces/:namespace/pods/:name', function(db, request) {
     return db.pods.find(idFromName(request.params.name));
   });
