@@ -40,6 +40,20 @@ export default Ember.Service.extend({
     return this.get('ajax').post(url, data );
   },
 
+  getLogOrThrow(error) {
+    if (error.errors) {
+      throw error;
+    }
+    if (error.search(/^Container.*not found/) > -1) {
+      throw { message: error };
+    }
+    if (error.search(/pod is not in .*state/) > -1) {
+      return null;
+    }
+    return error;
+    //let message = 'Pod should be in Running, Succeeded or Failed state to get logs';
+  },
+
   getLog(params, tailLines = 200) {
     let queryParams = `?container=${params.container}&tailLines=${tailLines}`;
     return this.get('ajax').request(
@@ -47,20 +61,9 @@ export default Ember.Service.extend({
     ).then((log) => {
       return { log };
     }).catch((error) => {
-      // TODO: Open ticket: this sucks.
-      // Since API returns a text response, jquery fails to parse
-      // the response and raises an error. Even when the AJAX suceeded
-      if (error.errors) {
-        throw error;
-      }
-      // For some reason API returns a not found container in content with status 200
-      // instead of a proper JSON error response
-      // TODO: handle a good response including the matching string
-      // TODO: handle case of no logs: Pod "data-collector-wbnwl" in namespace "default" : pod is not in 'Running', 'Succeeded' or 'Failed' state - State: "Pending"
-      if (error.includes('not found')) {
-        throw { message: error };
-      }
-      return { log: error };
+      // TODO: Remove this ugly workaround.
+      // See #38 for an explanation on why we need this catch
+      return this.getLogOrThrow(error);
     });
   }
 

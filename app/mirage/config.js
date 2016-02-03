@@ -13,12 +13,12 @@ const idFromName = function(name) {
 const getStatusResponse = function(name) {
   const code = name.split('-')[1];
   let data = {
-    'code': code,
-    'kind': 'Status',
-    'message': `error msg ${code}`,
-    'metadata': {},
-    'reason': reasons[code],
-    'status': 'Failure'
+    code: code,
+    kind: 'Status',
+    message: `error msg ${code}`,
+    metadata: {},
+    reason: reasons[code],
+    status: 'Failure'
   };
   return new Mirage.Response(400, {}, data);
 };
@@ -57,9 +57,9 @@ export default function() {
     return db.pods.insert(manifest);
   });
 
-  this.get('/namespaces/:namespace/pods/:pod/log', function(db, request) {
+  this.get('/namespaces/:namespace/pods/:pod/log', function() {
     let log = `line1\n\tline2`;
-    return log
+    return log;
     // TODO: use same headers that API uses to cause simulate the response
     //return new Mirage.Response(200, { 'Content-Type': 'text/plain'}, log);
   });
