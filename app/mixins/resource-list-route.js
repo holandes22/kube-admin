@@ -16,7 +16,7 @@ export default Ember.Mixin.create({
         flashMessages.positive('Successfully created');
         this.refresh();
       }).catch((error) => {
-        flashMessages.negative(error.errors[0].title, { sticky: true });
+        flashMessages.negative(error.errors[0].detail, { sticky: true });
       });
     }
   }

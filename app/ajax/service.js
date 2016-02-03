@@ -18,8 +18,8 @@ export default AjaxService.extend({
     if (payload && typeof payload === 'object' && payload.kind && payload.kind === 'Status') {
       let errors = [{
         status: `${status}`,
-        title: payload.message,
-        detail: payload.reason
+        title: payload.status,
+        detail: payload.message
       }];
       return new AjaxError(errors);
     }
