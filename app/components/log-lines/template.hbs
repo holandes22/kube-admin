@@ -1,0 +1,11 @@
+{{#if log}}
+  <div class="ui inverted segment" data-autoid="log">
+    {{#each lines as |line|}}
+      <div>{{line}}</div>
+    {{/each}}
+  </div>
+{{else}}
+  <div data-autoid="message">
+    Got null response from API. Maybe Pod is in Pending phase?
+  </div>
+{{/if}}
