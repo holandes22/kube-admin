@@ -1,7 +1,11 @@
 {{resource-details model=model keys='status.phase,status.startTime,status.hostIP,status.podIP' spec=model.spec}}
 {{#if model.status.containerStatuses}}
   <h4 class="ui horizontal divider header"><i class="cubes icon"></i>Containers</h4>
-  {{pod-containers containers=model.spec.containers containerStatuses=model.status.containerStatuses metadata=model.metadata}}
+  {{pod-containers
+      pod=model.metadata.name
+      namespace=model.metadata.namespace
+      containers=model.spec.containers
+      containerStatuses=model.status.containerStatuses}}
 {{else}}
 <div class="ui icon info message">
   <i class="info circle icon"></i>

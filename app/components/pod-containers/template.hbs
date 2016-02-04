@@ -17,8 +17,8 @@
     </div>
     <div class="extra content">
       <div class="ui two buttons">
-        <div class="ui basic black button">Details</div>
-        <div class="ui basic black button">Log</div>
+        {{link-to 'Details' 'pod.container' namespace pod item.container.name class="ui basic black button"}}
+        {{link-to 'Log' 'pod.log' namespace pod item.container.name class="ui basic black button"}}
       </div>
     </div>
   </div>
