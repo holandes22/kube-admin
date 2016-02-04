@@ -33,6 +33,7 @@ test('it renders with no ports', function(assert) {
   assert.equal(this.$('[data-autoid=lastState]').text().trim(), 'None');
   assert.equal(this.$('[data-autoid=ports]').text().trim(), '');
 });
+
 test('it renders with ports', function(assert) {
   assert.expect(11);
   let container = {
@@ -67,4 +68,20 @@ test('it renders with ports', function(assert) {
   assert.ok(this.$('[data-autoid=ports]').text().search('10999'));
   assert.ok(this.$('[data-autoid=ports]').text().search('12888'));
   assert.ok(this.$('[data-autoid=ports]').text().search('p1'));
+});
+
+test('it shows a warning message if no status', function(assert) {
+  let container = {
+    name: 'foo',
+    image: 'bar',
+    ports: []
+  };
+  const podName = 'fakePod';
+  this.set('pod', podName);
+  this.set('container', container);
+  this.set('status', null);
+  this.render(hbs`{{container-details container=container status=status namespace='default' pod=pod}}`);
+  const expected = `No status available for container ${container.name}. Maybe Pod ${podName} is in Pending/Unknown state?`;
+  assert.equal(this.$('[data-autoid=warning-message]').text().trim(), expected);
+
 });
