@@ -1,0 +1,27 @@
+<div class="ui cards">
+  {{#each items as |item|}}
+  <div class="card">
+    <div class="content">
+      <i class="right floated cube icon"></i>
+      <div class="header">
+        {{item.container.name}}
+      </div>
+    </div>
+    <div class="content">
+      <div class="ui basic {{item.readyColor}} label">
+        {{item.readyLabel}}
+      </div>
+      <div class="ui basic {{item.stateColor}} label">
+          {{item.stateLabel}}
+      </div>
+    </div>
+    <div class="extra content">
+      <div class="ui two buttons">
+        <div class="ui basic black button">Details</div>
+        <div class="ui basic black button">Log</div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+

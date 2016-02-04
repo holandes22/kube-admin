@@ -1,3 +1,14 @@
 {{resource-details model=model keys='status.phase,status.startTime,status.hostIP,status.podIP' spec=model.spec}}
-<br>
-{{containers-details containers=model.spec.containers containerStatuses=model.status.containerStatuses metadata=model.metadata}}
+{{#if model.status.containerStatuses}}
+  <h4 class="ui horizontal divider header"><i class="cubes icon"></i>Containers</h4>
+  {{pod-containers containers=model.spec.containers containerStatuses=model.status.containerStatuses metadata=model.metadata}}
+{{else}}
+<div class="ui icon info message">
+  <i class="info circle icon"></i>
+  <div class="content">
+    <div class="header">
+      Cannot show container statuses at the moment since Pod phase is {{model.status.phase}}
+    </div>
+  </div>
+</div>
+{{/if}}

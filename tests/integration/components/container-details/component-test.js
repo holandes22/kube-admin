@@ -1,6 +1,5 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { getPorts } from 'kube-admin/mirage/factories/fakers';
 
 
 moduleForComponent('container-details', 'Integration | Component | container details', {
@@ -32,7 +31,7 @@ test('it renders with no ports', function(assert) {
   assert.ok(this.$('[data-autoid=state]').text().search('Running'));
   assert.ok(this.$('[data-autoid=state]').text().search('Started at: 2016-01-13T06:29:31Z'));
   assert.equal(this.$('[data-autoid=lastState]').text().trim(), 'None');
-  assert.equal(this.$('[data-autoid=ports]').text(), '');
+  assert.equal(this.$('[data-autoid=ports]').text().trim(), '');
 });
 test('it renders with ports', function(assert) {
   assert.expect(11);

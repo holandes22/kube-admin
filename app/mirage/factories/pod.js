@@ -27,19 +27,20 @@ export default Mirage.Factory.extend({
           phase = faker.random.arrayElement(['Pending', 'Running', 'Succeded', 'Failed', 'Unknown']),
           startTime = faker.date.recent();
     let containerStatuses = [];
-    spec.containers.map((container) => {
-      containerStatuses.push({
-        name: container.name,
-        image: container.image,
-        ready: faker.random.boolean(),
-        restartCount: i,
-        imageID: `docker://a1c7d02c4d861248b9a6ef93447cbc5cdd25a5ef2a037e8402bbd85ccca5350${i}`,
-        containerID: `docker://23a0ee935e18956cf7b15ec9211cb709a4422068f211702c038df383f0605e7${i}`,
-        state: getState(),
-        lastState: getState()
+    if (phase !== 'Pending' && phase !== 'Unknown') {
+      spec.containers.map((container) => {
+        containerStatuses.push({
+          name: container.name,
+          image: container.image,
+          ready: faker.random.boolean(),
+          restartCount: i,
+          imageID: `docker://a1c7d02c4d861248b9a6ef93447cbc5cdd25a5ef2a037e8402bbd85ccca5350${i}`,
+          containerID: `docker://23a0ee935e18956cf7b15ec9211cb709a4422068f211702c038df383f0605e7${i}`,
+          state: getState(),
+          lastState: getState()
+        });
       });
-
-    });
+    }
     return { hostIP, podIP, phase, startTime, containerStatuses };
   },
 
