@@ -1,0 +1,53 @@
+<div data-autoid="state">
+  {{container-state state=status.state}}
+</div>
+<br>
+<table class="ui fixed single line definition table">
+  <tbody>
+    <tr>
+      <td class="two wide">Name</td>
+      <td data-autoid="name">{{container.name}}</td>
+    </tr>
+    <tr>
+      <td>Image</td>
+      <td>{{image-name name=container.image}}</td>
+    </tr>
+    <tr>
+      <td>Image pull policy</td>
+      <td>{{container.imagePullPolicy}}</td>
+    </tr>
+    <tr>
+      <td>Ready?</td>
+      <td data-autoid="ready">
+        {{if status.ready "Yes" "No"}}
+      </td>
+    </tr>
+    <tr>
+      <td>Restart count</td>
+      <td data-autoid="restartCount">
+        {{status.restartCount}}
+      </td>
+    </tr>
+    <tr>
+      <td>Last state</td>
+      <td data-autoid="lastState">
+        {{container-state state=status.lastState isLast=true}}
+      </td>
+    </tr>
+    <tr>
+      <td>Image ID</td>
+      <td data-autoid="imageID">
+        {{status.imageID}}
+      </td>
+    </tr>
+    <tr>
+      <td>Container ID</td>
+      <td data-autoid="containerID">
+        {{status.containerID}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div data-autoid="ports">
+{{ports-details ports=container.ports isContainer=true}}
+</div>
