@@ -1,0 +1,23 @@
+{{#if containers}}
+  {{#each containers as |container index|}}
+  <div class="ui raised segment">
+    <table class="ui fixed single line definition table">
+      <tbody>
+        <tr>
+          <td class="three wide">Name</td>
+          <td data-autoid="container{{index}}-name">{{container.name}}</td>
+        </tr>
+        <tr>
+          <td>Image</td>
+          <td>{{image-name name=container.image}}</td>
+        </tr>
+        <tr>
+          <td>Image pull policy</td>
+          <td>{{container.imagePullPolicy}}</td>
+        </tr>
+      </tbody>
+    </table>
+    {{ports-details ports=container.ports isContainer=true}}
+  </div>
+  {{/each}}
+{{/if}}
