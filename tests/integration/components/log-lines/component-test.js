@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -32,8 +33,10 @@ test('it shows log with several lines', function(assert) {
 });
 
 test('it preserves log format', function(assert) {
-  this.set('log', 'First line\nSecond log line');
+  let log = `First line
+  Second`;
+  this.set('log', log);
   this.render(hbs`{{log-lines log=log}}`);
-  assert.equal(this.$('[data-autoid=log] div:nth-child(1)').text().trim(), 'First&nbsp;line');
-  assert.equal(this.$('[data-autoid=log] div:nth-child(2)').text().trim(), 'Second&nbsp;log&nbsp;line');
+  assert.equal(this.$('[data-autoid=log] div:nth-child(1)').html(), "First&nbsp;line");
+  assert.equal(this.$('[data-autoid=log] div:nth-child(2)').html(), '&nbsp;&nbsp;Second');
 });

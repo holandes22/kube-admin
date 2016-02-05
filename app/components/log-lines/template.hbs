@@ -5,7 +5,9 @@
     {{/each}}
   </div>
 {{else}}
-  <div data-autoid="message">
-    Got null response from API. Maybe Pod is in Pending phase?
+  <div class="ui warning message">
+    <div class="header" data-autoid="message">
+      Got null response from API. Maybe Pod is in Pending phase?
+    </div>
   </div>
 {{/if}}

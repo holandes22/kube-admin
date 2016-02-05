@@ -44,14 +44,16 @@ export default Ember.Service.extend({
     if (error.errors) {
       throw error;
     }
-    if (error.search(/^Container.*not found/) > -1) {
-      throw { message: error };
+    if (!error.search) {
+      return null;
     }
     if (error.search(/pod is not in .*state/) > -1) {
       return null;
     }
+    if (error.search && error.search(/^Container.*not found/) > -1) {
+      throw { message: error };
+    }
     return error;
-    //let message = 'Pod should be in Running, Succeeded or Failed state to get logs';
   },
 
   getLog(params, tailLines = 200) {
@@ -59,7 +61,7 @@ export default Ember.Service.extend({
     return this.get('ajax').request(
       `/api/v1/namespaces/${params.namespace}/pods/${params.name}/log${queryParams}`
     ).then((log) => {
-      return { log };
+      return log;
     }).catch((error) => {
       // TODO: Remove this ugly workaround.
       // See #38 for an explanation on why we need this catch
