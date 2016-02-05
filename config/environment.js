@@ -21,6 +21,16 @@ module.exports = function(environment) {
     flashMessageDefaults: {
       timeout: 4000,
       types: ['positive', 'negative']
+    },
+
+    contentSecurityPolicy: {
+      'default-src': ["'none'"],
+      'script-src':  ["'self'"],
+      'font-src':    ["'self'", "https://fonts.gstatic.com", "data:"],
+      'connect-src': ["'self'"],
+      'img-src':     ["'self'"],
+      'style-src':   ["'self'", "http://fonts.googleapis.com"],
+      'media-src':   ["'self'"]
     }
   };
 
