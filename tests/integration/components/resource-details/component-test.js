@@ -14,6 +14,22 @@ test('it renders with no extra details and no spec', function(assert) {
   assert.equal(this.$('[data-autoid^=detail-container]').length, 0);
 });
 
+test('it renders with extra details, no spec and block', function(assert) {
+  let metadata = getMetadata();
+  let stats = { keyOne: 'key1' };
+  this.set('model', { metadata, stats });
+  this.render(hbs`
+    {{#resource-details model=model keys='stats.keyOne'}}
+      <div data-autoid="extra-block">
+        template block text
+      </div>
+    {{/resource-details}}
+  `);
+  assert.equal(this.$('[data-autoid=name]').text(), metadata.name);
+  assert.equal(this.$('[data-autoid=extra-block]').text().trim(), 'template block text');
+  assert.equal(this.$('[data-autoid^=detail-container]').length, 1);
+});
+
 test('it renders with extra details and no spec', function(assert) {
   let metadata = getMetadata();
   let stats = {
