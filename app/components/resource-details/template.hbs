@@ -25,14 +25,14 @@
         {{/each-in}}
       </td>
     </tr>
+    {{yield}}
+
     {{#each detailList as |detail index|}}
     <tr data-autoid="detail-container-{{index}}">
       <td data-autoid="detail-label{{index}}">{{detail.label}}</td>
       <td data-autoid="detail-value{{index}}">{{detail.value}}</td>
     </tr>
     {{/each}}
-
-    {{yield}}
 
     {{#if spec}}
       {{#if spec.nodeName}}
