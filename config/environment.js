@@ -20,7 +20,7 @@ module.exports = function(environment) {
 
     flashMessageDefaults: {
       timeout: 4000,
-      types: ['positive', 'negative']
+      types: ['1', '2', '3', '4', '5', '6', 'positive', 'negative']
     },
 
     contentSecurityPolicy: {
