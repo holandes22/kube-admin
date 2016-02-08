@@ -1,0 +1,9 @@
+<div class="ui action input {{if validations.isInvalid 'error' ''}}">
+  {{input type="number" value=replicas min="0"}}
+  <button class="ui button {{if validations.isInvalid 'disabled' ''}}" {{action "action"}}>Scale</button>
+</div>
+{{#if validations.isInvalid}}
+<div class="ui left pointing red basic label">
+  {{validations.messages}}
+</div>
+{{/if}}

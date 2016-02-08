@@ -1,3 +1,14 @@
-{{resource-details model=model keys='status.replicas,status.observedGeneration' spec=model.spec.template.spec}}
+{{#resource-details
+  model=model
+  keys='status.observedGeneration'
+  spec=model.spec.template.spec}}
+  <tr>
+    <td>Replicas</td>
+    <td>
+      {{rc-scale-input replicas=model.status.replicas}}
+    </td>
+  </tr>
+
+{{/resource-details}}
 <h4 class="ui horizontal divider header"><i class="cubes icon"></i>Containers</h4>
 {{rc-containers containers=model.spec.template.spec.containers}}
