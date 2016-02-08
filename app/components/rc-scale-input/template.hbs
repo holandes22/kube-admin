@@ -1,5 +1,5 @@
 <div class="ui action input {{if validations.isInvalid 'error' ''}}">
-  {{input type="number" value=replicas min="0"}}
+  {{input type="number" value=value min="0"}}
   <button class="ui button {{if validations.isInvalid 'disabled' ''}}" {{action "action"}}>Scale</button>
 </div>
 {{#if validations.isInvalid}}

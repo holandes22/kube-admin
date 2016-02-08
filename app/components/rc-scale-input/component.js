@@ -6,7 +6,7 @@ import {
 
 
 const Validations = buildValidations({
-  replicas: [
+  value: [
     validator('presence', true),
     validator('number', {
       allowString: true,
@@ -17,9 +17,13 @@ const Validations = buildValidations({
 });
 
 export default Ember.Component.extend(Validations, {
+  value: Ember.computed('replicas', function() {
+    return this.get('replicas');
+  }),
+
   actions: {
     action() {
-      this.get('attrs').action(this.get('replicas'));
+      this.get('attrs').action(this.get('value'));
     }
   }
 });
