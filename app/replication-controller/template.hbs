@@ -5,7 +5,7 @@
   <tr>
     <td>Replicas</td>
     <td>
-      {{rc-scale-input replicas=model.status.replicas}}
+      {{rc-scale-input replicas=model.status.replicas action=(route-action "scale")}}
     </td>
   </tr>
 
