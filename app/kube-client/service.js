@@ -24,7 +24,7 @@ export default Ember.Service.extend({
     return this.findAll(kind);
   },
 
-  create(manifest) {
+  getNamespacedUrl(manifest) {
     let url = '/api/v1/namespaces';
     if ( manifest.kind !== 'Namespace') {
       let namespace = 'default';
@@ -33,11 +33,26 @@ export default Ember.Service.extend({
       }
       url = `${url}/${namespace}/${manifest.kind.toLowerCase()}s`;
     }
+    return url;
+  },
+
+  create(manifest) {
+    let url = this.getNamespacedUrl(manifest);
     let data = {
       data: JSON.stringify(manifest),
       headers: {'Content-Type': 'application/json'}
     };
     return this.get('ajax').post(url, data );
+  },
+
+  replace(manifest) {
+    let url = this.getNamespacedUrl(manifest);
+    let data = {
+      data: JSON.stringify(manifest),
+      headers: {'Content-Type': 'application/json'}
+    };
+    url = `${url}/${manifest.metadata.name}`;
+    return this.get('ajax').put(url, data );
   },
 
   getLogOrThrow(error) {

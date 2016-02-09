@@ -17,6 +17,8 @@ let getState = function() {
 };
 
 export default Mirage.Factory.extend({
+  kind: 'Pod',
+
   metadata(i) {
     return getMetadata('pod', i);
   },

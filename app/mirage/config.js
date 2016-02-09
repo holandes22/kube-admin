@@ -105,6 +105,10 @@ export default function() {
   this.get('/namespaces/:namespace/replicationcontrollers/:name', function(db, request) {
     return db.replicationcontrollers.find(idFromName(request.params.name));
   });
+
+  this.put('/namespaces/:namespace/replicationcontrollers/:name', function(db, request) {
+    return JSON.parse(request.requestBody);
+  });
 }
 
 /*
