@@ -21,6 +21,12 @@ export default Ember.Component.extend(Validations, {
     return this.get('replicas');
   }),
 
+  valueUnchanged: Ember.computed('value', function() {
+    return this.get('value').toString() === this.get('replicas').toString();
+  }),
+
+  shouldDisable: Ember.computed.or('validations.isInvalid', 'valueUnchanged'),
+
   actions: {
     action() {
       this.get('attrs').action(this.get('value'));
