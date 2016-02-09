@@ -1,6 +1,6 @@
 import Mirage from 'ember-cli-mirage';
 import { faker } from 'ember-cli-mirage';
-import { getMetadata, getSpec } from './fakers';
+import { getId, getMetadata, getSpec } from './fakers';
 
 let spec = getSpec(true);
 
@@ -19,8 +19,12 @@ let getState = function() {
 export default Mirage.Factory.extend({
   kind: 'Pod',
 
+  id(i) {
+    return getId(this.kind, i);
+  },
+
   metadata(i) {
-    return getMetadata('pod', i);
+    return getMetadata(this.kind, i);
   },
 
   status(i) {

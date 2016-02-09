@@ -6,9 +6,6 @@ const reasons = {
   '422': 'Invalid'
 };
 
-const idFromName = function(name) {
-  return parseInt(name.split('-')[1]) + 1;
-};
 
 const getStatusResponse = function(name) {
   const code = name.split('-')[1];
@@ -65,7 +62,7 @@ export default function() {
   });
 
   this.get('/namespaces/:namespace/pods/:name', function(db, request) {
-    return db.pods.find(idFromName(request.params.name));
+    return db.pods.find(request.params.name);
   });
 
   this.get('/services', function(db) {
@@ -84,7 +81,7 @@ export default function() {
   });
 
   this.get('/namespaces/:namespace/services/:name', function(db, request) {
-    return db.services.find(idFromName(request.params.name));
+    return db.services.find(request.params.name);
   });
 
   this.get('/replicationcontrollers', function(db) {
@@ -98,12 +95,14 @@ export default function() {
     if ( name.includes('error') ) {
       return getStatusResponse(name);
     }
+    manifest.id = manifest.metadata.name;
     manifest.metadata.namespace = namespace;
+    manifest.status = { replicas: 1 };
     return db.replicationcontrollers.insert(manifest);
   });
 
   this.get('/namespaces/:namespace/replicationcontrollers/:name', function(db, request) {
-    return db.replicationcontrollers.find(idFromName(request.params.name));
+    return db.replicationcontrollers.find(request.params.name);
   });
 
   this.put('/namespaces/:namespace/replicationcontrollers/:name', function(db, request) {

@@ -51,8 +51,13 @@ export function getSpec(isContainer=false) {
 }
 
 
-export function getMetadata(kind, index) {
-  const name =  `${kind}-${index}`,
+export function getId(kind, index) {
+  return `${kind.toLowerCase()}-${index}`;
+}
+
+
+export function getMetadata(kind = 'namespace', index = 0) {
+  const name =  getId(kind, index),
         namespace = 'default',
         creationTimestamp = faker.date.recent(),
         labels = getLabels();

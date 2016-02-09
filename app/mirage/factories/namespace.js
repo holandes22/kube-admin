@@ -1,11 +1,15 @@
-import Mirage, { faker } from 'ember-cli-mirage';
+import Mirage from 'ember-cli-mirage';
+import { getId, getMetadata } from './fakers';
 
 export default Mirage.Factory.extend({
   kind: 'Namespace',
 
+  id(i) {
+    return getId(this.kind, i);
+  },
+
   metadata(i) {
-    const name =  `ns${i}`,
-          creationTimestamp = faker.date.recent();
-    return { name, creationTimestamp };
-  }
+    return getMetadata(this.kind, i);
+  },
+
 });

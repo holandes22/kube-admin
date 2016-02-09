@@ -1,9 +1,13 @@
 import Mirage from 'ember-cli-mirage';
 import { faker } from 'ember-cli-mirage';
-import { getMetadata, getPorts } from './fakers';
+import { getId, getMetadata, getPorts } from './fakers';
 
 export default Mirage.Factory.extend({
   kind: 'Service',
+
+  id(i) {
+    return getId(this.kind, i);
+  },
 
   metadata(i) {
     return getMetadata('service', i);
