@@ -17,6 +17,6 @@ export default Mirage.Factory.extend({
   },
 
   spec() {
-    return { template: { spec: getSpec(true) }  };
+    return { replicas: 1, template: { spec: getSpec(true) }  };
   }
 });

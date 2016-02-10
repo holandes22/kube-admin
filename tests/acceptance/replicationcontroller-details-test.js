@@ -12,7 +12,7 @@ test('it scales a replication controller', function(assert) {
 
   let done = assert.async();
   server.put(`/namespaces/default/replicationcontrollers/${rc.metadata.name}`, (db, request) => {
-    let replicas = JSON.parse(request.requestBody).status.replicas;
+    let replicas = JSON.parse(request.requestBody).spec.replicas;
     assert.equal(replicas, newReplicas);
     done();
   });

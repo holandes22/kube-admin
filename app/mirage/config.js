@@ -50,6 +50,7 @@ export default function() {
     if ( name.includes('error') ) {
       return getStatusResponse(name);
     }
+    manifest.id = name;
     manifest.metadata.namespace = namespace;
     return db.pods.insert(manifest);
   });
@@ -76,6 +77,7 @@ export default function() {
     if ( name.includes('error') ) {
       return getStatusResponse(name);
     }
+    manifest.id = name;
     manifest.metadata.namespace = namespace;
     return db.services.insert(manifest);
   });
@@ -98,6 +100,7 @@ export default function() {
     manifest.id = manifest.metadata.name;
     manifest.metadata.namespace = namespace;
     manifest.status = { replicas: 1 };
+    manifest.spec.replicas = 2;
     return db.replicationcontrollers.insert(manifest);
   });
 

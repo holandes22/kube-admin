@@ -5,7 +5,13 @@
   <tr>
     <td>Replicas</td>
     <td data-id="rc-scale">
-      {{rc-scale-input replicas=model.status.replicas action=(route-action "scale")}}
+      {{rc-scale-input replicas=model.spec.replicas action=(route-action "scale")}}
+    </td>
+  </tr>
+  <tr>
+    <td>Current replicas (status)</td>
+    <td>
+      {{model.status.replicas}}
     </td>
   </tr>
 {{/resource-details}}

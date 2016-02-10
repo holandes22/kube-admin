@@ -11,14 +11,14 @@ export default Ember.Route.extend({
   actions: {
     scale(replicas) {
       let manifest = this.modelFor('replicationController');
-      window.console.log(`Got RC scale request from ${manifest.status.replicas} to ${replicas}`);
-      if (replicas !== manifest.status.replicas) {
+      if (replicas !== manifest.spec.replicas) {
         let flashMessages = this.get('flashMessages'),
             newManifest = Ember.$.extend(true, {}, manifest);
-        newManifest.status.replicas = replicas;
+        newManifest.spec.replicas = parseInt(replicas);
         this.get('kubeClient').replace(newManifest).then(() => {
-          let message = 'A request to scale was sent. Change might not be reflected right away.';
-          flashMessages.info(message, { sticky: true });
+          let message = 'A request to scale was sent succesfully.';
+          flashMessages.info(message, { timeout: 5000 });
+          this.refresh();
         }).catch((error) => {
           flashMessages.negative(error.errors[0].detail, { sticky: true });
         });
