@@ -39,16 +39,17 @@ test('it shows an error if no file and removes it if file is selected', function
   });
 });
 
-test('it shows an error if cannot parse text as JSON', function(assert) {
+test('it shows an error if cannot parse text as YAML nor JSON', function(assert) {
   assert.expect(1);
   this.render(hbs`{{manifest-file-input}}`);
-  let event = makeFileInputEvent();
+  let badYamlString = 'a: v\n\t- bb';
+  let event = makeFileInputEvent(badYamlString);
   this.$('input:file').trigger(event);
   return wait().then(() => {
     this.$('[data-autoid=submit-file]').click();
     assert.equal(
       this.$('[data-autoid=error-message]').text(),
-      'Selected file must be valid JSON'
+      'Selected file must be valid JSON or YAML'
     );
   });
 });
@@ -67,7 +68,7 @@ test('it shows an error if manifest has no kind', function(assert) {
 test('it shows an error if kind in manifest is not the specified', function(assert) {
   assert.expect(1);
   this.render(hbs`{{manifest-file-input kind="Fake"}}`);
-  let event = makeFileInputEvent('{"kind": "Pod"}');
+  let event = makeFileInputEvent('kind: Pod');
   this.$('input:file').trigger(event);
   return wait().then(() => {
     this.$('[data-autoid=submit-file]').click();
@@ -87,4 +88,18 @@ test('it sets file name in input and passes up the manifest', function(assert) {
     assert.equal(this.$('[data-autoid=filename]').val(), 'fake_name');
     this.$('[data-autoid=submit-file]').click();
   });
+});
+
+
+test('it shows error message if empty string', function(assert) {
+  assert.expect(2);
+  this.render(hbs`{{manifest-file-input kind="Pod"}}`);
+  let event = makeFileInputEvent('');
+  this.$('input:file').trigger(event);
+  return wait().then(() => {
+    this.$('[data-autoid=submit-file]').click();
+    assert.equal(this.$('[data-autoid=error-message]').text(), 'Bad manifest (No kind attribute)');
+    assert.ok(this.$('button').hasClass('disabled'));
+  });
+
 });
