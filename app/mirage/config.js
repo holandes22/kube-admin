@@ -26,6 +26,10 @@ export default function() {
   this.namespace = 'api/v1';
   this.timing = 150;      // delay for each request, automatically set to 0 during testing
 
+  this.get('/', function() {
+    return { version: 'v1' };
+  });
+
   this.get('/namespaces', function(db) {
     return { items: db.namespaces };
   });

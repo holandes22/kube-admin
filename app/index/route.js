@@ -10,6 +10,7 @@ export default Ember.Route.extend({
           services: client.findAll('service'),
           replicationcontrollers: client.findAll('replicationcontroller'),
         };
+
     return Ember.RSVP.hash(promises);
   },
 });

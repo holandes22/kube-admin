@@ -4,6 +4,17 @@ export default Ember.Service.extend({
 
   ajax: Ember.inject.service(),
 
+  canConnect() {
+    return this.get('ajax').request('/api/v1/').then(() => {
+      return true;
+    }).catch((error) => {
+      if (error.errors && error.errors[0].status === '0') {
+        return false;
+      }
+      return true;
+    });
+  },
+
   findAll(kind) {
     let kinds = Ember.Inflector.inflector.pluralize(kind);
     return this.get('ajax').request(`/api/v1/${kinds}`);
