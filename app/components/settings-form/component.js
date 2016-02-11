@@ -12,22 +12,36 @@ const Validations = buildValidations({
       regex: /^https?:\/\/.*$/i,
       message: 'Host should include protocol (http:// or https://)'
     })
+  ],
+  tailLines: [
+    validator('presence', true),
+    validator('number', {
+      allowString: true,
+      integer: true,
+      positive: true
+    })
   ]
 });
 
 export default Ember.Component.extend(Validations, {
   host: null,
 
+  keyMap: {
+    tailLines: 'log.tailLines'
+  },
+
   session: Ember.inject.service(),
 
   init() {
     this._super(...arguments);
     this.set('host',  this.get('session').host);
+    this.set('tailLines',  this.get('session').log.tailLines);
   },
 
   actions: {
-    saveSettings() {
-      this.get('session').set('host', this.get('host'));
+    saveSetting(key) {
+      let sessionKey = this.keyMap[key] ? this.keyMap[key] : key;
+      this.get('session').set(sessionKey, this.get(key));
     }
   }
 });
