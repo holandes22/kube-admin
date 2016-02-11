@@ -3,6 +3,7 @@ import {
   validator,
   buildValidations
 } from 'ember-cp-validations';
+import Cookies from 'ember-cli-js-cookie';
 
 
 const Validations = buildValidations({
@@ -40,8 +41,10 @@ export default Ember.Component.extend(Validations, {
 
   actions: {
     saveSetting(key) {
-      let sessionKey = this.keyMap[key] ? this.keyMap[key] : key;
-      this.get('session').set(sessionKey, this.get(key));
+      let sessionKey = this.keyMap[key] ? this.keyMap[key] : key,
+          value = this.get(key);
+      Cookies.set(sessionKey, value);
+      this.get('session').set(sessionKey, value);
     }
   }
 });
