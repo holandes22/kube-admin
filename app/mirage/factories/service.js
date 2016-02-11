@@ -1,17 +1,9 @@
-import Mirage from 'ember-cli-mirage';
 import { faker } from 'ember-cli-mirage';
-import { getId, getMetadata, getPorts } from './fakers';
+import { getPorts } from './fakers';
+import ResourceBaseFactory from './resource-base';
 
-export default Mirage.Factory.extend({
+export default ResourceBaseFactory.extend({
   kind: 'Service',
-
-  id(i) {
-    return getId(this.kind, i);
-  },
-
-  metadata(i) {
-    return getMetadata('service', i);
-  },
 
   spec() {
     const clusterIP = faker.internet.ip(),

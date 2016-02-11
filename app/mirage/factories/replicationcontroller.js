@@ -1,16 +1,8 @@
-import Mirage from 'ember-cli-mirage';
-import { getId, getMetadata, getSpec } from './fakers';
+import { getSpec } from './fakers';
+import ResourceBaseFactory from './resource-base';
 
-export default Mirage.Factory.extend({
+export default ResourceBaseFactory.extend({
   kind: 'ReplicationController',
-
-  id(i) {
-    return getId(this.kind, i);
-  },
-
-  metadata(i) {
-    return getMetadata(this.kind, i);
-  },
 
   status(i) {
     return { replicas: i + 1, observedGeneration: i + 1 };

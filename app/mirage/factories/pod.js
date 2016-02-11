@@ -1,6 +1,6 @@
-import Mirage from 'ember-cli-mirage';
 import { faker } from 'ember-cli-mirage';
-import { getId, getMetadata, getSpec } from './fakers';
+import { getSpec } from './fakers';
+import ResourceBaseFactory from './resource-base';
 
 let spec = getSpec(true);
 
@@ -16,16 +16,8 @@ let getState = function() {
   return state;
 };
 
-export default Mirage.Factory.extend({
+export default ResourceBaseFactory.extend({
   kind: 'Pod',
-
-  id(i) {
-    return getId(this.kind, i);
-  },
-
-  metadata(i) {
-    return getMetadata(this.kind, i);
-  },
 
   status(i) {
     const hostIP = faker.internet.ip(),
