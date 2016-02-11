@@ -10,7 +10,7 @@ export default Ember.Service.extend({
   init() {
     let defaults = [
       { key: 'host', value: 'http://localhost:8080' },
-      { key: 'log.tailLines', value: 300 },
+      { key: 'log.tailLines', value: 500 },
     ];
 
     Ember.$.each(defaults, (index, obj) => {

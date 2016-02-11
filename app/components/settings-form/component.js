@@ -19,7 +19,8 @@ const Validations = buildValidations({
     validator('number', {
       allowString: true,
       integer: true,
-      positive: true
+      positive: true,
+      lte: 5000
     })
   ]
 });
