@@ -24,7 +24,7 @@ test('it renders actionLabel', function(assert) {
 });
 
 test('it shows an error if no file and removes it if file is selected', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
   this.render(hbs`{{manifest-file-input kind="Pod"}}`);
   this.$('[data-autoid=submit-file]').click();
   assert.equal(
@@ -36,6 +36,7 @@ test('it shows an error if no file and removes it if file is selected', function
   this.$('input:file').trigger(event);
   return wait().then(() => {
     assert.equal(this.$('[data-autoid=error-message]').text(), '');
+    assert.equal(this.$('[data-autoid=preview]').text(), '{"kind": "Pod"}');
   });
 });
 

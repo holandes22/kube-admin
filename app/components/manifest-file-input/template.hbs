@@ -6,8 +6,19 @@
     <i class="add square icon"></i>{{if actionLabel actionLabel "Go"}}
   </button>
 </div>
+
 {{#if (and selectionMade validations.isInvalid)}}
 <div class="ui negative small message">
   <div data-autoid="error-message">{{validations.messages}}</div>
+</div>
+{{/if}}
+
+{{#if selectionMade}}
+<p></p>
+<div class="ui form">
+  <div class="field">
+    <label>File content</label>
+    <textarea rows="4" readonly data-autoid="preview">{{fileInfo.text}}</textarea>
+  </div>
 </div>
 {{/if}}
