@@ -14,7 +14,7 @@ moduleForComponent('settings-form', 'Integration | Component | settings form', {
   integration: true,
   beforeEach: function () {
     this.register('service:session', sessionStub);
-    this.inject.service('session', { as: 'session' });
+    this.inject.service('session');
   }
 });
 

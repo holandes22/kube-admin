@@ -5,20 +5,18 @@ import Cookies from 'ember-cli-js-cookie';
 export default Ember.Service.extend({
   host: 'http://localhost:8080',
 
-  log: {},
+  log: {
+    tailLines: 500
+  },
 
   init() {
-    let defaults = [
-      { key: 'host', value: 'http://localhost:8080' },
-      { key: 'log.tailLines', value: 500 },
-    ];
+    this._super(...arguments);
+    let keys = ['host', 'log.tailLines'];
 
-    Ember.$.each(defaults, (index, obj) => {
-      let cookie = Cookies.get(obj.key);
+    Ember.$.each(keys, (_, key) => {
+      let cookie = Cookies.get(key);
       if (cookie) {
-        this.set(obj.key, cookie);
-      } else {
-        this.set(obj.key, obj.value);
+        this.set(key, cookie);
       }
     });
   }
