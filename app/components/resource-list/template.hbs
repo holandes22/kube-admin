@@ -9,18 +9,16 @@
     </tr>
   </thead>
   <tbody>
-      {{#each resources as |resource index|}}
-      <tr data-autoid="container{{index}}">
-        {{#if (eq kind "namespace")}}
-        <td data-autoid="name{{index}}">{{link-to resource.metadata.name "namespaces.namespace" resource.metadata.name class="header"}}</td>
-        {{else}}
-        <td data-autoid="name{{index}}">{{link-to resource.metadata.name kind resource.metadata.namespace resource.metadata.name class="header"}}</td>
-        {{/if}}
-        {{#if (not-eq kind "namespace")}}
-          <td data-autoid="namespace{{index}}">{{resource.metadata.namespace}}</td>
-        {{/if}}
-        <td data-autoid="timestamp{{index}}">{{moment-from-now resource.metadata.creationTimestamp allow-empty=true}} ({{resource.metadata.creationTimestamp}})</td>
-      </tr>
-      {{/each}}
+    {{#each resourceList as |resource index|}}
+    <tr data-autoid="container{{index}}">
+      {{#if (eq kind "namespace")}}
+      <td data-autoid="name{{index}}">{{link-to resource.metadata.name "namespaces.namespace" resource.metadata.name class="header"}}</td>
+      {{else}}
+      <td data-autoid="name{{index}}">{{link-to resource.metadata.name kind resource.metadata.namespace resource.metadata.name class="header"}}</td>
+      <td data-autoid="namespace{{index}}">{{resource.metadata.namespace}}</td>
+      {{/if}}
+      <td data-autoid="timestamp{{index}}">{{moment-from-now resource.metadata.creationTimestamp allow-empty=true}} ({{resource.metadata.creationTimestamp}})</td>
+    </tr>
+    {{/each}}
   </tbody>
 </table>
