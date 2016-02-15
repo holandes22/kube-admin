@@ -8,10 +8,10 @@ test('it scales a replication controller', function(assert) {
   assert.expect(1);
   let rc = server.create('replicationcontroller'),
       newReplicas = rc.status.replicas + 2,
-      url = `/namespaces/default/replication-controllers/${rc.metadata.name}`;
+      url = `/namespaces/${rc.metadata.namespace}/replication-controllers/${rc.metadata.name}`;
 
   let done = assert.async();
-  server.put(`/namespaces/default/replicationcontrollers/${rc.metadata.name}`, (db, request) => {
+  server.put(`/namespaces/${rc.metadata.namespace}/replicationcontrollers/${rc.metadata.name}`, (db, request) => {
     let replicas = JSON.parse(request.requestBody).spec.replicas;
     assert.equal(replicas, newReplicas);
     done();
@@ -26,8 +26,8 @@ test('it shows error message if scale request failed', function(assert) {
   assert.expect(2);
   let rc = server.create('replicationcontroller'),
       newReplicas = rc.status.replicas + 2,
-      url = `/namespaces/default/replication-controllers/${rc.metadata.name}`;
-  server.put(`/namespaces/default/replicationcontrollers/${rc.metadata.name}`, () => {
+      url = `/namespaces/${rc.metadata.namespace}/replication-controllers/${rc.metadata.name}`;
+  server.put(`/namespaces/${rc.metadata.namespace}/replicationcontrollers/${rc.metadata.name}`, () => {
     let data = {
       code: 406,
       kind: 'Status',
