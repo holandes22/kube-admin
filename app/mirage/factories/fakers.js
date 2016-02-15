@@ -58,7 +58,7 @@ export function getId(kind, index) {
 
 export function getMetadata(kind = 'namespace', index = 0) {
   const name =  getId(kind, index),
-        namespace = faker.random.arrayElement(['default', 'system', 'app']),
+        namespace = faker.random.arrayElement(['default', 'system', 'app-namespace']),
         creationTimestamp = faker.date.recent(),
         labels = getLabels();
   return { name, namespace, creationTimestamp, labels };
