@@ -2,6 +2,7 @@
 @import "ember-power-select";
 
 $sidebar-width: 260px;
+$main-content-padding: 10px;
 
 .ember-power-select-trigger-multiple-input {
   line-height: 2;
@@ -24,7 +25,10 @@ $sidebar-width: 260px;
 }
 
 .main {
-  padding-right: $sidebar-width;
+  padding-top: $main-content-padding;
+  padding-bottom: $main-content-padding;
+  padding-left: $main-content-padding;
+  padding-right: $sidebar-width + $main-content-padding;
 }
 
 .position-relative {
