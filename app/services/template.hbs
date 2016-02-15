@@ -1,9 +1,7 @@
-<div class="ui segment">
-  <div class="ui form">
-    <div class="field">
-      <label>Manifest file</label>
-      {{manifest-file-input kind="Service" actionLabel="Create" action=(route-action "create")}}
-    </div>
+<div class="ui form">
+  <div class="field">
+    <label>Manifest file</label>
+    {{manifest-file-input kind="Service" actionLabel="Create" action=(route-action "create")}}
   </div>
 </div>
 {{resource-list resources=model.items kind="service"}}
