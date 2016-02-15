@@ -4,7 +4,7 @@
   {{#power-select-multiple
     options=namespaces
     selected=selectedNamespaces
-    onchange=(action (mut selectedNamespaces))
+    onchange=(action "changeFilters")
     as |namespace|
   }}
     {{namespace}}

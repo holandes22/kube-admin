@@ -9,6 +9,8 @@ export default Ember.Service.extend({
     tailLines: 500
   },
 
+  filters: {},
+
   init() {
     this._super(...arguments);
     let keys = ['host', 'log.tailLines'];
