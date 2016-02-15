@@ -1,3 +1,6 @@
+{{resource-list-filter
+    resources=model.items
+    filters=session.filters.replication-controller}}
 <div class="ui container">
   <div class="ui form">
     <div class="field">
@@ -6,4 +9,7 @@
     </div>
   </div>
 </div>
-{{resource-list resources=model.items kind="replication-controller"}}
+{{resource-list
+    resources=model.items
+    filters=session.filters.replication-controller
+    kind="replication-controller"}}
