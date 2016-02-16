@@ -1,4 +1,12 @@
-{{#navigation-menu}}
+<div class="ui visible inverted left vertical sidebar menu">
+  {{#link-to "index" class="item"}}
+    <h4 class="ui header"><span class="highlight-white">Kube</span><span class="highlight-blue">ADMIN</span></h4>
+  {{/link-to}}
+  <div class="item">
+    <div class="ui inverted blue segment" data-autoid="host-menu">
+      {{session.host}}
+    </div>
+  </div>
   {{#link-to "settings" class="item"}}
     <i class="setting icon"></i>
     Settings
@@ -15,7 +23,7 @@
     <i class="angle double up icon"></i>
     ReplicationControllers
   {{/link-to}}
-{{/navigation-menu}}
+</div>
 <div class="pusher">
   <div class="main">
     {{#each flashMessages.queue as |flash|}}
