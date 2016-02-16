@@ -15,7 +15,7 @@ const makeFileInputEvent = function(content='fake_content', type='application/js
 
 test('it renders no actionLabel', function(assert) {
   this.render(hbs`{{manifest-file-input}}`);
-  assert.equal(this.$().text().trim(), 'Go');
+  assert.equal(this.$().text().trim(), 'Create');
 });
 
 test('it renders actionLabel', function(assert) {

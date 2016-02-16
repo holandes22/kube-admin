@@ -18,6 +18,8 @@ const Validations = buildValidations({
 
 export default Ember.Component.extend(Validations, {
 
+  actionLabel: 'Create',
+
   fileInfo: null,
 
   // Hide validations at start
