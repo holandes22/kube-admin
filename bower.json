@@ -7,7 +7,6 @@
     "ember-qunit-notifications": "0.1.0",
     "jquery": "2.1.4",
     "semantic-ui": "~2.1.8",
-    "es5-shim": "^4.0.5",
     "pretender": "~0.10.1",
     "lodash": "~3.7.0",
     "Faker": "~3.0.0",
