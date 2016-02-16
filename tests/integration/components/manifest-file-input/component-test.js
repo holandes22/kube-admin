@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
-import makeEventOptions from '../../../../helpers/make-event-options';
+import makeEventOptions from '../../../helpers/make-event-options';
 
 moduleForComponent('manifest-file-input', 'Integration | Component | manifest file input', {
   integration: true
