@@ -30,19 +30,6 @@ export default function() {
     return { version: 'v1' };
   });
 
-  this.get('/namespaces', function(db) {
-    return { items: db.namespaces };
-  });
-
-  this.post('/namespaces', function(db, request) {
-    const manifest = JSON.parse(request.requestBody),
-          name = manifest.metadata.name;
-    if ( name.includes('error') ) {
-      return getStatusResponse(name);
-    }
-    return db.namespaces.insert(manifest);
-  });
-
   this.get('/pods', function(db) {
     return { items: db.pods };
   });
