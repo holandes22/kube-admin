@@ -1,20 +1,13 @@
-<div class="ui segment">
-  <div class="ui two column grid">
-    <div class="column">
-    {{#power-select-multiple
-      options=options
-      selected=filters
-      onchange=(action "changeFilters")
-      as |namespace|
-    }}
-      {{namespace}}
-    {{/power-select-multiple}}
-    </div>
-    <div class="column">
-      <button {{action "clearFilters"}} class="ui red basic tiny button {{if filters '' 'disabled'}}">
-        <i class="remove icon"></i>
-        Clear filters
-      </button>
-    </div>
-  </div>
-</div>
+{{yield (hash
+  input=(
+   component "resource-list-filter/input"
+   resources=resources
+   filters=filters
+   action=(action "changeFilters")
+  )
+  clear=(
+    component "resource-list-filter/clear"
+    filters=filters
+    action=(action "clearFilters")
+  )
+)}}

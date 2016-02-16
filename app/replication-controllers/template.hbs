@@ -1,6 +1,12 @@
-{{resource-list-filter
+{{#resource-list-filter
     resources=model.items
-    filters=session.filters.replication-controller}}
+    filters=session.filters.replication-controller as |list|}}
+
+    {{list.input}}
+    {{list.clear}}
+
+{{/resource-list-filter}}
+
 <div class="ui container">
   <div class="ui form">
     <div class="field">
