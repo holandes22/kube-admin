@@ -1,20 +1,21 @@
-{{#resource-list-filter
-    resources=model.items
-    filters=session.filters.replication-controller as |list|}}
-
-    {{list.input}}
-    {{list.clear}}
-
-{{/resource-list-filter}}
-
-<div class="ui container">
-  <div class="ui form">
-    <div class="field">
-      <label>Manifest file</label>
-      {{manifest-file-input kind="ReplicationController" actionLabel="Create" action=(route-action "create")}}
-    </div>
+<div class="ui form">
+  <div class="field">
+    <label>Manifest file</label>
+    {{manifest-file-input kind="ReplicationController" actionLabel="Create" action=(route-action "create")}}
   </div>
 </div>
+
+<P></p>
+
+{{#resource-list-filter
+    resources=model.items
+    filters=session.filters.replication-controller as |filter|}}
+    <div class="ui two column centered grid">
+      <div class="ten wide column">{{filter.input}}</div>
+      <div class="three wide column">{{filter.clear}}</div>
+    </div>
+{{/resource-list-filter}}
+
 {{resource-list
     resources=model.items
     filters=session.filters.replication-controller
