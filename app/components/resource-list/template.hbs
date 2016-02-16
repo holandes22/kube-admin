@@ -1,22 +1,4 @@
-<br>
-<div class="ui two column grid">
-  <div class="column">
-  {{#power-select-multiple
-    options=namespaces
-    selected=selectedNamespaces
-    onchange=(action "changeFilters")
-    as |namespace|
-  }}
-    {{namespace}}
-  {{/power-select-multiple}}
-  </div>
-  <div class="column">
-    <button {{action "clearFilters"}} class="ui red basic tiny button {{if selectedNamespaces '' 'disabled'}}">
-      <i class="remove icon"></i>
-      Clear filters
-    </button>
-  </div>
-</div>
+<p></p>
 
 <table class="ui compact celled definition table">
   <thead class="full-width">

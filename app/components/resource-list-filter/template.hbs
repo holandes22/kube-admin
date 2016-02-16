@@ -1,0 +1,13 @@
+{{yield (hash
+  input=(
+   component "resource-list-filter/input"
+   resources=resources
+   filters=filters
+   action=(action "changeFilters")
+  )
+  clear=(
+    component "resource-list-filter/clear"
+    filters=filters
+    action=(action "clearFilters")
+  )
+)}}
