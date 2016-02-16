@@ -3,20 +3,15 @@
                   key='host'
                   setting=host
                   validations=validations
-                  action=(action 'saveSetting')
-                  }}
-  <div class="field">
-    {{test-connection}}
-  </div>
-</div>
+                  action=(action 'saveSetting')}}
 
-<div class="ui divider"></div>
+  <div class="field">{{test-connection}}</div>
 
-<div class="ui form">
+  <div class="ui divider"></div>
+
   {{setting-field label='Number of lines to show from pod logs'
                   key='tailLines'
                   setting=tailLines
                   validations=validations
-                  action=(action 'saveSetting')
-                  }}
+                  action=(action 'saveSetting')}}
 </div>
