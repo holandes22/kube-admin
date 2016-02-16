@@ -38,13 +38,3 @@ test('it renders resource list', function(assert) {
   assert.ok(this.$('[data-autoid=timestamp0]'));
   assert.equal(this.$('[data-autoid^=namespace]').length, 5);
 });
-
-test('it does not render namespace if kind namespace', function(assert) {
-  assert.expect(2);
-  const model = makeResourceObjects(5);
-  this.set('model', model);
-  this.render(hbs`{{resource-list kind='namespace' resources=model}}`);
-  const containers = this.$('[data-autoid^=container]');
-  assert.equal(containers.length, 5);
-  assert.equal(this.$('[data-autoid^=namespace]').length, 0);
-});

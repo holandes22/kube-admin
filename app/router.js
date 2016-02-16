@@ -6,9 +6,6 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('namespaces', function() {
-    this.route('namespace', { path: ':namespace' });
-  });
   this.route('pods');
   this.route('pod', { path: 'namespaces/:namespace/pods/:name' });
   this.route('pod.container', { path: 'namespaces/:namespace/pods/:name/containers/:container' });
