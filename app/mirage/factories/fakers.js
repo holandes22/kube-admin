@@ -2,9 +2,8 @@ import { faker } from 'ember-cli-mirage';
 
 
 export function getPorts(isContainer=false) {
-  const count = faker.random.arrayElement([0, 1, 3]);
   let ports = [];
-  for (let j = 1; j <= count; j++) {
+  for (let j = 1; j <= faker.random.number({ max: 3 }); j++) {
     let obj = {
       name: faker.hacker.noun(),
       protocol: 'TCP',
@@ -18,9 +17,8 @@ export function getPorts(isContainer=false) {
 
 
 export function getLabels() {
-  const count = faker.random.arrayElement([0, 1, 2, 3]);
   let labels = {};
-  for (let j = 1; j <= count; j++) {
+  for (let j = 1; j <= faker.random.number({ max: 3 }); j++) {
     labels[faker.hacker.verb()] = faker.hacker.noun();
   }
   return labels;
@@ -29,8 +27,7 @@ export function getLabels() {
 
 export function getSpec(isContainer=false) {
   let containers = [];
-  const count = faker.random.arrayElement([1, 2, 5]);
-  for (let j = 1; j <= count; j++) {
+  for (let j = 1; j <= faker.random.number({ min: 1, max: 5 }); j++) {
     const name = faker.hacker.verb();
     containers.push({
       name,
