@@ -30,6 +30,10 @@ export default function() {
     return { version: 'v1' };
   });
 
+  this.get('/nodes', function(db) {
+    return { items: db.nodes };
+  });
+
   this.get('/pods', function(db) {
     return { items: db.pods };
   });
