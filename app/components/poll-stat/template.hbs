@@ -1,13 +1,34 @@
-<div class="ui card">
-  <div class="content">
-    <i class="right floated square outline icon"></i>
-    <div class="header">
-      {{node}}
+<div class="ui grid">
+  <div class="two column row">
+    <div class="left floated column">
+      <h2 class="ui header">{{node}}</h2>
     </div>
+    <div class="right aligned column">
+    {{#if poll.isRunning}}
+      <div class="ui basic teal button" {{action 'cancel'}}>
+      <i class="remove icon"></i>
+      Cancel polling
+      </div>
+    {{else}}
+    <div class="ui basic teal button" {{action poll.perform}}>
+      <i class="signal icon"></i>
+      Continue polling
+    </div>
+    {{/if}}
+    </div>
+  </div>
+
+  <div class="two column row">
+    <div class="column">
     {{usage-bar total=stat.cpu.total usage=stat.cpu.usage label="CPU" color="blue" showActivity=poll.isRunning}}
-
+    </div>
+    <div class="column">
     {{usage-bar total=stat.memory.total usage=stat.memory.usage label="Memory" color="orange" showActivity=poll.isRunning}}
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="column">
     {{#if stat.filesystems}}
       <div class="ui inverted segment">
       {{#each stat.filesystems as |fs|}}
@@ -15,16 +36,7 @@
       {{/each}}
       </div>
     {{/if}}
-  </div>
-  {{#if poll.isRunning}}
-    <div class="ui bottom attached teal button" {{action 'cancel'}}>
-    <i class="remove icon"></i>
-    Cancel polling
     </div>
-  {{else}}
-  <div class="ui bottom attached teal button" {{action poll.perform}}>
-    <i class="signal icon"></i>
-    Continue polling
   </div>
-  {{/if}}
+
 </div>
