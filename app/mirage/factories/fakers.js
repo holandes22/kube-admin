@@ -1,5 +1,6 @@
 import { faker } from 'ember-cli-mirage';
 
+export const CONTAINER_MEMORY = 8023089152;
 
 export function getPorts(isContainer=false) {
   let ports = [];
@@ -59,4 +60,14 @@ export function getMetadata(kind = 'namespace', index = 0) {
         creationTimestamp = faker.date.recent(),
         labels = getLabels();
   return { name, namespace, creationTimestamp, labels };
+}
+
+
+export function getCAdvisorContainerSpec() {
+  return {
+    creation_time: faker.date.recent(),
+    memory: {
+      limit: CONTAINER_MEMORY
+      }
+    };
 }

@@ -1,4 +1,5 @@
 import Mirage from 'ember-cli-mirage';
+import { getCAdvisorContainerSpec } from 'kube-admin/mirage/factories/fakers';
 
 const reasons = {
   '400': 'BadRequest',
@@ -32,6 +33,18 @@ export default function() {
 
   this.get('/nodes', function(db) {
     return { items: db.nodes };
+  });
+
+  this.get('/proxy/nodes/:node\::port/api/v1.0/containers', function(db) {
+    // Randomize order of stats to we simulate movement in dashboard
+    let stats = db.stats.sort(function() {
+      return 0.5 - Math.random();
+    });
+    return {
+      name: '/',
+      spec: getCAdvisorContainerSpec(),
+      stats
+    };
   });
 
   this.get('/pods', function(db) {
