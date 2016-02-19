@@ -24,3 +24,9 @@
     </div>
   </div>
 </div>
+
+<div class="ui two stackable cards">
+{{#each model.nodes.items as |node|}}
+  {{poll-stat node=node.metadata.name}}
+{{/each}}
+</div>

@@ -8,11 +8,10 @@ let getFilesystem = function() {
       'docker-8:1-7083173-pool',
       '/dev/mapper/docker-8:1-7083173-8f138ecc6e8dc81a08b9fee2f256415e96de06a8eb4ab247bde008932fc53c3a'
   ]);
-  let min = 12589133824, max = 1258913382400;
+  let min = 1024, max = 1024 * 20;
   let capacity = faker.random.number({ min, max }),
-      usage = faker.random.number({ min, max }),
-      available = faker.random.number({ min, max });
-  return { device, capacity, usage, available };
+      usage = faker.random.number({ min, max: capacity });
+  return { device, capacity, usage };
 };
 
 
@@ -23,20 +22,14 @@ export default Mirage.Factory.extend({
   },
 
   cpu() {
-    let max = 15668881748990,
+    let total = faker.random.number({ min: 2000, max: 1000000 }),
         cpus = faker.random.number({ min:1, max: 10 }),
         per_cpu_usage = [],
-        max_per_cpu = max / cpus;
-    for (let i = 1; i <= cpus; i++) {
-      per_cpu_usage.push(faker.random.number({ max: max_per_cpu }));
+        maxPerCpu = Math.round(total / cpus);
+    for (let i = 1; i < cpus; i++) {
+      per_cpu_usage.push(faker.random.number({ max: maxPerCpu }));
     }
-
-    return {
-      usage: {
-        total: faker.random.number({ max }),
-        per_cpu_usage
-      }
-    };
+    return { usage: { total, per_cpu_usage } };
   },
 
   memory() {

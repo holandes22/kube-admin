@@ -7,6 +7,7 @@ export default Ember.Route.extend({
     let client = this.get('kubeClient'),
         promises = {
           pods: client.findAll('pod'),
+          nodes: client.findAll('nodes'),
           services: client.findAll('service'),
           replicationcontrollers: client.findAll('replicationcontroller'),
         };
