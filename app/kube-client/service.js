@@ -97,7 +97,7 @@ export default Ember.Service.extend({
 
   getStat(node) {
     let port = '4194';
-    let url = `/api/v1/proxy/nodes/${node}:${port}'/api/v1.0/containers`;
+    let url = `/api/v1/proxy/nodes/${node}:${port}/api/v1.0/containers`;
     return this.get('ajax').request(url);
   }
 
