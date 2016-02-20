@@ -21,8 +21,17 @@ export default Ember.Component.extend({
         usage = total - stat.cpu.usage.per_cpu_usage.reduce((a, b) => a + b, 0),
         cpu = { total, usage },
         memory = { total: spec.memory.limit, usage: stat.memory.usage };
+    let filesystems = [];
+    Ember.$.each(stat.filesystem, (index, fs) => {
+      let total = fs.capacity,
+          usage = fs.usage,
+          percentage = Math.round((usage * 100) / total),
+          device = fs.device;
 
-    return { cpu, memory, filesystems: stat.filesystem, timestamp: stat.timestamp };
+      filesystems.push({ total, usage, percentage, device });
+    });
+
+    return { cpu, memory, filesystems, timestamp: stat.timestamp };
   }),
 
   poll: task(function * () {

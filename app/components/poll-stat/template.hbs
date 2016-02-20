@@ -1,7 +1,10 @@
+<h4 class="ui horizontal divider header">
+  {{node}}
+</h4>
 <div class="ui grid">
   <div class="two column row">
-    <div class="left floated column">
-      <h2 class="ui header">{{node}}</h2>
+    <div class="column">
+      {{stat.timestamp}}
     </div>
     <div class="right aligned column">
     {{#if poll.isRunning}}
@@ -23,20 +26,36 @@
     {{usage-bar total=stat.cpu.total usage=stat.cpu.usage label="CPU" color="blue" showActivity=poll.isRunning}}
     </div>
     <div class="column">
-    {{usage-bar total=stat.memory.total usage=stat.memory.usage label="Memory" color="orange" showActivity=poll.isRunning}}
+    {{usage-bar total=stat.memory.total usage=stat.memory.usage label="Memory" color="purple" showActivity=poll.isRunning}}
     </div>
   </div>
 
+  {{#if stat.filesystems}}
   <div class="row">
     <div class="column">
-    {{#if stat.filesystems}}
-      <div class="ui inverted segment">
-      {{#each stat.filesystems as |fs|}}
-        {{usage-bar total=fs.capacity usage=fs.usage inverted=true}}
-      {{/each}}
-      </div>
-    {{/if}}
+      <table class="ui inverted compact table">
+        <thead>
+          <tr>
+            <th>Storage device</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each stat.filesystems as |fs|}}
+            <tr>
+              <td>{{fs.device}}</td>
+              <td class="{{if (eq fs.percentage 100) 'error' ''}}">
+                {{#if (eq fs.percentage 100)}}
+                <i class="attention icon"></i>
+              {{/if}}
+              {{fs.percentage}}%
+              </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
     </div>
   </div>
+  {{/if}}
 
 </div>
