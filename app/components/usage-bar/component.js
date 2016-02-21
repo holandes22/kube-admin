@@ -5,11 +5,9 @@ export default Ember.Component.extend({
   inverted: false,
 
   progress() {
-    let percent = this.get('percent'),
-        showActivity = this.get('showActivity');
     this.$('.ui.progress').progress({
-      percent,
-      showActivity,
+      percent: this.get('percent'),
+      showActivity: false,
       autoSuccess: false
     });
   },

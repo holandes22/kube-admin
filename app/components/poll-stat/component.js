@@ -30,7 +30,7 @@ export default Ember.Component.extend({
 
       filesystems.push({ total, usage, percentage, device });
     });
-
+    filesystems.sort();
     return { cpu, memory, filesystems, timestamp: stat.timestamp };
   }),
 
