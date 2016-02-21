@@ -66,6 +66,7 @@ export function getMetadata(kind = 'namespace', index = 0) {
 export function getCAdvisorContainerSpec() {
   return {
     creation_time: faker.date.recent(),
+    has_cpu: true,
     memory: {
       limit: CONTAINER_MEMORY
       }

@@ -27,10 +27,6 @@ export default Ember.Component.extend({
       return 'error';
     }
     return this.get('color');
-  }),
-
-  percent: Ember.computed('total', 'usage', function() {
-    let usage = this.get('usage'), total = this.get('total');
-    return Math.round((usage * 100) / total);
   })
+
 });

@@ -23,18 +23,14 @@
 
   <div class="two column row">
     <div class="column">
-      {{usage-bar total=stat.cpu.total
-                  usage=stat.cpu.usage
+      {{usage-bar percent=stat.cpu.percent
                   label="CPU"
-                  color="blue"
-                  showActivity=poll.isRunning}}
+                  color="blue"}}
     </div>
     <div class="column">
-      {{usage-bar total=stat.memory.total
-                  usage=stat.memory.usage
+      {{usage-bar percent=stat.memory.percent
                   label="Memory"
-                  color="purple"
-                  showActivity=poll.isRunning}}
+                  color="purple"}}
     </div>
   </div>
 
@@ -53,10 +49,10 @@
             <tr>
               <td>{{fs.device}}</td>
               <td class="{{if (eq fs.percentage 100) 'error' ''}}">
-                {{#if (eq fs.percentage 100)}}
+                {{#if (eq fs.percent 100)}}
                 <i class="attention icon"></i>
               {{/if}}
-              {{fs.percentage}}%
+              {{fs.percent}}%
               </td>
           </tr>
           {{/each}}

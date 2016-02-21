@@ -18,6 +18,7 @@ let getFilesystem = function() {
 export default Mirage.Factory.extend({
 
   timestamp() {
+    // 2016-02-21T12:34:45.490370039Z
     return faker.date.recent();
   },
 
