@@ -68,15 +68,16 @@ export function getCAdvisorContainerSpec() {
   return {
     creation_time: faker.date.recent(),
     has_cpu: true,
+    has_memory: true,
+    has_filesystem: true,
     memory: {
       limit: CONTAINER_MEMORY
       }
     };
 }
 
-export function getStat(total, timestamp) {
-  let cpus = faker.random.number({ min: 1, max: 10 }),
-      per_cpu_usage = [],
+export function getStat(total, timestamp, cpus=4) {
+  let per_cpu_usage = [],
       maxPerCpu = Math.round(total / cpus);
   for (let i = 1; i < cpus; i++) {
     per_cpu_usage.push(faker.random.number({ max: maxPerCpu }));

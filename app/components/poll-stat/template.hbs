@@ -21,22 +21,24 @@
     </div>
   </div>
 
-  <div class="two column row">
-    <div class="column">
-      {{usage-bar percent=stat.cpu.percent
-                  label="CPU"
-                  color="blue"}}
-    </div>
-    <div class="column">
-      {{usage-bar percent=stat.memory.percent
-                  label="Memory"
-                  color="purple"}}
-    </div>
-  </div>
 
-  {{#if stat.filesystems}}
-  <div class="row">
-    <div class="column">
+  {{#if stats}}
+    <div class="two column row">
+      <div class="column" data-id="cpu">
+        {{usage-bar percent=stat.cpu.percent
+                    label="CPU"
+                    color="blue"}}
+      </div>
+      <div class="column" data-id="memory">
+        {{usage-bar percent=stat.memory.percent
+                    label="Memory"
+                    color="purple"}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column">
+      {{#if stat.filesystem}}
       <table class="ui inverted compact table">
         <thead>
           <tr>
@@ -45,10 +47,10 @@
           </tr>
         </thead>
         <tbody>
-          {{#each stat.filesystems as |fs|}}
+          {{#each stat.filesystem as |fs index|}}
             <tr>
               <td>{{fs.device}}</td>
-              <td class="{{if (eq fs.percentage 100) 'error' ''}}">
+              <td class="{{if (eq fs.percentage 100) 'error' ''}}" data-id="fs-{{index}}">
                 {{#if (eq fs.percent 100)}}
                 <i class="attention icon"></i>
               {{/if}}
@@ -58,6 +60,24 @@
           {{/each}}
         </tbody>
       </table>
+      {{else}}
+      <div class="ui message">
+        <div class="header" data-id="fs-unavailable">
+          No storage stats available
+        </div>
+      </div>
+      {{/if}}
+      </div>
+    </div>
+  {{else}}
+  <div class="row">
+    <div class="column">
+      <div class="ui warning message">
+        <div class="header" data-id="stats-unavailable">
+          No stats available
+        </div>
+        Verify that the cAdvisor service is up and running at port {{port}}
+      </div>
     </div>
   </div>
   {{/if}}

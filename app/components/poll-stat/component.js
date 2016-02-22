@@ -6,15 +6,17 @@ export default Ember.Component.extend({
 
   tagName: '',
 
+  port: 4194,
+
   kubeClient: Ember.inject.service(),
 
-  interval: 2000,
+  interval: 2500,
 
   getCpuUsagePercentage(spec, stats) {
     let percentage = null;
     if (spec.has_cpu && stats && stats.length >= 2) {
-      let current = stats[0],
-          prev = stats[1],
+      let current = stats[stats.length - 1],
+          prev = stats[stats.length - 2],
           cpus = current.cpu.usage.per_cpu_usage.length,
           usage = current.cpu.usage.total - prev.cpu.usage.total,
           interval = (new Date(current.timestamp).getTime() - new Date(prev.timestamp).getTime()) * 1000000;
@@ -32,32 +34,43 @@ export default Ember.Component.extend({
       return null;
     }
 
-    let spec = stats.spec,
-        stat = stats.stats[0],
-        cpu = { percent: this.getCpuUsagePercentage(spec, stats.stats) },
-        memory = { percent: Math.round((stat.memory.usage * 100) / spec.memory.limit) };
-    let filesystems = [];
-    Ember.$.each(stat.filesystem, (index, fs) => {
-      let total = fs.capacity,
-          usage = fs.usage,
-          percent = Math.round((usage * 100) / total),
-          device = fs.device;
+    let spec = stats.spec, stat = lodash.last(stats.stats),
+        cpu = null, memory = null, filesystem = null;
 
-      filesystems.push({ percent, device });
-    });
-    filesystems = lodash.orderBy(filesystems, ['device']);
-    return { cpu, memory, filesystems, timestamp: stat.timestamp };
+
+    if (spec.has_cpu) {
+      cpu = { percent: this.getCpuUsagePercentage(spec, stats.stats) };
+    }
+    if (spec.has_memory) {
+      memory = { percent: Math.round((stat.memory.usage * 100) / spec.memory.limit) };
+    }
+    if (spec.has_filesystem) {
+      let filesystems = [];
+      Ember.$.each(stat.filesystem, (index, fs) => {
+        let total = fs.capacity,
+            usage = fs.usage,
+            percent = Math.round((usage * 100) / total),
+            device = fs.device;
+
+        filesystems.push({ percent, device });
+      });
+      filesystem = lodash.orderBy(filesystems, ['device']);
+    }
+    return { cpu, memory, filesystem, timestamp: stat.timestamp };
   }),
 
   poll: task(function * () {
     let node = this.get('node'),
-        interval = this.get('interval');
+        interval = this.get('interval'),
+        errorHandler = function(error) {
+          window.console.warn('Got error response from cAdvisor while polling stats:', error.message);
+        };
 
     while (true) {
 
-      this.get('kubeClient').getStat(node).then((stats) => {
+      this.get('kubeClient').getStats(node).then((stats) => {
         this.set('stats', stats);
-      });
+      }).catch(errorHandler);
 
       yield timeout(interval);
 

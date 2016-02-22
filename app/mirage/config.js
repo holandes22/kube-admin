@@ -41,11 +41,12 @@ export default function() {
     let prevTotal = faker.random.number({ min: 12434011785426, max: 12435811785426}),
         currentTotal = faker.random.number({ min: prevTotal, max: prevTotal + 3000000000}),
         current = getStat(currentTotal, '2016-02-21T13:18:01.985517833Z'),
-        prev = getStat(prevTotal, '2016-02-21T13:18:00.985517833Z');
+        prev = getStat(prevTotal, '2016-02-21T13:18:00.985517833Z'),
+        spec = getCAdvisorContainerSpec();
     return {
       name: '/',
-      spec: getCAdvisorContainerSpec(),
-      stats: [current, prev]
+      spec,
+      stats: [prev, current]
     };
   });
 
