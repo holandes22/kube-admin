@@ -16,8 +16,7 @@ export default Ember.Route.extend({
       this.get('kubeClient').deleteRecord(manifest).then(() => {
         let kind = manifest.kind.toLowerCase();
         this.get(`session.pendingDeletion.${kind}`).push(manifest.metadata.name);
-        let message = `Successfully sent request to delete ${manifest.kind}.
-                       ${manifest.metadata.name}. Deleteion will take some time to take place`;
+        let message = `Successfully sent request to delete ${manifest.kind} ${manifest.metadata.name}`;
         flashMessages.positive(message);
         this.transitionTo('pods');
       }).catch((error) => {
