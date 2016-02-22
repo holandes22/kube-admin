@@ -1,4 +1,5 @@
 import { faker } from 'ember-cli-mirage';
+import lodash from 'npm:lodash';
 
 export const CONTAINER_MEMORY = 8023089152;
 
@@ -71,4 +72,33 @@ export function getCAdvisorContainerSpec() {
       limit: CONTAINER_MEMORY
       }
     };
+}
+
+export function getStat(total, timestamp) {
+  let cpus = faker.random.number({ min: 1, max: 10 }),
+      per_cpu_usage = [],
+      maxPerCpu = Math.round(total / cpus);
+  for (let i = 1; i < cpus; i++) {
+    per_cpu_usage.push(faker.random.number({ max: maxPerCpu }));
+  }
+  let cpu = { usage: { total, per_cpu_usage } },
+      memory = { usage: faker.random.number({ max: CONTAINER_MEMORY }) },
+      filesystems = [],
+      devices = [
+        '/dev/sda1',
+        'docker-8:1-7083173-pool',
+        '/dev/mapper/docker-8:1-7083173-8f138ecc6e8dc81a08b9fee2f256415e96de06a8eb4ab247bde008932fc53c3a'
+      ];
+
+  lodash.each(devices, (device) => {
+    let min = 1024,
+        max = 1024 * 20,
+        capacity = faker.random.number({ min, max }),
+        usage = faker.random.number({ min, max: capacity });
+    filesystems.push({ device, capacity, usage });
+
+  });
+
+  return { timestamp, cpu, memory, filesystem: filesystems };
+
 }

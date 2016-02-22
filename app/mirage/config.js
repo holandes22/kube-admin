@@ -1,5 +1,6 @@
 import Mirage from 'ember-cli-mirage';
-import { getCAdvisorContainerSpec } from 'kube-admin/mirage/factories/fakers';
+import { faker } from 'ember-cli-mirage';
+import { getCAdvisorContainerSpec, getStat } from 'kube-admin/mirage/factories/fakers';
 
 const reasons = {
   '400': 'BadRequest',
@@ -21,6 +22,7 @@ const getStatusResponse = function(name) {
   return new Mirage.Response(400, {}, data);
 };
 
+
 export default function() {
 
   this.urlPrefix = 'http://localhost:8080';
@@ -35,15 +37,15 @@ export default function() {
     return { items: db.nodes };
   });
 
-  this.get('/proxy/nodes/:node\::port/api/v1.0/containers', function(db) {
-    // Randomize order of stats to we simulate movement in dashboard
-    let stats = db.stats.sort(function() {
-      return 0.5 - Math.random();
-    });
+  this.get('/proxy/nodes/:node\::port/api/v1.0/containers', function() {
+    let prevTotal = faker.random.number({ min: 12434011785426, max: 12435811785426}),
+        currentTotal = faker.random.number({ min: prevTotal, max: prevTotal + 3000000000}),
+        current = getStat(currentTotal, '2016-02-21T13:18:01.985517833Z'),
+        prev = getStat(prevTotal, '2016-02-21T13:18:00.985517833Z');
     return {
       name: '/',
       spec: getCAdvisorContainerSpec(),
-      stats
+      stats: [current, prev]
     };
   });
 
