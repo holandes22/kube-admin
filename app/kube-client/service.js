@@ -99,6 +99,19 @@ export default Ember.Service.extend({
     let port = '4194';
     let url = `/api/v1/proxy/nodes/${node}:${port}/api/v1.0/containers`;
     return this.get('ajax').request(url);
+  },
+
+  deleteRecord(manifest) {
+    let name = manifest.metadata.name,
+        namespace = manifest.metadata.namespace,
+        kinds = Ember.Inflector.inflector.pluralize(manifest.kind.toLowerCase()),
+        url = `/api/v1/namespaces/${namespace}/${kinds}/${name}`;
+    // use default grace period by kind: http://kubernetes.io/v1.1/docs/api-reference/v1/definitions.html#_v1_deleteoptions
+    let data = {
+      data: JSON.stringify({ gracePeriodSeconds: null}),
+      headers: {'Content-Type': 'application/json'}
+    };
+    return this.get('ajax').del(url, data );
   }
 
 });

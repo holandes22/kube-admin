@@ -1,9 +1,19 @@
 import Ember from 'ember';
+import lodash from 'npm:lodash';
+
 
 export default Ember.Component.extend({
+  session: Ember.inject.service(),
+
   spec: null,
 
   keys: null,
+
+  pendingDeletion: Ember.computed('', function() {
+    let kind = this.get('model.kind').toLowerCase(),
+        pending = this.get(`session.pendingDeletion.${kind}`);
+    return lodash.includes(pending, this.get('model.metadata.name'));
+  }),
 
   detailList: Ember.computed('keys', function() {
     let detailList = [];
@@ -23,6 +33,11 @@ export default Ember.Component.extend({
       detailList.push({ label, value });
     });
     return detailList;
+  }),
 
-  })
+  actions: {
+    delete() {
+      return this.get('attrs').delete(this.get('model'));
+    }
+  }
 });

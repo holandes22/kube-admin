@@ -11,6 +11,8 @@ export default Ember.Service.extend({
 
   filters: {},
 
+  pendingDeletion: { pod: [] },
+
   init() {
     this._super(...arguments);
     let keys = ['host', 'log.tailLines'];

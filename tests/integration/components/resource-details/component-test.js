@@ -8,7 +8,7 @@ moduleForComponent('resource-details', 'Integration | Component | resurce detail
 
 test('it renders with no extra details and no spec', function(assert) {
   let metadata = getMetadata();
-  this.set('model', { metadata });
+  this.set('model', { kind: 'Pod', metadata });
   this.render(hbs`{{resource-details model=model}}`);
   assert.equal(this.$('[data-autoid=name]').text(), metadata.name);
   assert.equal(this.$('[data-autoid^=detail-container]').length, 0);
@@ -17,7 +17,7 @@ test('it renders with no extra details and no spec', function(assert) {
 test('it renders with extra details, no spec and block', function(assert) {
   let metadata = getMetadata();
   let stats = { keyOne: 'key1' };
-  this.set('model', { metadata, stats });
+  this.set('model', { kind: 'Pod', metadata, stats });
   this.render(hbs`
     {{#resource-details model=model keys='stats.keyOne'}}
       <div data-autoid="extra-block">
@@ -36,7 +36,7 @@ test('it renders with extra details and no spec', function(assert) {
     keyOne: 'key1',
     keyTwo: 'key2'
   };
-  this.set('model', { metadata, stats });
+  this.set('model', { kind: 'Pod', metadata, stats });
   this.render(hbs`{{resource-details model=model keys='stats.keyOne'}}`);
   assert.equal(this.$('[data-autoid=name]').text(), metadata.name);
   assert.equal(this.$('[data-autoid^=detail-container]').length, 1);
@@ -45,7 +45,7 @@ test('it renders with extra details and no spec', function(assert) {
 test('it renders with no details and spec', function(assert) {
   let metadata = getMetadata(),
       spec = getSpec();
-  this.set('model', { metadata, spec });
+  this.set('model', { kind: 'Pod', metadata, spec });
   this.render(hbs`{{resource-details model=model spec=model.spec}}`);
   assert.equal(this.$('[data-autoid=name]').text(), metadata.name);
   assert.equal(this.$('[data-autoid=restartPolicy]').text(), spec.restartPolicy);
@@ -59,7 +59,7 @@ test('it renders with details and spec', function(assert) {
     keyOne: 'key1',
     keyTwo: 'key2'
   };
-  this.set('model', { metadata, spec, stats });
+  this.set('model', { kind: 'Pod', metadata, spec, stats });
   this.render(hbs`{{resource-details model=model spec=model.spec keys='stats.keyOne,stats.keyTwo'}}`);
   assert.equal(this.$('[data-autoid=name]').text(), metadata.name);
   assert.equal(this.$('[data-autoid=restartPolicy]').text(), spec.restartPolicy);

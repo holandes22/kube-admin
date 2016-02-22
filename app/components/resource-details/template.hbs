@@ -1,3 +1,15 @@
+{{#if pendingDeletion}}
+<div class="ui warning message">
+  <div class="header" data-id="pending">
+    This resoure is pending deletion
+  </div>
+</div>
+{{else}}
+<button class="ui basic button" {{action 'delete'}} data-id="delete">
+  <i class="remove icon"></i>
+  Delete
+</button>
+{{/if}}
 <table class="ui definition table">
   <tbody>
     <tr>

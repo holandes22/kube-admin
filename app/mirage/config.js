@@ -66,6 +66,17 @@ export default function() {
     return db.pods.insert(manifest);
   });
 
+  this.del('/namespaces/:namespace/pods/:name', function(db, request) {
+    let name = request.params.name;
+    if ( name.includes('error') ) {
+      return getStatusResponse(name);
+    }
+    if ( name.includes('pending') ) {
+      return db.pods.find(name);
+    }
+    return db.pods.remove(name);
+  });
+
   this.get('/namespaces/:namespace/pods/:pod/log', function(db, request) {
     let log = '',
         tailLines = request.queryParams.tailLines;
@@ -73,7 +84,7 @@ export default function() {
       log = log + `\nlog line number ${i}`;
     }
     return log;
-    // TODO: use same headers that API uses to cause simulate the response
+    // TODO: use same headers that API uses to simulate the response
     //return new Mirage.Response(200, { 'Content-Type': 'text/plain'}, log);
   });
 

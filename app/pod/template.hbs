@@ -1,4 +1,7 @@
-{{resource-details model=model keys='status.phase,status.startTime,status.hostIP,status.podIP' spec=model.spec}}
+{{resource-details model=model
+                   keys='status.phase,status.startTime,status.hostIP,status.podIP'
+                   spec=model.spec
+                   delete=(route-action "delete")}}
 {{#if model.status.containerStatuses}}
   <h4 class="ui horizontal divider header"><i class="cubes icon"></i>Containers</h4>
   {{pod-containers
