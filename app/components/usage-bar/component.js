@@ -4,6 +4,8 @@ export default Ember.Component.extend({
 
   inverted: false,
 
+  color: 'blue',
+
   progress() {
     this.$('.ui.progress').progress({
       percent: this.get('percent'),
@@ -23,7 +25,11 @@ export default Ember.Component.extend({
   },
 
   state: Ember.computed('percent', function() {
-    if (this.get('percent') === 100) {
+    let percent = this.get('percent');
+    if (!percent) {
+      return 'disabled';
+    }
+    if (percent === 100) {
       return 'error';
     }
     return this.get('color');
