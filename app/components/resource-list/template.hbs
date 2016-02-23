@@ -4,15 +4,21 @@
   <thead class="full-width">
     <tr>
       <th>Name</th>
-      <th>Namespace</th>
+      {{#if (not-eq kind "node")}}
+        <th>Namespace</th>
+      {{/if}}
       <th>Created</th>
     </tr>
   </thead>
   <tbody>
     {{#each resourceList as |resource index|}}
     <tr data-autoid="container{{index}}">
+      {{#if (eq kind "node")}}
+      <td data-autoid="name{{index}}">{{link-to resource.metadata.name "node" resource.metadata.name class="header"}}</td>
+      {{else}}
       <td data-autoid="name{{index}}">{{link-to resource.metadata.name kind resource.metadata.namespace resource.metadata.name class="header"}}</td>
       <td data-autoid="namespace{{index}}">{{resource.metadata.namespace}}</td>
+      {{/if}}
       <td data-autoid="timestamp{{index}}">{{moment-from-now resource.metadata.creationTimestamp allow-empty=true}} ({{resource.metadata.creationTimestamp}})</td>
     </tr>
     {{/each}}

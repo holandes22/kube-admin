@@ -21,8 +21,14 @@ export default Ember.Service.extend({
   },
 
   findRecord(kind, ns, name) {
-    let kinds = Ember.Inflector.inflector.pluralize(kind);
-    return this.get('ajax').request(`/api/v1/namespaces/${ns}/${kinds}/${name}`);
+    let kinds = Ember.Inflector.inflector.pluralize(kind),
+        url = null;
+    if (ns) {
+      url = `/api/v1/namespaces/${ns}/${kinds}/${name}`;
+    } else {
+      url = `/api/v1/${kinds}/${name}`;
+    }
+    return this.get('ajax').request(url);
   },
 
   query(kind, query) {

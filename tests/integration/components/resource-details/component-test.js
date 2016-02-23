@@ -7,7 +7,7 @@ const sessionStub = Ember.Service.extend({
   pendingRemoval: { pod: [] }
 });
 
-moduleForComponent('resource-details', 'Integration | Component | resurce details', {
+moduleForComponent('resource-details', 'Integration | Component | resource details', {
   integration: true,
   beforeEach: function () {
     this.register('service:session', sessionStub);
@@ -83,7 +83,8 @@ test('it shows pending deletion message', function(assert) {
   let metadata = getMetadata(), spec = getSpec();
   this.set('model', { kind: 'Pod', metadata, spec });
   this.get('session.pendingRemoval.pod').push(metadata.name);
-  this.render(hbs`{{resource-details model=model spec=model.spec}}`);
+  this.set('delAction', () => {});
+  this.render(hbs`{{resource-details model=model spec=model.spec del=(action delAction)}}`);
 
   assert.equal(this.$('[data-id=pending]').text().trim(), 'This resoure is pending removal');
 

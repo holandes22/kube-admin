@@ -1,0 +1,50 @@
+{{#resource-details
+    model=model
+    keys='status.nodeInfo.kernelVersion,status.nodeInfo.osImage,status.nodeInfo.containerRuntimeVersion,status.nodeInfo.kubeletVersion,status.nodeInfo.kubeProxyVersion'}}
+  <tr>
+    <td>CPU capacity</td>
+    <td>{{model.status.capacity.cpu}}</td>
+  </tr>
+  <tr>
+    <td>Memory capacity</td>
+    <td>{{model.status.capacity.memory}}</td>
+  </tr>
+  <tr>
+    <td>Pods capacity</td>
+    <td>{{model.status.capacity.pods}}</td>
+  </tr>
+  {{#each model.status.addresses as |addr|}}
+    <tr>
+      <td>{{addr.type}}</td>
+      <td>{{addr.address}}</td>
+    </tr>
+  {{/each}}
+{{/resource-details}}
+
+<h4 class="ui horizontal divider header">Conditions</h4>
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Type</th>
+      <th>Status</th>
+      <th>Last heartbeat</th>
+      <th>Last transition</th>
+      <th>Reason</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each model.status.conditions as |cond index|}}
+    <tr>
+      <td>{{index}}</td>
+      <td>{{cond.type}}</td>
+      <td>{{cond.status}}</td>
+      <td>{{cond.lastHeartbeatTime}}</td>
+      <td>{{cond.lastTransitionTime}}</td>
+      <td>{{cond.reason}}</td>
+      <td>{{cond.message}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

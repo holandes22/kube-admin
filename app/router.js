@@ -16,6 +16,8 @@ Router.map(function() {
   this.route('service', { path: 'namespaces/:namespace/services/:name' });
   this.route('settings');
   this.route('not-found', { path: '/*path' });
+  this.route('nodes');
+  this.route('node', { path: 'nodes/:name' });
 });
 
 export default Router;

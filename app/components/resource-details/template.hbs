@@ -1,15 +1,17 @@
-{{#if pendingRemoval}}
-<div class="ui warning message">
-  <div class="header" data-id="pending">
-    This resoure is pending removal
+{{#if del}}
+  {{#if pendingRemoval}}
+  <div class="ui warning message">
+    <div class="header" data-id="pending">
+      This resoure is pending removal
+    </div>
   </div>
-</div>
-{{else}}
-  {{button-with-confirmation
-      color="red"
-      label="Delete"
-      header="Remove the resource?"
-      approve=(action 'del')}}
+  {{else}}
+    {{button-with-confirmation
+        color="red"
+        label="Delete"
+        header="Remove the resource?"
+        approve=(action 'del')}}
+  {{/if}}
 {{/if}}
 <table class="ui definition table">
   <tbody>
@@ -17,10 +19,12 @@
       <td class="five wide">Name</td>
       <td data-autoid="name">{{model.metadata.name}}</td>
     </tr>
+    {{#if model.metadata.namespace}}
     <tr>
       <td>Namespace</td>
       <td>{{model.metadata.namespace}}</td>
     </tr>
+    {{/if}}
     <tr>
       <td>Creation timestamp</td>
       <td>{{model.metadata.creationTimestamp}}</td>
