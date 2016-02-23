@@ -11,7 +11,7 @@ export default Ember.Service.extend({
 
   filters: {},
 
-  pendingDeletion: { pod: [] },
+  pendingRemoval: { pod: [] },
 
   init() {
     this._super(...arguments);

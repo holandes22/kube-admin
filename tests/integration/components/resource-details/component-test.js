@@ -1,9 +1,18 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { getMetadata, getSpec } from 'kube-admin/mirage/factories/fakers';
 
+const sessionStub = Ember.Service.extend({
+  pendingRemoval: { pod: [] }
+});
+
 moduleForComponent('resource-details', 'Integration | Component | resurce details', {
-  integration: true
+  integration: true,
+  beforeEach: function () {
+    this.register('service:session', sessionStub);
+    this.inject.service('session');
+  }
 });
 
 test('it renders with no extra details and no spec', function(assert) {
@@ -68,4 +77,14 @@ test('it renders with details and spec', function(assert) {
   assert.equal(this.$('[data-autoid=detail-value0]').text(), 'key1');
   assert.equal(this.$('[data-autoid=detail-label1]').text(), 'Key two');
   assert.equal(this.$('[data-autoid=detail-value1]').text(), 'key2');
+});
+
+test('it shows pending deletion message', function(assert) {
+  let metadata = getMetadata(), spec = getSpec();
+  this.set('model', { kind: 'Pod', metadata, spec });
+  this.get('session.pendingRemoval.pod').push(metadata.name);
+  this.render(hbs`{{resource-details model=model spec=model.spec}}`);
+
+  assert.equal(this.$('[data-id=pending]').text().trim(), 'This resoure is pending removal');
+
 });

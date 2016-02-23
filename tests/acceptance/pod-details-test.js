@@ -32,7 +32,7 @@ test('it shows message if deletion pending and hides delete button', function(as
   page.del();
   page.visit(pod);
   andThen(function() {
-    assert.equal(page.pending(), 'This resoure is pending deletion');
+    assert.equal(page.pending(), 'This resoure is pending removal');
     assert.equal(currentURL(), `/namespaces/${pod.metadata.namespace}/pods/${pod.metadata.name}`);
   });
 });

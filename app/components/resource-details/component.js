@@ -9,9 +9,9 @@ export default Ember.Component.extend({
 
   keys: null,
 
-  pendingDeletion: Ember.computed('', function() {
+  pendingRemoval: Ember.computed('model', function() {
     let kind = this.get('model.kind').toLowerCase(),
-        pending = this.get(`session.pendingDeletion.${kind}`);
+        pending = this.get(`session.pendingRemoval.${kind}`);
     return lodash.includes(pending, this.get('model.metadata.name'));
   }),
 
