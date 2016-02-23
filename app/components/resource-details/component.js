@@ -22,8 +22,9 @@ export default Ember.Component.extend({
       return detailList;
     }
     Ember.$.each(keys.split(','), (i, key) => {
-      const value = this.get('model.' + key);
+      const value = this.get('model.' + key.trim());
       let label = key
+                 .trim()
                  .split('.')
                  .pop()
                  .dasherize()
