@@ -15,7 +15,7 @@ export default AjaxService.extend({
    * request
   */
   handleResponse(status, headers, payload) {
-    if (payload && typeof payload === 'object' && payload.kind && payload.kind === 'Status') {
+    if (payload && typeof payload === 'object' && payload.kind && payload.kind === 'Status' && payload.status !== 'Success') {
       let errors = [{
         status: `${status}`,
         title: payload.status,
