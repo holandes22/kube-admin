@@ -1,12 +1,3 @@
-{{#resource-list-filter
-    resources=model.items
-    filters=session.filters.node as |filter|}}
-    <div class="ui two column centered grid">
-      <div class="ten wide column">{{filter.input}}</div>
-      <div class="three wide column">{{filter.clear}}</div>
-    </div>
-{{/resource-list-filter}}
-
 {{resource-list
     resources=model.items
     filters=session.filters.node
