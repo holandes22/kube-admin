@@ -108,6 +108,10 @@ export default function() {
     return db.services.insert(manifest);
   });
 
+  this.del('/namespaces/:namespace/services/:name', function(db, request) {
+    return db.services.remove(request.params.name);
+  });
+
   this.get('/namespaces/:namespace/services/:name', function(db, request) {
     return db.services.find(request.params.name);
   });
@@ -136,6 +140,10 @@ export default function() {
 
   this.put('/namespaces/:namespace/replicationcontrollers/:name', function(db, request) {
     return JSON.parse(request.requestBody);
+  });
+
+  this.del('/namespaces/:namespace/replicationcontrollers/:name', function(db, request) {
+    return db.replicationcontrollers.remove(request.params.name);
   });
 }
 

@@ -1,4 +1,7 @@
-{{resource-details model=model keys='spec.clusterIP,spec.sessionAffinity'}}
+{{resource-details
+    model=model
+    keys='spec.clusterIP,spec.sessionAffinity'
+    del=(route-action "del")}}
 
 {{#if model.spec.ports}}
 <h4 class="ui horizontal divider header"><i class="sitemap icon"></i>Ports</h4>

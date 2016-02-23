@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import ResourceDeleteAction from 'kube-admin/mixins/resource-delete-action';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(ResourceDeleteAction, {
   kubeClient: Ember.inject.service(),
 
   model(params) {
@@ -20,7 +21,14 @@ export default Ember.Route.extend({
           flashMessages.info(message, { timeout: 5000 });
           this.refresh();
         }).catch((error) => {
-          flashMessages.negative(error.errors[0].detail, { sticky: true });
+          window.console.error(error);
+          let message = null;
+          if (error.errors) {
+            message = error.errors[0].detail;
+          } else {
+            message = error.message;
+          }
+          flashMessages.negative(message, { sticky: true });
         });
       }
     }

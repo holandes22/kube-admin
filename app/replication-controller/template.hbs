@@ -1,7 +1,8 @@
 {{#resource-details
-  model=model
-  keys='status.observedGeneration'
-  spec=model.spec.template.spec}}
+    model=model
+    keys='status.observedGeneration'
+    spec=model.spec.template.spec
+    del=(route-action "del")}}
   <tr>
     <td>Replicas (Spec)</td>
     <td data-id="rc-scale">
