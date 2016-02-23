@@ -3,6 +3,7 @@ import { faker } from 'ember-cli-mirage';
 import { getCAdvisorContainerSpec, getStat } from 'kube-admin/mirage/factories/fakers';
 
 const reasons = {
+  '200': null,
   '400': 'BadRequest',
   '409': 'AlreadyExists',
   '422': 'Invalid'
@@ -10,16 +11,19 @@ const reasons = {
 
 
 const getStatusResponse = function(name) {
-  const code = name.split('-')[1];
+  let code = name.split('-')[1];
+  if (!code) {
+    code = '200';
+  }
   let data = {
     code: code,
     kind: 'Status',
     message: `error msg ${code}`,
     metadata: {},
     reason: reasons[code],
-    status: 'Failure'
+    status: name.includes('error')? 'Failure' : 'Success'
   };
-  return new Mirage.Response(400, {}, data);
+  return new Mirage.Response(code, {}, data);
 };
 
 
@@ -78,7 +82,10 @@ export default function() {
     if ( name.includes('pending') ) {
       return db.pods.find(name);
     }
-    return db.pods.remove(name);
+    let pod = db.pods.find(name);
+    db.pods.remove(name);
+    // Kube API returns the pod manifest on delete
+    return pod;
   });
 
   this.get('/namespaces/:namespace/pods/:pod/log', function(db, request) {
@@ -113,7 +120,8 @@ export default function() {
   });
 
   this.del('/namespaces/:namespace/services/:name', function(db, request) {
-    return db.services.remove(request.params.name);
+    db.services.remove(request.params.name);
+    return getStatusResponse(request.params.name);
   });
 
   this.get('/namespaces/:namespace/services/:name', function(db, request) {
@@ -147,7 +155,8 @@ export default function() {
   });
 
   this.del('/namespaces/:namespace/replicationcontrollers/:name', function(db, request) {
-    return db.replicationcontrollers.remove(request.params.name);
+    db.replicationcontrollers.remove(request.params.name);
+    return getStatusResponse(request.params.name);
   });
 }
 
