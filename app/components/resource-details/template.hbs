@@ -5,10 +5,11 @@
   </div>
 </div>
 {{else}}
-<button class="ui basic red button" {{action 'del'}} data-id="delete">
-  <i class="remove icon"></i>
-  Delete
-</button>
+  {{button-with-confirmation
+      color="red"
+      label="Delete"
+      header="Remove the resource?"
+      approve=(action 'del')}}
 {{/if}}
 <table class="ui definition table">
   <tbody>

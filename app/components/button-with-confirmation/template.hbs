@@ -1,0 +1,22 @@
+<button class="ui basic {{color}} button" {{action 'open'}} data-id="delete">
+  <i class="remove icon"></i>
+  {{label}}
+</button>
+
+<div class="ui basic modal" name={{elementId}}>
+  <div class="header">
+    {{header}}
+  </div>
+  <div class="actions">
+    <div class="two fluid ui inverted buttons">
+      <div class="ui red basic inverted button" {{action 'deny'}}>
+        <i class="remove icon"></i>
+        No
+      </div>
+      <div class="ui green basic inverted button" {{action 'approve'}} data-id="approve">
+        <i class="checkmark icon"></i>
+        Yes
+      </div>
+    </div>
+  </div>
+</div>

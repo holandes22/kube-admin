@@ -13,5 +13,7 @@ export default PageObject.create({
   error: text('.ui.negative.message'),
   success: text('.ui.positive.message'),
   pending: text('[data-id=pending]'),
-  del: clickable('[data-id=delete]')
+  del: clickable('[data-id=delete]'),
+  approve: clickable('[data-id=approve]'),
+
 });
