@@ -10,7 +10,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    delete(manifest) {
+    del(manifest) {
       let flashMessages = this.get('flashMessages');
       flashMessages.clearMessages();
       this.get('kubeClient').deleteRecord(manifest).then(() => {

@@ -36,8 +36,8 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    delete() {
-      return this.get('attrs').delete(this.get('model'));
+    del() {
+      return this.get('attrs').del(this.get('model'));
     }
   }
 });
