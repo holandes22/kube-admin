@@ -37,6 +37,10 @@ export default function() {
     return { items: db.nodes };
   });
 
+  this.get('/nodes/:name', function(db, request) {
+    return db.nodes.find(request.params.name);
+  });
+
   this.get('/proxy/nodes/:node\::port/api/v1.0/containers', function() {
     let prevTotal = faker.random.number({ min: 12434011785426, max: 12435811785426}),
         currentTotal = faker.random.number({ min: prevTotal, max: prevTotal + 3000000000}),

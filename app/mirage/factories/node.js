@@ -42,7 +42,19 @@ export default ResourceBaseFactory.extend({
       { type: 'internalIP', address: faker.internet.ip() },
       { type: 'LegacyHostIP', address: faker.internet.ip() }
     ];
-    return { capacity, conditions, addresses };
+
+    let nodeInfo = {
+      machineID: 'fc8074bde4104c8096d0a477ea51bc21',
+      systemUUID: faker.random.uuid().toUpperCase(),
+      bootID: 'eb93e345-e375-4d2f-ae8b-58467249e549',
+      kernelVersion: '4.4.1-2-ARCH',
+      osImage: 'Debian GNU/Linux 8 (jessie)',
+      containerRuntimeVersion: 'docker://1.9.1',
+      kubeletVersion: 'v1.1.2',
+      kubeProxyVersion: 'v1.1.2'
+
+    };
+    return { capacity, conditions, addresses, nodeInfo };
   },
 
   spec() {
