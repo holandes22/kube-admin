@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: kube-admin
   namespace: kube-system
-c labels:
+  labels:
     k8s-app: kube-admin
 spec:
   selector:

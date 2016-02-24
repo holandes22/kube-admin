@@ -7,7 +7,7 @@ KBIN="kubectl -s $KUBE_CLUSTER"
 
 already_created() {
     ret_val=1
-    if [ $($KBIN get rc --namespace=kube-system -l k8s-app=kube-admin |awk '{print $2}'|tail -1) = "kube-admin" ];
+    if [ $($KBIN get $1 --namespace=kube-system -l k8s-app=kube-admin |awk '{print $1}'|tail -1) = "kube-admin" ];
     then
         return 0
     fi
@@ -15,24 +15,32 @@ already_created() {
 }
 
 
-start_app() {
-    $KBIN create -f rc-manifest.yml
-    sleep 2
-    $KBIN create -f service-manifest.yml
-    sleep 5
+start_in_k8s() {
+    manifest=$1
+    case "$manifest" in
+    *service*)
+        kind=service
+        ;;
+    *)
+        kind=rc
+        ;;
+    esac
+    if already_created $kind
+    then
+        echo "$kind already created. Skipping"
+    else
+        echo "creating $kind"
+        $KBIN create -f $manifest
+        sleep $2
+        echo Done
+    fi
 }
 
-if already_created
-then
-    addr=`$KBIN get service --namespace=kube-system |awk '{print $4}'|tail -1`
-    echo "Kube-Admin is already running"
-    echo "Browse to $addr"
-    exit 0
-else
-    echo "Starting app"
-    start_app
-    echo "Done. Pod may take a few seconds to start"
-    addr=`$KBIN get service --namespace=kube-system |awk '{print $4}'|tail -1`
-    echo "Browse to $addr"
-fi
 
+echo "Starting app..."
+echo
+start_in_k8s service-manifest.yml 2
+start_in_k8s rc-manifest.yml 5
+echo
+addr=`$KBIN get service --namespace=kube-system |awk '{print $4}'|tail -1`
+echo "Done. Browse to $addr to get the dashboard. (if not active pod might still be booting)"
