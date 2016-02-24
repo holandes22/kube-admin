@@ -1,16 +1,36 @@
 ---
-language: node_js
-node_js:
-  - "0.12"
+sudo: required
+dist: trusty
 
-sudo: false
+addons:
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
+
+env:
+  - EMBER_TRY_SCENARIO=default
+  - EMBER_TRY_SCENARIO=ember-release
+  - EMBER_TRY_SCENARIO=ember-beta
+  - EMBER_TRY_SCENARIO=ember-canary
+  - CURRENT_TAG=git describe --tags --exact-match $TRAVIS_COMMIT 2> /dev/null
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: EMBER_TRY_SCENARIO=ember-canary
 
 cache:
   directories:
+    - $HOME/.cache/pip
     - node_modules
+    - bower_components
 
 before_install:
-  - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
+    #- export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
   - "npm config set spin false"
   - "npm install -g npm@^2"
 
@@ -20,4 +40,13 @@ install:
   - bower install
 
 script:
-  - npm test
+  - ember try $EMBER_TRY_SCENARIO test
+
+after_success:
+  - if ["$TRAVIS_BRANCH" != "$CURRENT_TAG" ]; then echo "Done!"; exit 0; fi
+  - echo "Releasing version $TRAVIS_TAG"
+  - pip install -r requirements.txt
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - cd build
+  - python cli.py --version $TRAVIS_TAG release
+  - cd ..
