@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-admin
+  namespace: kube-system
+c labels:
+    k8s-app: kube-admin
+spec:
+  selector:
+    k8s-app: kube-admin
+  ports:
+  - port: 80
+    targetPort: 80

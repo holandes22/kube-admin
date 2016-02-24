@@ -1,0 +1,38 @@
+#!/usr/bin/bash
+set -e
+
+KUBE_CLUSTER=http://localhost:8080
+KBIN="kubectl -s $KUBE_CLUSTER"
+
+
+already_created() {
+    ret_val=1
+    if [ $($KBIN get rc --namespace=kube-system -l k8s-app=kube-admin |awk '{print $2}'|tail -1) = "kube-admin" ];
+    then
+        return 0
+    fi
+    return 1
+}
+
+
+start_app() {
+    $KBIN create -f rc-manifest.yml
+    sleep 2
+    $KBIN create -f service-manifest.yml
+    sleep 5
+}
+
+if already_created
+then
+    addr=`$KBIN get service --namespace=kube-system |awk '{print $4}'|tail -1`
+    echo "Kube-Admin is already running"
+    echo "Browse to $addr"
+    exit 0
+else
+    echo "Starting app"
+    start_app
+    echo "Done. Pod may take a few seconds to start"
+    addr=`$KBIN get service --namespace=kube-system |awk '{print $4}'|tail -1`
+    echo "Browse to $addr"
+fi
+
