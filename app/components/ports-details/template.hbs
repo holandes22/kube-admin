@@ -3,6 +3,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Protocol</th>
       {{#if isContainer}}
       <th>Host port</th>
       <th>Container port</th>
@@ -10,21 +11,28 @@
       <th>Port</th>
       <th>Target port</th>
       {{/if}}
-      <th>Protocol</th>
+      {{#if address}}
+      <th>Link</th>
+      {{/if}}
     </tr>
   </thead>
   <tbody>
     {{#each ports as |port|}}
     <tr>
       <td>{{port.name}}</td>
-      {{#if isContainer}}
-      <td>{{port.hostPort}}</td>
-      <td>{{port.containerPort}}</td>
-      {{else}}
-      <td>{{port.port}}</td>
-      <td>{{port.targetPort}}</td>
-      {{/if}}
       <td>{{port.protocol}}</td>
+      {{#if isContainer}}
+        <td>{{if port.hostPort port.hostPort port.containerPort}}</td>
+        <td>{{port.containerPort}}</td>
+      {{else}}
+        <td>{{if port.port port.port port.targetPort}}</td>
+        <td>{{port.targetPort}}</td>
+        {{#if address}}
+          <td>
+            <a target="_blank" href="http://{{address}}:{{port.targetPort}}">{{address}}</a>
+          </td>
+        {{/if}}
+      {{/if}}
     </tr>
     {{/each}}
   </tbody>

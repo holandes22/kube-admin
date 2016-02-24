@@ -20,9 +20,10 @@ export default PageObject.create({
       itemScope: '[data-autoid=ports] tbody tr',
       item: {
         name: text('td:nth-of-type(1)'),
-        port: text('td:nth-of-type(2)'),
-        targetPort: text('td:nth-of-type(3)'),
-        protocol: text('td:nth-of-type(4)'),
+        protocol: text('td:nth-of-type(2)'),
+        port: text('td:nth-of-type(3)'),
+        targetPort: text('td:nth-of-type(4)'),
+        link: text('td:nth-of-type(5)'),
       }
     })
   }

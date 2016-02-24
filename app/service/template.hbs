@@ -5,5 +5,5 @@
 
 {{#if model.spec.ports}}
 <h4 class="ui horizontal divider header"><i class="sitemap icon"></i>Ports</h4>
-{{ports-details ports=model.spec.ports}}
+{{ports-details ports=model.spec.ports address=model.spec.clusterIP}}
 {{/if}}

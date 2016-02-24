@@ -16,7 +16,7 @@ test('visiting service details', function(assert) {
 });
 
 test('service details are shown', function(assert) {
-  assert.expect(7);
+  assert.expect(8);
   // Add a few extra services to make sure we test against the correct one
   server.createList('service', 3);
   let service = server.create('service');
@@ -33,9 +33,10 @@ test('service details are shown', function(assert) {
     assert.equal(page.details().name(), service.metadata.name);
     assert.equal(page.details().labels(), 'a = 1 b = 2');
     assert.equal(page.details().ports(1).name(), 'a');
+    assert.equal(page.details().ports(1).protocol(), 'TCP');
     assert.equal(page.details().ports(1).port(), 4200);
     assert.equal(page.details().ports(1).targetPort(), 4300);
-    assert.equal(page.details().ports(1).protocol(), 'TCP');
+    assert.equal(page.details().ports(1).link(), service.spec.clusterIP);
     assert.equal(page.details().ports(2).name(), 'b');
   });
 });
