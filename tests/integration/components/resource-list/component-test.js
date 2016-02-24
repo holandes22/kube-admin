@@ -18,11 +18,12 @@ const makeResourceObjects = function(total) {
 };
 
 test('it renders empty', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
   this.set('model', []);
-  this.render(hbs`{{resource-list kind='pod' resources=model}}`);
+  this.render(hbs`{{resource-list kind='replication-controller' resources=model}}`);
   const containers = this.$('[data-autoid^=container]');
   assert.equal(containers.length, 0);
+  assert.equal(this.$('[data-id=empty]').text().trim(), 'No ReplicationControllers');
 });
 
 test('it renders resource list', function(assert) {

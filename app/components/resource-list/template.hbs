@@ -1,5 +1,15 @@
 <p></p>
 
+{{#if empty}}
+<div class="ui info icon message" data-id="empty">
+  <i class="circle thin icon"></i>
+  <div class="content">
+    <div class="header">
+      No {{kinds}}
+    </div>
+  </div>
+</div>
+{{else}}
 <table class="ui compact celled definition table">
   <thead class="full-width">
     <tr>
@@ -24,3 +34,4 @@
     {{/each}}
   </tbody>
 </table>
+{{/if}}
