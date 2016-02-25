@@ -1,0 +1,10 @@
+site_name: KubeADMIN docs
+pages:
+  - Home: index.md
+  - Install:
+    - 'Prerequisites': prerequistes.md
+    - 'Installation': installation.md
+    - 'Upgrade': upgrade.md
+  - Contributing: contributing.md
+  - Changelog: changelog.md
+theme: readthedocs
