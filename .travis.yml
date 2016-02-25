@@ -12,18 +12,16 @@ addons:
     packages:
     - google-chrome-stable
 
-env:
-  - EMBER_TRY_SCENARIO=default
-  - EMBER_TRY_SCENARIO=ember-release
-  - EMBER_TRY_SCENARIO=ember-beta
-  - EMBER_TRY_SCENARIO=ember-canary
-  - KUBE_ADMIN_VERSION=$TRAVIS_TAG
-  - CURRENT_TAG=git describe --tags --exact-match $TRAVIS_COMMIT 2> /dev/null
+#env:
+#  - EMBER_TRY_SCENARIO=default
+#  - EMBER_TRY_SCENARIO=ember-release
+#  - EMBER_TRY_SCENARIO=ember-beta
+#  - EMBER_TRY_SCENARIO=ember-canary
 
-matrix:
-  fast_finish: true
-  allow_failures:
-    - env: EMBER_TRY_SCENARIO=ember-canary
+#matrix:
+#  fast_finish: true
+#  allow_failures:
+#    - env: EMBER_TRY_SCENARIO=ember-canary
 
 cache:
   directories:
@@ -44,13 +42,14 @@ install:
   - bower install
 
 script:
-  - ember try $EMBER_TRY_SCENARIO test
+  - ember try default test
 
 #after_success:
+#  - CURRENT_TAG=git describe --tags --exact-match $TRAVIS_COMMIT 2> /dev/null
 #  - if ["$TRAVIS_BRANCH" != "$CURRENT_TAG" ]; then echo "Done!"; exit 0; fi
 #  - echo "Releasing version $TRAVIS_TAG"
 #  - pip install -r requirements.txt
 #  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 #  - cd build
-#  - python2 cli.py --version $KUBE_ADMIN_VERSION release
+#  - python2 cli.py --version $TRAVIS_TAG release
 #  - cd ..
