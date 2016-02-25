@@ -43,11 +43,11 @@ install:
 script:
   - ember try $EMBER_TRY_SCENARIO test
 
-after_success:
-  - if ["$TRAVIS_BRANCH" != "$CURRENT_TAG" ]; then echo "Done!"; exit 0; fi
-  - echo "Releasing version $TRAVIS_TAG"
-  - pip install -r requirements.txt
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - cd build
-  - python cli.py --version $KUBE_ADMIN_VERSION release
-  - cd ..
+#after_success:
+#  - if ["$TRAVIS_BRANCH" != "$CURRENT_TAG" ]; then echo "Done!"; exit 0; fi
+#  - echo "Releasing version $TRAVIS_TAG"
+#  - pip install -r requirements.txt
+#  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+#  - cd build
+#  - python2 cli.py --version $KUBE_ADMIN_VERSION release
+#  - cd ..
