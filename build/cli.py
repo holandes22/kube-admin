@@ -33,15 +33,15 @@ def bundle_kube_scripts(path, out='kubernetes.tar.gz'):
         tar.add(path, arcname='kube-admin')
 
 
-def build_ember(env='production', out='build/dist'):
+def build_ember(out='build/dist'):
     click.echo('Building ember with env {}'.format(env))
-    cmd = ['ember', 'build', '--environment', env, '--output-path', out]
+    cmd = ['ember', 'build', '--environment', 'production', '--output-path', out]
     check_output(cmd)
 
 
 def deploy():
     click.echo('Deploying demo')
-    cmd = ['ember', 'deploy:dev']
+    check_output(['ember', 'deploy', 'development'])
 
 
 @click.group()

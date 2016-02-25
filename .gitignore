@@ -16,4 +16,6 @@ dist
 npm-debug.log
 testem.log
 
+.env
 build/kubernetes/*.yml
+build/*.tar.gz
