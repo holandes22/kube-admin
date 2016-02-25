@@ -1,6 +1,6 @@
 {
   "name": "kube-admin",
-  "version": "0.2.0",
+  "version": "0.0.0",
   "description": "Small description for kube-admin goes here",
   "private": true,
   "directories": {

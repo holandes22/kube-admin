@@ -14,7 +14,8 @@ module.exports = function(environment) {
     },
 
     APP: {
-      persistSession: true
+      persistSession: true,
+      version: process.env.KUBE_ADMIN_VERSION
     },
 
     flashMessageDefaults: {
