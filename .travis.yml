@@ -1,10 +1,10 @@
----
-sudo: false
-# sudo: required
-# dist: trusty
+sudo: required
+
+dist: trusty
+
 language: node_js
 node_js:
-    - "stable"
+ - stable
 
 addons:
   apt:
@@ -12,45 +12,69 @@ addons:
     - google-chrome
     packages:
     - google-chrome-stable
-
-#env:
-#  - EMBER_TRY_SCENARIO=default
-#  - EMBER_TRY_SCENARIO=ember-release
-#  - EMBER_TRY_SCENARIO=ember-beta
-#  - EMBER_TRY_SCENARIO=ember-canary
-
-#matrix:
-#  fast_finish: true
-#  allow_failures:
-#    - env: EMBER_TRY_SCENARIO=ember-canary
+    - python-virtualenv
 
 cache:
   directories:
-    - $HOME/.cache/pip
-    - node_modules
-    - bower_components
+  - "$HOME/.cache/pip"
+  - node_modules
+  - bower_components
 
 before_install:
-    #- export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
+- export KUBE_ADMIN_VERSION=$TRAVIS_TAG
+- echo $KUBE_ADMIN_VERSION $TRAVIS_TAG
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- npm config set spin false
+- npm install -g npm@^2
 
 install:
-  - npm install -g bower
-  - npm install
-  - bower install
+- npm install -g bower
+- npm install
+- bower install
 
 script:
-  - ember try default test
+- ember try:one ember-release test
 
-#after_success:
-#  - CURRENT_TAG=git describe --tags --exact-match $TRAVIS_COMMIT 2> /dev/null
-#  - if ["$TRAVIS_BRANCH" != "$CURRENT_TAG" ]; then echo "Done!"; exit 0; fi
-#  - echo "Releasing version $TRAVIS_TAG"
-#  - pip install -r requirements.txt
-#  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-#  - cd build
-#  - python2 cli.py --version $TRAVIS_TAG release
-#  - cd ..
+after_success:
+- if [ -z "$TRAVIS_TAG" ]; then echo "Done!"; exit 0; fi
+- export IMAGE_NAME="holandes22/kube-admin:$TRAVIS_TAG"
+- echo "Releasing version $TRAVIS_TAG. docker image $IMAGE_NAME"
+- which python
+- virtualenv .venv
+- source .venv/bin/activate
+- which python
+- pip install -r requirements.txt
+- docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+- mkdocs build --site-dir docs_dist
+- ember deploy development
+- ember build --environment production --output-path packaging/dist/
+- cd packaging
+- docker build -t $IMAGE_NAME .
+- docker push $IMAGE_NAME
+- python cli.py --version $TRAVIS_TAG release
+- echo "Done!"
+
+deploy:
+- provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: I+g/m9xJeT5ybJ1Q31LxHExwECKt61YZhJpDMUAnZ3grURDiUlX/T2jx8lO49CDObraax5GpB0JaYCZSnG14pscF7rm5XxiJIhnuwBc0QYyOitOv8tFFbQueVBVTxpJCZfSv2nVjiLYhxez5X361e9YCLP9vYBmN4gN8JvxJoHjmYByZp6EwQdR8k86lweX2nsLPo2hUHtOD/ZbgNtSX28fO9FgnbDMMAZZFH9gpvy8PjynSUGAJrmhEm/UMgd7PJFuJ0z8AnMK3za9J5fpnKhMe9oKFzD0A1inhdLVlcHjv8GM6T0oFcSQHnaqTpC/hv3GEWNam7XTwlF5YYlmQqXAYRFRwkZu6DpxnN4mHpf7qLk4ImuCP58E38W7qwrJ+Av79p+JpHETYIQdeTu5q3qHd+gsFtIxdh9UB9AtmZzv3eLKXZCqJpvb/zAd7mKBSUvjabn9greqjvhUnluGxAeCjQ0BYD9VvL0/hq5mMANabDYJaxL8JpCMkkTk2RR2nBDk35F/Qswmj7DzAO0MzUG8uomCJcA4SaBLU0ZPtDUk/LxTXFzdV2AMBRuL3dXEBdrcvWkfkuWIA3925AHBBSQ+mxJwY7hh2tVKHoblXtfgk/GPqU6Pe+DWV6wa8OHrqJB5Go2PgJ7nDgWttQzrk/An2YxYp3uvktzHPF7zS2LQ=
+  file_glob: true
+  file: kube-admin-k8s-*.tar.gz
+  on:
+    tags: true
+    repo: holandes22/kube-admin
+    all_branches: true
+- provider: s3
+  skip_cleanup: true
+  access_key_id: AKIAJTJIQRNQZIWFD36A
+  secret_access_key:
+    secure: GL1VZgbyGbjQhoIabAJiOtG/ewyLbq7/yesgnzH4UKv9OOsudQY0753Kp05Po81e7RV24yZrjgxNtOv+vsmHq6+vMmrsZc7gS3vH584he5j0mYvAvrBNAZ5OMB5p58q5VKlXxKFnh7vAxKIky5MukhO3TgW+Sb7JVz+2GmXsYKn5nrDlBHksDF2oh9cTZDmP2uwbE1/RCCWdMR+R9qRfhciX8fejZD0+DxC2h1PwiN9XxjP6bJIg59k/F6ZwJoDZdetHLUWEBPDL5PDakVkGGTBKCR2+n7YQg4C7H7Y2cCAnX3XngwktEzUncprFW+rl9GjCYxbNlkogBm565I5dxfCOagdqb+h+tuohiPW9cfVtXFYKdi9YKnr9pQYI2kRqyFUxwzEaqF9MqtDY4DlC5en5vNj/wpEbIdkRTegQs5nkGUt2+8vYxGbU+pjFar2keCwOJ+b2mlQ0m0WZ29n8k5s/ezq+72aQojfmkc7rmayQaXTzVdwALTWG+OccQfQeFuDniovQuU5bmu4OVLKBVAqKPji+mXSOf/v9UfMRVOvDIi1rrlIZGyIIN/ZSRlz18dao99w4wh1WAM6vzoE29Lx0z72vwTazTif440xVrqpVdmAGB52DvOoEE/XUmtRiqBvaSBPV47zfZm1R5IGEsggmzSdCIzEErRlaWl6HNKU=
+  bucket: kube-admin-docs
+  local-dir: ../docs_dist
+  acl: public_read
+  on:
+    tags: true
+    repo: holandes22/kube-admin
+    all_branches: true
