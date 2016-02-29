@@ -1,21 +1,21 @@
-apiVersion: {{ version }}
+apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: kube-admin
+  name: kube-admin-{{ version }}
   namespace: kube-system
   labels:
-    k8s-app: kube-admin
+    k8s-app: kube-admin-{{ version }}
     version: {{ version }}
     kubernetes.io/cluster-service: "true"
 spec:
   replicas: 1
   selector:
-    k8s-app: kube-admin
+    k8s-app: kube-admin-{{ version }}
     version: {{ version }}
   template:
     metadata:
       labels:
-        k8s-app: kube-admin
+        k8s-app: kube-admin-{{ version }}
         version: {{ version }}
         kubernetes.io/cluster-service: "true"
     spec:
