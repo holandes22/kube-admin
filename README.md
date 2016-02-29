@@ -1,23 +1,11 @@
 # Kube-admin
 
-WIP
+[![devDependency Status](https://david-dm.org/holandes22/kube-admin/dev-status.svg)](https://david-dm.org/holandes22/kube-admin#info=devDependencies)
+[![Code Climate](https://codeclimate.com/github/holandes22/kube-admin/badges/gpa.svg)](https://codeclimate.com/github/holandes22/kube-admin)
+[![Build Status](https://travis-ci.org/holandes22/kube-admin.svg?branch=master)](https://travis-ci.org/holandes22/kube-admin)
 
-## Prerequisites
+KubeADMIN is an administration dashboard for Kubernetes. It allows you to inspect and manage resources such as Node, Pods, ReplicationControllers, Services, etc.
 
-You will need the following things properly installed on your computer.
+Documentation can be found [here](http://kube-admin-docs.s3-website-us-east-1.amazonaws.com/)
 
-* Docker
-
-## Installation
-
-Run as docker container
-
-    docker run -d -p <SOME_PORT>:80 kube-admin
-
-and then browse to localhost:<SOME_PORT>
-
-or run it in k8s
-
-    build/kubernetes/start-in-k8s
-
-and browse to the address indicated by the script
+A demo site, using a fake server backed by the awesome [Ember mirage](http://www.ember-cli-mirage.com/) can be found [here](http://kube-admin-demo.s3-website-us-east-1.amazonaws.com/)
