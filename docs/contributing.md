@@ -59,6 +59,11 @@ You can then run a dev server for the docs with:
 This will spin up a server to browse for rendered docs. It is very handy as it listens
 on achanges in the docs files and rebuilts if needed.
 
+# Conventions
+
+Comment in commit message should start with the associated ticket number `gh-XXX` or with the word `trivial` if a it is a
+very minor change and there is no associated ticket.
+
 # Issues board
 
 [https://waffle.io/holandes22/kube-admin](https://waffle.io/holandes22/kube-admin)
