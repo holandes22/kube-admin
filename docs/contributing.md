@@ -16,7 +16,7 @@ for dev purposes.
 
 Running tests:
 
-    $ ember test
+    $ ember test --serve
 
 The tests are only against chrome in CI (not using phantomjs) so during dev this is the browser to target.
 Firefox is in the todo list.
