@@ -20,3 +20,4 @@ testem.log
 packaging/kubernetes/*.yml
 packaging/*.tar.gz
 docs_dist
+site

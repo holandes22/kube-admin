@@ -1,10 +1,9 @@
 site_name: KubeADMIN docs
 pages:
   - Home: index.md
-  - Install:
-    - 'Prerequisites': install/prerequisites.md
-    - 'Installation': install/installation.md
-    - 'Upgrade': install/upgrade.md
+  - Installation: installation.md
+  - Usage: usage.md
   - Contributing: contributing.md
   - Changelog: changelog.md
+  - Issues: issues.md
 theme: readthedocs
