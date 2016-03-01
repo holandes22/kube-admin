@@ -34,7 +34,7 @@ install:
 - bower install
 
 script:
-- ember try:one ember-release test
+- ember try:one default test
 
 after_success:
 - if [ -z "$TRAVIS_TAG" ]; then echo "Done!"; exit 0; fi
