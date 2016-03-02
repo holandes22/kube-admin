@@ -11,7 +11,7 @@ test('it redirects to pods after deletion', function(assert) {
   page.approve();
   andThen(function() {
     assert.equal(server.db.pods.length, 2);
-    assert.ok(page.success().includes('Successfully sent request to delete'));
+    assert.ok(page.success.includes('Successfully sent request to delete'));
     assert.equal(currentURL(), '/pods');
   });
 });
@@ -23,7 +23,7 @@ test('it shows and error message if delete fails', function(assert) {
   page.approve();
   andThen(function() {
     assert.equal(server.db.pods.length, 1);
-    assert.equal(page.error(), 'error msg fake');
+    assert.equal(page.error, 'error msg fake');
     assert.equal(currentURL(), `/namespaces/${pod.metadata.namespace}/pods/${pod.metadata.name}`);
   });
 });
@@ -35,7 +35,7 @@ test('it shows message if deletion pending and hides delete button', function(as
   page.approve();
   page.visit(pod);
   andThen(function() {
-    assert.equal(page.pending(), 'This resoure is pending removal');
+    assert.equal(page.pending, 'This resoure is pending removal');
     assert.equal(currentURL(), `/namespaces/${pod.metadata.namespace}/pods/${pod.metadata.name}`);
   });
 });

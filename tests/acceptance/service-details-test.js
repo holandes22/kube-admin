@@ -27,17 +27,17 @@ test('service details are shown', function(assert) {
   ];
   server.db.services.update(service.id, service);
 
-  page.visit(service);
+  page.visit({ namespace: service.metadata.namespace, name: service.metadata.name });
 
   andThen(function() {
-    assert.equal(page.details().name(), service.metadata.name);
-    assert.equal(page.details().labels(), 'a = 1 b = 2');
-    assert.equal(page.details().ports(1).name(), 'a');
-    assert.equal(page.details().ports(1).protocol(), 'TCP');
-    assert.equal(page.details().ports(1).port(), 4200);
-    assert.equal(page.details().ports(1).targetPort(), 4300);
-    assert.equal(page.details().ports(1).link(), service.spec.clusterIP);
-    assert.equal(page.details().ports(2).name(), 'b');
+    assert.equal(page.details.name, service.metadata.name);
+    assert.equal(page.details.labels, 'a = 1 b = 2');
+    assert.equal(page.details.ports(0).name, 'a');
+    assert.equal(page.details.ports(0).protocol, 'TCP');
+    assert.equal(page.details.ports(0).port, 4200);
+    assert.equal(page.details.ports(0).targetPort, 4300);
+    assert.equal(page.details.ports(0).link, service.spec.clusterIP);
+    assert.equal(page.details.ports(1).name, 'b');
   });
 });
 
@@ -47,10 +47,10 @@ test('service details with no labels', function(assert) {
   service.metadata.labels = {};
   server.db.services.update(service.id, service);
 
-  page.visit(service);
+  page.visit({ namespace: service.metadata.namespace, name: service.metadata.name });
 
   andThen(function() {
-    assert.equal(page.details().labels(), 'No labels');
+    assert.equal(page.details.labels, 'No labels');
   });
 });
 
@@ -60,10 +60,10 @@ test('service details with no ports', function(assert) {
   service.spec.ports = [];
   server.db.services.update(service.id, service);
 
-  page.visit(service);
+  page.visit({ namespace: service.metadata.namespace, name: service.metadata.name });
 
   andThen(function() {
-    assert.ok(page.isPortsSectionHidden());
-    assert.ok(page.details().ports().isHidden());
+    assert.equal(page.isPortsSectionHidden, true);
+    assert.equal(page.details.ports().isHidden, true);
   });
 });

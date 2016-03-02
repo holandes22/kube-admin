@@ -1,10 +1,11 @@
 import Ember from 'ember';
-import PageObject from '../page-object';
+import PageObject from 'kube-admin/tests/page-object';
 import ResourceCreationBase from './resource-creation-base';
 
 let {
   visitable
 } = PageObject;
+
 
 let fileContent = {
   'apiVersion': 'v1',

@@ -11,7 +11,7 @@ test('create pod with namespace', function(assert) {
     assert.equal(currentURL(), '/pods');
     assert.equal(server.db.pods[0].metadata.name, 'fake');
     assert.equal(server.db.pods[0].metadata.namespace, 'fake');
-    assert.equal(page.success(), 'Successfully created');
+    assert.equal(page.success, 'Successfully created');
   });
 });
 
@@ -41,7 +41,7 @@ test('create pod shows error on failure', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/pods');
-    assert.equal(page.error(), 'error msg 400');
+    assert.equal(page.error, 'error msg 400');
   });
 });
 
@@ -50,12 +50,12 @@ test('only one message is displayed after success', function(assert) {
   page.createError(400);
 
   andThen(function() {
-    assert.equal(page.error(), 'error msg 400');
+    assert.equal(page.error, 'error msg 400');
   });
 
   page.createWithoutNamespace();
   andThen(function() {
-    assert.equal(page.messageCount(), 1);
+    assert.equal(page.messageCount, 1);
   });
 });
 
@@ -65,11 +65,11 @@ test('only one message is displayed after error', function(assert) {
   page.createWithoutNamespace();
 
   andThen(function() {
-    assert.equal(page.success(), 'Successfully created');
+    assert.equal(page.success, 'Successfully created');
   });
 
   page.createError(400);
   andThen(function() {
-    assert.equal(page.messageCount(), 1);
+    assert.equal(page.messageCount, 1);
   });
 });

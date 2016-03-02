@@ -1,17 +1,14 @@
-import PageObject from '../page-object';
+import PageObject from 'kube-admin/tests/page-object';
 
 let {
   text,
   isHidden,
+  visitable,
   collection
 } = PageObject;
 
 export default PageObject.create({
-  visit(service) {
-    const url = `/namespaces/${service.metadata.namespace}/services/${service.metadata.name}`;
-    return visit(url);
-  },
-
+  visit: visitable('/namespaces/:namespace/services/:name'),
   isPortsSectionHidden: isHidden('[data-autoid=ports]'),
   details: {
     name: text('[data-autoid=name]'),
