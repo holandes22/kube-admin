@@ -3,7 +3,7 @@ import {
   validator,
   buildValidations
 } from 'ember-cp-validations';
-import Cookies from 'ember-cli-js-cookie';
+import Cookies from 'npm:js-cookie';
 import ENV from 'kube-admin/config/environment';
 
 const { persistSession } = ENV.APP;
