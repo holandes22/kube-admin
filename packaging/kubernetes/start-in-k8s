@@ -1,13 +1,26 @@
 #!/usr/bin/bash
 set -e
 
-KUBE_CLUSTER=http://localhost:8080
-KBIN="kubectl -s $KUBE_CLUSTER"
 
+if [ -z "$KUBE_ADMIN_CLUSTER_ADDR" ]; then
+    CLUSTER_ADDR=http://localhost:8080
+else
+    CLUSTER_ADDR="$KUBE_ADMIN_CLUSTER_ADDR"
+fi
+
+if [ -z "$KUBE_ADMIN_KUBECTL_PATH" ]; then
+    KUBECTL_PATH=kubectl
+else
+    KUBECTL_PATH="$KUBE_ADMIN_KUBECTL_PATH"
+fi
+
+KBIN="$KUBECTL_PATH -s $CLUSTER_ADDR"
+
+echo "Using kubectl: $KBIN"
 
 already_created() {
     ret_val=1
-    if [ $($KBIN get $1 --namespace=kube-system -l k8s-app=kube-admin |awk '{print $1}'|tail -1) = "kube-admin" ];
+    if [[ $($KBIN get $1 --namespace=kube-system -l k8s-app=kube-admin |awk '{print $1}'|tail -1) == *"kube-admin"* ]];
     then
         return 0
     fi

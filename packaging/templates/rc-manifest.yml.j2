@@ -4,18 +4,18 @@ metadata:
   name: kube-admin-{{ version }}
   namespace: kube-system
   labels:
-    k8s-app: kube-admin-{{ version }}
+    k8s-app: kube-admin
     version: {{ version }}
     kubernetes.io/cluster-service: "true"
 spec:
   replicas: 1
   selector:
-    k8s-app: kube-admin-{{ version }}
+    k8s-app: kube-admin
     version: {{ version }}
   template:
     metadata:
       labels:
-        k8s-app: kube-admin-{{ version }}
+        k8s-app: kube-admin
         version: {{ version }}
         kubernetes.io/cluster-service: "true"
     spec:
