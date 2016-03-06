@@ -5,8 +5,15 @@ import hbs from 'htmlbars-inline-precompile';
 
 const sessionStub = Ember.Service.extend({
   host: 'http://fake:8080',
+
   log: {
     tailLines: 50
+  },
+
+  showSystemResources: false,
+
+  setAttr(key, value) {
+    this.set(key, value);
   }
 });
 

@@ -3,10 +3,7 @@ import {
   validator,
   buildValidations
 } from 'ember-cp-validations';
-import Cookies from 'npm:js-cookie';
-import ENV from 'kube-admin/config/environment';
 
-const { persistSession } = ENV.APP;
 
 
 const Validations = buildValidations({
@@ -29,7 +26,6 @@ const Validations = buildValidations({
 });
 
 export default Ember.Component.extend(Validations, {
-  host: null,
 
   keyMap: {
     tailLines: 'log.tailLines'
@@ -47,10 +43,7 @@ export default Ember.Component.extend(Validations, {
     saveSetting(key) {
       let sessionKey = this.keyMap[key] ? this.keyMap[key] : key,
           value = this.get(key);
-      if (persistSession) {
-        Cookies.set(sessionKey, value);
-      }
-      this.get('session').set(sessionKey, value);
+      this.get('session').setAttr(sessionKey, value);
     }
   }
 });
