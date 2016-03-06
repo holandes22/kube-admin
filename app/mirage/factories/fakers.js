@@ -55,11 +55,14 @@ export function getId(kind, index) {
 }
 
 
-export function getMetadata(kind = 'namespace', index = 0) {
-  const name =  getId(kind, index),
-        namespace = faker.random.arrayElement(['default', 'system', 'app-namespace']),
-        creationTimestamp = faker.date.recent(),
-        labels = getLabels();
+export function getMetadata(kind='Node', index=0, namespace=null) {
+  let name =  getId(kind, index),
+      creationTimestamp = faker.date.recent(),
+      labels = getLabels();
+  if (!namespace && kind !== 'Node') {
+      namespace = faker.random.arrayElement(['default', 'kube-system', 'app-namespace']);
+  }
+
   return { name, namespace, creationTimestamp, labels };
 }
 
