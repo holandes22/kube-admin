@@ -56,4 +56,7 @@ start_in_k8s service-manifest.yml 2
 start_in_k8s rc-manifest.yml 5
 echo
 addr=`$KBIN get service --namespace=kube-system |awk '{print $4}'|tail -1`
-echo "Done. Browse to $addr to get the dashboard. (if not active pod might still be booting)"
+echo "Done. Browse to $addr to get the dashboard."
+echo "The app might take a few minutes to start because:"
+echo "  - If the docker image is not present locally it need to be downloaded from docker hub"
+echo "  - Replication controller needs a few seconds to start the Pod"
