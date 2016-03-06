@@ -1,17 +1,30 @@
 <div class="ui form">
-  {{setting-field label='Kubernetes hostname or IP address'
-                  key='host'
-                  setting=host
-                  validations=validations
-                  action=(action 'saveSetting')}}
+      {{setting-field key='host'
+                      label="Kubernetes hostname or IP address"
+                      setting=host
+                      validations=validations
+                      action=(action 'saveSetting')}}
 
-  <div class="field">{{test-connection}}</div>
+      <div class="field">{{test-connection}}</div>
 
-  <div class="ui divider"></div>
 
   {{setting-field label='Number of lines to show from pod logs'
                   key='tailLines'
                   setting=tailLines
                   validations=validations
                   action=(action 'saveSetting')}}
+
 </div>
+
+
+<h4 class="ui horizontal yellow divider header">
+    <i class="warning sign icon"></i>
+    Sensitive settings
+</h4>
+
+{{ui-checkbox checked=showSystemResources
+              label="Show resources from kube-system namespace?"
+              class="toggle"
+              onChange=(action "saveSetting" "showSystemResources")}}
+
+

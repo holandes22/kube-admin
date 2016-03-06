@@ -35,8 +35,9 @@ export default Ember.Component.extend(Validations, {
 
   init() {
     this._super(...arguments);
-    this.set('host',  this.get('session').host);
-    this.set('tailLines',  this.get('session').log.tailLines);
+    this.set('host',  this.get('session.host'));
+    this.set('tailLines',  this.get('session.log.tailLines'));
+    this.set('showSystemResources', this.get('session.showSystemResources'));
   },
 
   actions: {

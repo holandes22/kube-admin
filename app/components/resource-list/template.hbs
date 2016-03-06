@@ -20,7 +20,7 @@
       <th>Created</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody data-id="resource-list">
     {{#each resourceList as |resource index|}}
     <tr data-autoid="container{{index}}">
       {{#if (eq kind "node")}}

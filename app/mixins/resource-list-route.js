@@ -2,10 +2,19 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
 
+  session: Ember.inject.service(),
+
   kubeClient: Ember.inject.service(),
 
   model() {
-    return this.get('kubeClient').findAll(this.get('kind'));
+    return this.get('kubeClient').findAll(this.get('kind')).then((resources) => {
+      if (!this.get('session.showSystemResources')) {
+        resources.items = resources.items.filter((resource) => {
+          return !resource.metadata.namespace || !resource.metadata.namespace.includes('kube-system');
+        });
+      }
+      return resources;
+    });
   },
 
   actions: {

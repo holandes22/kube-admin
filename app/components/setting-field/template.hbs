@@ -1,5 +1,8 @@
 <div class="field {{if (v-get this key 'isInvalid') 'error' ''}}" data-id="setting-{{key}}">
-  <label>{{label}}</label>
+
+  {{#if label}}
+    <label>{{label}}</label>
+  {{/if}}
   <div class="ui action input {{if (v-get this key 'isInvalid') 'error' ''}}">
     {{input value=setting}}
     <button class="ui button {{if (v-get this key 'isInvalid') 'disabled' ''}}" {{action "saveSetting"}}>Save</button>
@@ -9,4 +12,5 @@
       {{v-get this key 'message'}}
     </div>
   {{/if}}
+
 </div>
