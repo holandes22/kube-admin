@@ -1,12 +1,14 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'kube-admin/tests/helpers/module-for-acceptance';
 import page from '../pages/service-details';
+import { getMetadata } from 'kube-admin/mirage/factories/fakers';
 
 moduleForAcceptance('Acceptance | service details');
 
 test('visiting service details', function(assert) {
-  const service = server.create('service'),
-        url = `/namespaces/${service.metadata.namespace}/services/${service.metadata.name}`;
+  let metadata = getMetadata('Service', 0, 'default'),
+      service = server.create('service', { metadata }),
+      url = `/namespaces/${service.metadata.namespace}/services/${service.metadata.name}`;
   visit('/services');
   click('[data-autoid^=name] a');
 
