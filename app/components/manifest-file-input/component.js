@@ -38,7 +38,7 @@ export default Ember.Component.extend(Validations, {
     let reader = new window.FileReader();
     reader.readAsText(file);
     while(reader.readyState !== 2) {
-      yield timeout(0);
+      yield timeout(50);
     }
     if (reader.error) {
       let flashMessages = this.get('flashMessages'),

@@ -1,7 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import wait from 'ember-test-helpers/wait';
 import { getCAdvisorContainerSpec } from 'kube-admin/mirage/factories/fakers';
 
 const getFakeStats = function() {
@@ -54,12 +53,9 @@ moduleForComponent('poll-stat', 'Integration | Component | poll stat', {
 test('it shows stats', function(assert) {
   this.render(hbs`{{poll-stat node='fake'}}`);
 
-  return wait().then(() => {
-    assert.equal(this.$('[data-id=cpu]').text().replace(/[\t\n\s]+/g, ''), '50%CPU');
-    assert.equal(this.$('[data-id=memory]').text().replace(/[\t\n\s]+/g, ''), '50%Memory');
-    assert.equal(this.$('[data-id=fs-0]').text().trim(), '50%');
-
-  });
+  assert.equal(this.$('[data-id=cpu]').text().replace(/[\t\n\s]+/g, ''), '50%CPU');
+  assert.equal(this.$('[data-id=memory]').text().replace(/[\t\n\s]+/g, ''), '50%Memory');
+  assert.equal(this.$('[data-id=fs-0]').text().trim(), '50%');
 });
 
 test('it indicates no stats if has no stats data', function(assert) {
@@ -67,27 +63,21 @@ test('it indicates no stats if has no stats data', function(assert) {
   this.get('kubeClient').set('fakeStats.spec.has_memory', false);
   this.render(hbs`{{poll-stat node='fake'}}`);
 
-  return wait().then(() => {
-    assert.equal(this.$('[data-id=cpu]').text().replace(/[\t\n\s]+/g, ''), 'CPU(Nostatsavailable)');
-    assert.equal(this.$('[data-id=memory]').text().replace(/[\t\n\s]+/g, ''), 'Memory(Nostatsavailable)');
-    assert.equal(this.$('[data-id=fs-0]').text().trim(), '50%');
-  });
+  assert.equal(this.$('[data-id=cpu]').text().replace(/[\t\n\s]+/g, ''), 'CPU(Nostatsavailable)');
+  assert.equal(this.$('[data-id=memory]').text().replace(/[\t\n\s]+/g, ''), 'Memory(Nostatsavailable)');
+  assert.equal(this.$('[data-id=fs-0]').text().trim(), '50%');
 });
 
 test('it indicates no storage stats if has no stats data for filesystem', function(assert) {
   this.get('kubeClient').set('fakeStats.spec.has_filesystem', false);
   this.render(hbs`{{poll-stat}}`);
 
-  return wait().then(() => {
-    assert.equal(this.$('[data-id=fs-unavailable]').text().trim(), 'No storage stats available');
-  });
+  assert.equal(this.$('[data-id=fs-unavailable]').text().trim(), 'No storage stats available');
 });
 
 test('it indicates no storage stats if error', function(assert) {
   this.get('kubeClient').set('error', true);
   this.render(hbs`{{poll-stat}}`);
 
-  return wait().then(() => {
-    assert.equal(this.$('[data-id=stats-unavailable]').text().trim(), 'No stats available');
-  });
+  assert.equal(this.$('[data-id=stats-unavailable]').text().trim(), 'No stats available');
 });
