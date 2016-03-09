@@ -1,64 +1,53 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { task, timeout } from 'ember-concurrency';
 
-const {
-  run: {
-    bind
-  }
-} = Ember;
-
+const MAX_FILE_SIZE = 1048576;
 
 const Validations = buildValidations({
-  fileInfo: [
-    validator('presence', true),
-    validator('valid-manifest')
+  fileText: [validator('valid-manifest')],
+  fileSize: [
+    validator('number', {
+      lte: MAX_FILE_SIZE,
+      message: 'File size exceeds 1 MiB. Is this a text file?'
+    })
   ]
 });
 
 
 export default Ember.Component.extend(Validations, {
 
+  flashMessages: Ember.inject.service(),
+
   actionLabel: 'Create',
 
-  fileInfo: null,
+  fileName: null,
 
-  // Hide validations at start
-  selectionMade: false,
+  fileText: null,
 
-  didInsertElement() {
-    this.$('input:file').on('change', bind(this, 'handleFileSelection'));
-  },
+  fileSize: null,
 
-  handleFileSelection(event) {
-    // TODO:
-    // - Handle very large files
-    // (maybe show a progress bar and allow cancel)
-    // - Properly handle read error
-    const file = event.target.files[0];
-    this.readFile(file).then((fileInfo) => {
-      this.set('selectionMade', true);
-      this.set('fileInfo', fileInfo);
-    }).catch((reason) => {
-      window.console.log('Error loading file:', reason);
-    });
-  },
-
-  readFile(file) {
-    const reader = new window.FileReader();
+  readFile: task(function * (event) {
+    let file = event.target.files[0];
+    this.set('fileSize', file.size);
+    this.set('fileName', file.name);
+    this.set('fileText', null);
+    if (file.size > MAX_FILE_SIZE) {
+      return;
+    }
+    let reader = new window.FileReader();
     reader.readAsText(file);
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      reader.onload = function(event) {
-        resolve({
-          name: file.name,
-          type: file.type,
-          text: event.target.result
-        });
-      };
-      reader.onerror = function(error) {
-        reject({ event: 'onerror', error });
-      };
-    });
-  },
+    while(reader.readyState !== 2) {
+      yield timeout(0);
+    }
+    if (reader.error) {
+      let flashMessages = this.get('flashMessages'),
+          message = `Error while reading file: ${reader.error}`;
+      flashMessages.negative(message, { sticky: true });
+      return;
+    }
+    this.set('fileText', reader.result);
+  }),
 
   actions: {
 
@@ -67,11 +56,8 @@ export default Ember.Component.extend(Validations, {
     },
 
     action() {
-      this.set('selectionMade', true);
-      if (this.get('validations.isValid')) {
-        // manifest is set by the validator after parsing fileInfo.text
-        this.get('attrs').action(this.get('manifest'));
-      }
+      // manifest is set by the validator after parsing fileText
+      this.get('attrs').action(this.get('manifest'));
     }
   }
 

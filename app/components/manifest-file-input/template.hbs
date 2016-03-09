@@ -1,24 +1,24 @@
 <div class="ui right action left icon input">
   <i class="file icon"></i>
-  <input data-autoid="filename" type="text" readonly value={{if fileInfo fileInfo.name "Select manifest file (JSON or YAML)"}} {{action "selectFile"}}>
-  <input type="file">
-  <button class="ui teal labeled icon {{if validations.isInvalid 'disabled' ''}} button" {{action "action"}} data-autoid="submit-file">
+  <input data-autoid="filename" type="text" readonly value={{if fileName fileName "Select manifest file (JSON or YAML)"}} {{action "selectFile"}}>
+  <input type="file" onchange={{perform readFile}}>
+  <button class="ui teal labeled icon {{if readFile.isRunning 'loading' ''}} {{if (or validations.isInvalid (not fileText)) 'disabled' ''}} button" {{action "action"}} data-autoid="submit-file">
     <i class="add square icon"></i>{{actionLabel}}
   </button>
 </div>
 
-{{#if (and selectionMade validations.isInvalid)}}
+{{#if validations.isInvalid}}
 <div class="ui negative small message">
   <div data-autoid="error-message">{{validations.messages}}</div>
 </div>
 {{/if}}
 
-{{#if selectionMade}}
+{{#if fileText}}
 <p></p>
 <div class="ui form">
   <div class="field">
     <label>File content</label>
-    <textarea rows="4" readonly data-autoid="preview">{{fileInfo.text}}</textarea>
+    <textarea rows="4" readonly data-autoid="preview">{{fileText}}</textarea>
   </div>
 </div>
 {{/if}}

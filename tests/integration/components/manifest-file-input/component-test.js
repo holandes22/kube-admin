@@ -23,19 +23,12 @@ test('it renders actionLabel', function(assert) {
   assert.equal(this.$().text().trim(), 'Blah');
 });
 
-test('it shows an error if no file and removes it if file is selected', function(assert) {
-  assert.expect(3);
+test('it shows file preview', function(assert) {
+  assert.expect(1);
   this.render(hbs`{{manifest-file-input kind="Pod"}}`);
-  this.$('[data-autoid=submit-file]').click();
-  assert.equal(
-    this.$('[data-autoid=error-message]').text(),
-    "This field can't be blank"
-  );
-
   let event = makeFileInputEvent('{"kind": "Pod"}');
   this.$('input:file').trigger(event);
   return wait().then(() => {
-    assert.equal(this.$('[data-autoid=error-message]').text(), '');
     assert.equal(this.$('[data-autoid=preview]').text(), '{"kind": "Pod"}');
   });
 });
@@ -45,9 +38,9 @@ test('it shows an error if cannot parse text as YAML nor JSON', function(assert)
   this.render(hbs`{{manifest-file-input}}`);
   let badYamlString = 'a: v\n\t- bb';
   let event = makeFileInputEvent(badYamlString);
+
   this.$('input:file').trigger(event);
   return wait().then(() => {
-    this.$('[data-autoid=submit-file]').click();
     assert.equal(
       this.$('[data-autoid=error-message]').text(),
       'Selected file must be valid JSON or YAML'
@@ -61,7 +54,6 @@ test('it shows an error if manifest has no kind', function(assert) {
   let event = makeFileInputEvent('{"apiVersion": "v1"}');
   this.$('input:file').trigger(event);
   return wait().then(() => {
-    this.$('[data-autoid=submit-file]').click();
     assert.equal(this.$('[data-autoid=error-message]').text(), 'Bad manifest (No kind attribute)');
   });
 });
@@ -72,7 +64,6 @@ test('it shows an error if kind in manifest is not the specified', function(asse
   let event = makeFileInputEvent('kind: Pod');
   this.$('input:file').trigger(event);
   return wait().then(() => {
-    this.$('[data-autoid=submit-file]').click();
     assert.equal(this.$('[data-autoid=error-message]').text(), 'Resource kind should be Fake');
   });
 });
@@ -91,16 +82,23 @@ test('it sets file name in input and passes up the manifest', function(assert) {
   });
 });
 
-
 test('it shows error message if empty string', function(assert) {
   assert.expect(2);
   this.render(hbs`{{manifest-file-input kind="Pod"}}`);
   let event = makeFileInputEvent('');
   this.$('input:file').trigger(event);
   return wait().then(() => {
-    this.$('[data-autoid=submit-file]').click();
     assert.equal(this.$('[data-autoid=error-message]').text(), 'Bad manifest (No kind attribute)');
     assert.ok(this.$('button').hasClass('disabled'));
   });
+});
 
+test('it shows error message if file is too big', function(assert) {
+  assert.expect(2);
+  this.render(hbs`{{manifest-file-input kind="Pod"}}`);
+  let longString = (new Array(1148576)).join("a");
+  let event = makeFileInputEvent(`{"kind": "Pod", "name": ${longString}}`);
+  this.$('input:file').trigger(event);
+  assert.equal(this.$('[data-autoid=error-message]').text(), 'File size exceeds 1 MiB. Is this a text file?');
+  assert.ok(this.$('button').hasClass('disabled'));
 });

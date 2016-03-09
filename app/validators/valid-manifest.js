@@ -3,18 +3,17 @@ import yaml from 'npm:js-yaml';
 
 export default BaseValidator.extend({
   validate(value) {
-    if(!value) {
-      return false;
+    if(value == null) { // unset
+      return true;
     }
-    let fileInfo = value,
-        kind = this.get('model.kind'),
+    let kind = this.get('model.kind'),
         manifest = null;
 
     try {
-      manifest = yaml.safeLoad(fileInfo.text);
+      manifest = yaml.safeLoad(value);
     } catch(yamlError) {
       try {
-        manifest = JSON.parse(fileInfo.text);
+        manifest = JSON.parse(value);
       } catch(jsonError) {
         window.console.log(yamlError, jsonError);
         return 'Selected file must be valid JSON or YAML';
@@ -25,8 +24,9 @@ export default BaseValidator.extend({
     } else if (manifest.kind !== kind) {
       return `Resource kind should be ${kind}`;
     }
-    // This is dirty, but is to avoid
-    // having to parse twice the text file
+    // FIXME: This is dirty because it couples the
+    // validator with the object using it
+    // The reason is to avoid having to parse twice the text file
     this.set('model.manifest', manifest);
     return true;
   }
